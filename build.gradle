@@ -2,10 +2,8 @@ plugins {
     id 'java'
 }
 
-group 'com.emporium'
-version '0.0.1'
-
-sourceCompatibility = 1.8
+group = 'com.emporium'
+sourceCompatibility = '13'
 
 repositories {
     mavenCentral()
