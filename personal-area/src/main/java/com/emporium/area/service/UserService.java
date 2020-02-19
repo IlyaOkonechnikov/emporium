@@ -7,4 +7,6 @@ public interface UserService {
   User findById(long id);
 
   long create(User user);
+
+  void update(User user);
 }
