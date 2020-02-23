@@ -6,6 +6,7 @@ import com.emporium.area.model.jpa.User;
 import com.emporium.area.service.UserService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,11 @@ public class UserController {
   public void update(@PathVariable("id") long id, @RequestBody User user) {
     Preconditions.checkNotNull(user);
     userService.update(user);
+  }
+
+  @DeleteMapping(value = "/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void delete(@PathVariable("id") Long id) {
+    userService.delete(id);
   }
 }

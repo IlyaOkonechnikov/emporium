@@ -17,17 +17,26 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findById(long id) {
-    return userRepository.findById(id)
-        .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND_EXCEPTION));
+    return userRepository.findById(id).orElseThrow(() ->
+        new UserException(UserErrorCode.USER_NOT_FOUND_EXCEPTION));
   }
 
   @Override
   public long create(User user) {
-    return 0;
+    return userRepository.save(user).getId();
   }
 
   @Override
   public void update(User user) {
+    userRepository.findById(user.getId()).orElseThrow(() ->
+        new UserException(UserErrorCode.USER_NOT_FOUND_EXCEPTION));
+    userRepository.save(user);
+  }
 
+  @Override
+  public void delete(long id) {
+    userRepository.findById(id).orElseThrow(() ->
+        new UserException(UserErrorCode.USER_NOT_FOUND_EXCEPTION));
+    userRepository.deleteById(id);
   }
 }
