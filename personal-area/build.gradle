@@ -19,11 +19,12 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
+	compile group: 'com.querydsl', name: 'querydsl-mongodb', version: '4.2.2'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

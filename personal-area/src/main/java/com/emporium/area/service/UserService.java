@@ -4,11 +4,11 @@ import com.emporium.area.model.jpa.User;
 
 public interface UserService {
 
-  User findById(long id);
+  User findById(String id);
 
-  long create(User user);
+  String create(User user);
 
   void update(User user);
 
-  void delete(long id);
+  void delete(String id);
 }

@@ -28,26 +28,27 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/{id}")
-  public User findById(long id) {
+  public User findById(String id) {
     return userService.findById(id);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public long create(@Valid @RequestBody User user) {
+  public String create(@Valid @RequestBody User user) {
+    Preconditions.checkNotNull(user);
     return userService.create(user);
   }
 
   @PutMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void update(@PathVariable("id") long id, @RequestBody User user) {
+  public void update(@PathVariable("id") String id, @RequestBody User user) {
     Preconditions.checkNotNull(user);
     userService.update(user);
   }
 
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void delete(@PathVariable("id") Long id) {
+  public void delete(@PathVariable("id") String id) {
     userService.delete(id);
   }
 }
