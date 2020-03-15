@@ -1,36 +1,39 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
+  id 'org.springframework.boot' version '2.2.4.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'java'
 }
 
 group = 'com.emporium'
 sourceCompatibility = '13'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
 }
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+  implementation(
+      'org.springframework.boot:spring-boot-starter-web',
+      'org.springframework.boot:spring-boot-starter-data-mongodb',
+      'com.google.guava:guava:28.2-jre'
+  )
 
-	compile group: 'com.google.guava', name: 'guava', version: '28.2-jre'
-	compile group: 'com.querydsl', name: 'querydsl-mongodb', version: '4.2.2'
+  testImplementation(
+      'org.springframework.boot:spring-boot-starter-test',
+//      'org.junit.jupiter:junit-jupiter:5.6.0',
+      'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
+  )
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+  annotationProcessor 'org.projectlombok:lombok'
+  compileOnly 'org.projectlombok:lombok'
 }
 
 test {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }

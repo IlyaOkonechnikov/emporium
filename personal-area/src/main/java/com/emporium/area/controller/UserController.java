@@ -28,7 +28,7 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/{id}")
-  public User findById(String id) {
+  public User findById(@PathVariable String id) {
     return userService.findById(id);
   }
 
@@ -39,9 +39,9 @@ public class UserController {
     return userService.create(user);
   }
 
-  @PutMapping(value = "/{id}")
+  @PutMapping
   @ResponseStatus(HttpStatus.OK)
-  public void update(@PathVariable("id") String id, @RequestBody User user) {
+  public void update(@RequestBody User user) {
     Preconditions.checkNotNull(user);
     userService.update(user);
   }

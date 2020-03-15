@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      name: emporium_test
+      url: localhost
+      port: 0

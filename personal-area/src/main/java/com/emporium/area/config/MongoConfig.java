@@ -14,6 +14,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.util.Collections;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableMongoRepositories(basePackages = "com.emporium.area.repository")
 public class MongoConfig extends AbstractMongoClientConfiguration {
@@ -34,6 +37,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     this.username = username;
     this.password = password;
     this.database = database;
+    log.info("MongoConfig initialized with the following credentials: \n" +
+            "host: {} \nport: {} \nusername: {} \npassword: {} \ndatabase: {}. ",
+        host, port, username, password, database);
   }
 
   @Override

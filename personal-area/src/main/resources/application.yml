@@ -9,3 +9,7 @@ spring:
       username: ilya
       password: password
       database: emporium
+
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG

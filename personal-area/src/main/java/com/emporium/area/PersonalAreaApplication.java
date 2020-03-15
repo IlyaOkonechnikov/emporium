@@ -9,5 +9,4 @@ public class PersonalAreaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PersonalAreaApplication.class, args);
 	}
-
 }
