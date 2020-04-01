@@ -6,10 +6,8 @@ spring:
     mongodb:
       host: 127.0.0.1
       port: 27017
-      username: ilya
-      password: password
       database: emporium
 
 logging:
   level:
-    org.springframework.data.mongodb: DEBUG
+    org.springframework.data.mongodb: debug
