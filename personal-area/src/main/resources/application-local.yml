@@ -4,9 +4,10 @@ server:
 spring:
   data:
     mongodb:
-      host: mongo-service
+      host: 127.0.0.1
       port: 27017
       database: emporium
+      auto-index-creation: false
 
 logging:
   level:

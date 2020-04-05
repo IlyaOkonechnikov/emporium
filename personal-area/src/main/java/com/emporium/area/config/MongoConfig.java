@@ -31,7 +31,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     this.port = port;
     this.database = database;
     log.info("MongoConfig initialized with the following credentials: \n" +
-            "host: {} \nport: {} \ndatabase: {}. ", host, port, database);
+        "host: {} \nport: {} \ndatabase: {}. ", host, port, database);
   }
 
   @Override

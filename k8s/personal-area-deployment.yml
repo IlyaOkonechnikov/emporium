@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-area-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: personal-area
+  template:
+    metadata:
+      labels:
+        component: personal-area
+    spec:
+      containers:
+        - name: personal-area
+          image: scarron95/emporium-personal-area
+          ports:
+            - containerPort: 9999
