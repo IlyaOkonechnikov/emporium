@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,12 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
   private final UserService userService;
+
+//  just for quick cluster test
+  @GetMapping
+  public List<User> findAll() {
+    return userService.findAll();
+  }
 
   @GetMapping("/{id}")
   public User findById(@PathVariable String id) {

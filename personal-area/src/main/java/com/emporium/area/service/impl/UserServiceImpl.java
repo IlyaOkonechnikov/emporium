@@ -8,6 +8,8 @@ import com.emporium.area.service.UserService;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +17,11 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+
+  @Override
+  public List<User> findAll() {
+    return userRepository.findAll();
+  }
 
   @Override
   public User findById(String id) {
