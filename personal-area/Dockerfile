@@ -1,7 +1,6 @@
 FROM openjdk:13-slim
-ENV APP_FILE personal-area-0.0.1.jar
-WORKDIR "/app"
+ARG JAR_FILE
+ENV JAR_FILE=${JAR_FILE}
+COPY ${JAR_FILE} .
 EXPOSE 9999
-COPY build/libs/*.jar ./
-ENTRYPOINT ["sh", "-c"]
-CMD ["exec java -jar $APP_FILE"]
+ENTRYPOINT java -jar ${JAR_FILE}

@@ -1,6 +1,7 @@
 plugins {
-  id 'org.springframework.boot' version '2.2.4.RELEASE'
   id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'org.springframework.boot' version '2.2.4.RELEASE'
+  id "com.palantir.docker" version "0.25.0"
   id 'java'
 }
 
@@ -34,4 +35,12 @@ dependencies {
 
 test {
   useJUnitPlatform()
+}
+
+docker {
+  name "scarron95/emporium-personal-area"
+  files jar.archivePath   // передаем jar в контекст
+  buildArgs([JAR_FILE: "${jar.archiveName}"])
+  noCache true
+  tag 'DockerHub', "scarron95/emporium-personal-area:latest"
 }
