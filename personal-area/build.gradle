@@ -38,9 +38,7 @@ test {
 }
 
 docker {
-  name "scarron95/emporium-personal-area"
-  files jar.archivePath   // передаем jar в контекст
-  buildArgs([JAR_FILE: "${jar.archiveName}"])
-  noCache true
-  tag 'DockerHub', "scarron95/emporium-personal-area:latest"
+  name 'scarron95/emporium-personal-area'
+  files jar.archiveFile
+  buildArgs([JAR_FILE: "${jar.archiveFileName.get()}"])
 }
