@@ -1,12 +1,14 @@
-package com.emporium.area.model.jpa;
+package com.emporium.security.model.jpa;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -49,4 +51,7 @@ public class User {
 
   @LastModifiedDate
   private LocalDate updated;
+
+  @DBRef
+  private List<Role> roles;
 }
