@@ -1,4 +1,4 @@
-package com.emporium.security.model.jpa;
+package com.emporium.lib.security;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -11,9 +11,6 @@ import java.util.List;
 
 import lombok.Data;
 
-/**
- * @author <a href="mailto:ilya.okonechnikov@waveaccess.ru">Ilya Okonechnikov</a>
- */
 @Data
 @Document(value = "roles")
 public class Role {

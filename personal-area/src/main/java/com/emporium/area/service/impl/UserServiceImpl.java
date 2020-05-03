@@ -1,7 +1,7 @@
 package com.emporium.area.service.impl;
 
-import com.emporium.area.exception.export.UserErrorCode;
-import com.emporium.area.exception.export.UserException;
+import com.emporium.area.exception.UserErrorCode;
+import com.emporium.area.exception.UserException;
 import com.emporium.area.model.jpa.User;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;

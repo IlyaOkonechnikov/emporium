@@ -1,3 +1,4 @@
 rootProject.name = 'emporium'
 include('personal-area')
-include('security-service')
+include('security')
+include('security-lib')

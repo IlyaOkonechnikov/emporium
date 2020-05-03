@@ -32,15 +32,15 @@ public class User {
   @Size(min = 4, max = 32, message = "Surname must be between 4 and 32 characters")
   private String surname;
 
+  @Size(min = 4, max = 32, message = "Patronymic must be between 4 and 32 characters")
+  private String patronymic;
+
   @Indexed(unique = true)
   @Email(message = "Email should be valid")
   private String email;
 
   @Size(min = 4, max = 16, message = "Password must be between 4 and 16 characters")
   private String password;
-
-  @Size(min = 4, max = 32, message = "Patronymic must be between 4 and 32 characters")
-  private String patronymic;
 
   private String photoStorageId;
 

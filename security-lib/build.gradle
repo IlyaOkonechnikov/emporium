@@ -1,0 +1,29 @@
+plugins {
+  id "io.freefair.lombok" version "5.0.1"
+  id 'java'
+}
+
+group = 'com.emporium.lib'
+sourceCompatibility = '13'
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation(
+      'org.springframework.data:spring-data-mongodb:2.2.7.RELEASE',
+      'org.springframework:spring-context:5.2.6.RELEASE',
+      'javax.validation:validation-api:2.0.1.Final'
+  )
+}
+
+test {
+  useJUnitPlatform()
+}

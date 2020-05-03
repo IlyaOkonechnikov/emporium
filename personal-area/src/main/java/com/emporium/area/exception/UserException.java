@@ -1,7 +1,4 @@
-package com.emporium.area.exception.export;
-
-import com.emporium.area.exception.ClientKnownException;
-import com.emporium.area.exception.ExceptionReason;
+package com.emporium.area.exception;
 
 public class UserException extends ClientKnownException {
 
