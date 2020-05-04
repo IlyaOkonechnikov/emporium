@@ -40,6 +40,8 @@ public class User {
   @LastModifiedDate
   private LocalDate updated;
 
+  private Status status;
+
   @DBRef
   private Role role;
 }

@@ -1,5 +1,7 @@
 package com.emporium.security.model;
 
+import com.emporium.lib.security.Status;
+
 import java.time.LocalDate;
 
 import lombok.Data;
@@ -11,5 +13,6 @@ public class UserDTO {
   private String email;
   private String password;
   private LocalDate created;
-  private final LocalDate updated = LocalDate.now();
+  private LocalDate updated;
+  private Status status;
 }

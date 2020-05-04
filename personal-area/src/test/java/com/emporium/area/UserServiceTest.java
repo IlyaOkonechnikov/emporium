@@ -96,6 +96,6 @@ public class UserServiceTest {
 
   public void assertException(Executable executable) {
     Exception exception = assertThrows(UserException.class, executable);
-    assertEquals(exception.getMessage(), UserErrorCode.USER_NOT_FOUND_EXCEPTION.getReason());
+    assertEquals(exception.getMessage(), UserErrorCode.USER_NOT_FOUND_ERROR.getReason());
   }
 }
