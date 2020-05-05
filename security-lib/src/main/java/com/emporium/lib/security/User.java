@@ -27,6 +27,12 @@ public class User {
   @Size(min = 4, max = 16, message = "Username must be between 4 and 16 characters")
   private String username;
 
+  @Size(min = 4, max = 32, message = "Name must be between 4 and 32 characters")
+  private String name;
+
+  @Size(min = 4, max = 32, message = "Surname must be between 4 and 32 characters")
+  private String surname;
+
   @Indexed(unique = true)
   @Email(message = "Email should be valid")
   private String email;
