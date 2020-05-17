@@ -1,4 +1,4 @@
 rootProject.name = 'emporium'
 include('personal-area')
-include('security')
-include('security-lib')
+include('auth')
+include('auth-lib')
