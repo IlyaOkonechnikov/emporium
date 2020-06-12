@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     implementation(
-            'org.springframework.data:spring-data-mongodb:2.2.7.RELEASE',
+            'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework:spring-context:5.2.6.RELEASE',
             'org.springframework.security:spring-security-core:5.3.2.RELEASE',
             'javax.validation:validation-api:2.0.1.Final',
