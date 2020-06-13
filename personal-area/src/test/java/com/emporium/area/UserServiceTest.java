@@ -2,10 +2,10 @@ package com.emporium.area;
 
 import com.emporium.area.exception.UserErrorCode;
 import com.emporium.area.exception.UserException;
-import com.emporium.area.model.jpa.User;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;
 
+import com.emporium.lib.auth.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.function.Executable;

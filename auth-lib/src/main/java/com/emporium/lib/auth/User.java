@@ -1,18 +1,16 @@
-package com.emporium.area.model.jpa;
+package com.emporium.lib.auth;
 
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import lombok.Data;
+import java.time.LocalDate;
 
 @Data
 @Document(value = "users")

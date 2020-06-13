@@ -1,7 +1,7 @@
 package com.emporium.area.controller;
 
-import com.emporium.area.model.jpa.User;
 import com.emporium.area.service.UserService;
+import com.emporium.lib.auth.User;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
