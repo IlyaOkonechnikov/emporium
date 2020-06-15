@@ -5,7 +5,7 @@ import com.emporium.area.exception.UserException;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;
 
-import com.emporium.lib.auth.User;
+import com.emporium.area.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.function.Executable;

@@ -1,6 +1,6 @@
 package com.emporium.area.service;
 
-import com.emporium.lib.auth.User;
+import com.emporium.area.model.User;
 
 import java.util.List;
 

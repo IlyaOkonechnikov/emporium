@@ -1,6 +1,2 @@
 server:
   port: 9998
-
-jwt:
-  secret: eHXcK2RfLg55yYqh
-  expiration-time: 3600000
