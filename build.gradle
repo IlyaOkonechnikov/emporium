@@ -8,14 +8,3 @@ sourceCompatibility = '13'
 repositories {
     mavenCentral()
 }
-
-dependencies {
-    implementation(
-            "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springVersion}",
-            "org.springframework.boot:spring-boot-configuration-processor:${springVersion}"
-    )
-
-    testImplementation(
-            'junit:junit:4.12'
-    )
-}

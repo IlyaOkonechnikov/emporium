@@ -2,6 +2,7 @@ package com.emporium.auth.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,7 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class OauthClientToken {
 
     @Id
+    @Field("_id")
+    private String id;
+
     @Field("authentication_id")
+    @Indexed(unique = true)
     private String authenticationId;
 
     @Field("token_id")

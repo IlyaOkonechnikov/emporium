@@ -1,3 +1,5 @@
+use auth
+
 db.oauth_client_details.insertOne({
     "client_id": "client_id",
     "client_secret": "{bcrypt}$2a$10$vCXMWCn7fDZWOcLnIEhmK.74dvK1Eh8ae2WrWlhr2ETPLoxQctN4.",
@@ -7,3 +9,13 @@ db.oauth_client_details.insertOne({
     "access_token_validity": 300
 })
 
+db.users.insertOne({{
+    "username": "user",
+    "password": "{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC",
+    "enabled": true
+})
+
+db.users.insertOne({{
+    "username": "user",
+    "authority": "ROLE_USER"
+})
