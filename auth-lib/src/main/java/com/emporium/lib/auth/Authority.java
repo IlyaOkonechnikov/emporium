@@ -15,10 +15,13 @@ public class Authority {
     @Id
     private CompositeKey id;
 
-    private static class CompositeKey implements Serializable {
+    @Data
+    public static class CompositeKey implements Serializable {
+
         @NotNull
         @Indexed(unique = true)
-        private String username;
+        public String username;
+
         @NotNull
         @Indexed(unique = true)
         private String authority;
