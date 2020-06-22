@@ -12,9 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author <a href="mailto:ilya.okonechnikov@waveaccess.ru">Ilya Okonechnikov</a>
- */
 @RequiredArgsConstructor
 public class MongoUserDetailsService implements UserDetailsService {
 

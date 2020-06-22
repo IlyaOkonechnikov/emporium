@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -27,10 +26,6 @@ import java.security.KeyPair;
 @SuppressWarnings("deprecation")
 @EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
-
-    private final MongoClientDetailsService mongoClientDetailsService;
-    private final MongoTokenStore mongoTokenStore;
-    private final MongoApprovalStore mongoApprovalStore;
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -70,11 +65,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         jwtAccessTokenConverter = new JwtAccessTokenConverter();
         jwtAccessTokenConverter.setKeyPair(keyPair);
         return jwtAccessTokenConverter;
-    }
-
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        security.tokenKeyAccess("isAnonymous() || permitAll()").checkTokenAccess("permitAll()");
     }
 
     @Override
