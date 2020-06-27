@@ -1,6 +1,5 @@
 package com.emporium.auth.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,13 +11,17 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("mongoUserDetailsService")
-    private final UserDetailsService userDetailsService;
+//    @Qualifier("mongoUserDetailsService")
+//    private final UserDetailsService userDetailsService;
 
     private PasswordEncoder passwordEncoder;
+//
+//    public WebSecurityConfiguration(UserDetailsService userDetailsService) {
+//        this.userDetailsService = userDetailsService;
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,7 +43,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Override
     public UserDetailsService userDetailsService() {
-        return userDetailsService;
+        return new MongoUserDetailsService(null, null);
     }
 }

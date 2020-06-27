@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface AuthorityRepository extends MongoRepository<Authority, String> {
 
-    List<Authority> findByUsername(String username);
+    List<Authority> findByIdUsername(String username);
 }

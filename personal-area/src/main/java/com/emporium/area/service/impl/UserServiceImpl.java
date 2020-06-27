@@ -1,7 +1,7 @@
 package com.emporium.area.service.impl;
 
-import com.emporium.area.exception.UserErrorCode;
-import com.emporium.area.exception.UserException;
+import com.emporium.area.exception.PersonalAreaErrorCode;
+import com.emporium.area.exception.PersonalAreaException;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     Optional<User> optionalUser = userRepository.findById(id);
     if (optionalUser.isEmpty()) {
       log.error("An error occurred due to the attempt to find a nonexistent user. id: {}", id);
-      throw new UserException(UserErrorCode.USER_NOT_FOUND_ERROR);
+      throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
     User user = optionalUser.get();
     log.debug("findById() - end. user: {}", user);
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     log.debug("update() - start. user: {}", user);
     if (userRepository.findById(user.getId()).isEmpty()) {
       log.error("An error occurred due to the attempt to update a nonexistent user. id: {}", user.getId());
-      throw new UserException(UserErrorCode.USER_NOT_FOUND_ERROR);
+      throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
     userRepository.save(user);
   }
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     log.debug("delete() - start. id: {}", id);
     if (userRepository.findById(id).isEmpty()) {
       log.error("An error occurred due to the attempt to delete a nonexistent user. id: {}", id);
-      throw new UserException(UserErrorCode.USER_NOT_FOUND_ERROR);
+      throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
     userRepository.deleteById(id);
   }

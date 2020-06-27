@@ -1,2 +1,9 @@
 server:
   port: 9998
+
+security:
+  jwt:
+    key-store: classpath:emporium.jks
+    key-store-password: emporium
+    key-pair-alias: emporium
+    key-pair-password: emporium

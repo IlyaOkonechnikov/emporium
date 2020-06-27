@@ -7,3 +7,7 @@ spring:
       host: ${MONGO_HOST}
       port: ${MONGO_PORT}
       database: ${MONGO_DATABASE}
+
+security:
+  jwt:
+    public-key: classpath:public.txt

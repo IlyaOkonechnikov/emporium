@@ -22,7 +22,7 @@ public class MongoUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         com.emporium.lib.auth.User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found. username: " + username));
-        List<SimpleGrantedAuthority> authorities = authorityRepository.findByUsername(username).stream()
+        List<SimpleGrantedAuthority> authorities = authorityRepository.findByIdUsername(username).stream()
                 .map(a -> new SimpleGrantedAuthority(a.getId().getAuthority()))
                 .collect(Collectors.toList());
         return new User(user.getUsername(), user.getPassword(), authorities);

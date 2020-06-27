@@ -5,6 +5,7 @@ import com.emporium.area.model.User;
 import com.google.common.base.Preconditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,8 +18,9 @@ public class UserController {
 
     private final UserService userService;
 
-    //    just for quick cluster test
+//    just for quick cluster test
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<User> findAll() {
         return userService.findAll();
     }

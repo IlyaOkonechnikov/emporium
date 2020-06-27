@@ -1,7 +1,7 @@
 package com.emporium.area;
 
-import com.emporium.area.exception.UserErrorCode;
-import com.emporium.area.exception.UserException;
+import com.emporium.area.exception.PersonalAreaErrorCode;
+import com.emporium.area.exception.PersonalAreaException;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;
 
@@ -95,7 +95,7 @@ public class UserServiceTest {
   }
 
   public void assertException(Executable executable) {
-    Exception exception = assertThrows(UserException.class, executable);
-    assertEquals(exception.getMessage(), UserErrorCode.USER_NOT_FOUND_ERROR.getReason());
+    Exception exception = assertThrows(PersonalAreaException.class, executable);
+    assertEquals(exception.getMessage(), PersonalAreaErrorCode.USER_NOT_FOUND_ERROR.getReason());
   }
 }
