@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -31,6 +32,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private final AuthenticationManager authenticationManager;
     private final SecurityProperties securityProperties;
     private final UserDetailsService userDetailsService;
+    private final MongoClientDetailsService mongoClientDetailsService;
 
     private JwtAccessTokenConverter jwtAccessTokenConverter;
     private TokenStore tokenStore;
@@ -49,6 +51,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setClientDetailsService(clientDetailsService);
+        tokenServices.setClientDetailsService(mongoClientDetailsService);
         tokenServices.setAuthenticationManager(this.authenticationManager);
         return tokenServices;
     }
@@ -79,6 +82,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         oauthServer.passwordEncoder(this.passwordEncoder).tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
+    }
+
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients)
+            throws Exception {
+        clients.withClientDetails(mongoClientDetailsService);
     }
 
     private KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
