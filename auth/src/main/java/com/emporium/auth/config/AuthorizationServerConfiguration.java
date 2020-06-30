@@ -1,7 +1,6 @@
 package com.emporium.auth.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,32 +16,33 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
-
-import java.security.KeyPair;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableAuthorizationServer
 @SuppressWarnings("deprecation")
-@EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final SecurityProperties securityProperties;
     private final UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
     private final MongoClientDetailsService mongoClientDetailsService;
+    private final String signingKey;
 
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-    private TokenStore tokenStore;
+    public AuthorizationServerConfiguration(PasswordEncoder passwordEncoder,
+                                            UserDetailsService userDetailsService,
+                                            AuthenticationManager authenticationManager,
+                                            MongoClientDetailsService mongoClientDetailsService,
+                                            @Value("${jwt.signingKey}") String signingKey) {
+        this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+        this.authenticationManager = authenticationManager;
+        this.mongoClientDetailsService = mongoClientDetailsService;
+        this.signingKey = signingKey;
+    }
 
     @Bean
     public TokenStore tokenStore() {
-        if (tokenStore == null) {
-            tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
-        }
-        return tokenStore;
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     @Bean
@@ -52,49 +52,34 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         tokenServices.setTokenStore(tokenStore);
         tokenServices.setClientDetailsService(clientDetailsService);
         tokenServices.setClientDetailsService(mongoClientDetailsService);
-        tokenServices.setAuthenticationManager(this.authenticationManager);
+        tokenServices.setAuthenticationManager(authenticationManager);
         return tokenServices;
     }
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        if (jwtAccessTokenConverter != null) {
-            return jwtAccessTokenConverter;
-        }
-
-        SecurityProperties.JwtProperties jwtProperties = securityProperties.getJwt();
-        KeyPair keyPair = keyPair(jwtProperties, keyStoreKeyFactory(jwtProperties));
-
-        jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setKeyPair(keyPair);
-        return jwtAccessTokenConverter;
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(signingKey);
+        return converter;
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.authenticationManager(this.authenticationManager)
+        endpoints.authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter())
-                .userDetailsService(this.userDetailsService)
+                .userDetailsService(userDetailsService)
                 .tokenStore(tokenStore());
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.passwordEncoder(this.passwordEncoder).tokenKeyAccess("permitAll()")
+        oauthServer.passwordEncoder(passwordEncoder)
+                .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer clients)
-            throws Exception {
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(mongoClientDetailsService);
-    }
-
-    private KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
-        return keyStoreKeyFactory.getKeyPair(jwtProperties.getKeyPairAlias(), jwtProperties.getKeyPairPassword().toCharArray());
-    }
-
-    private KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
-        return new KeyStoreKeyFactory(jwtProperties.getKeyStore(), jwtProperties.getKeyStorePassword().toCharArray());
     }
 }

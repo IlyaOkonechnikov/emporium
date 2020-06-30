@@ -1,18 +1,16 @@
 package com.emporium.area.controller;
 
-import com.emporium.area.service.UserService;
 import com.emporium.area.model.User;
-import com.google.common.base.Preconditions;
+import com.emporium.area.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/emporium/user")
+@RequestMapping("/personal-area/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -20,7 +18,6 @@ public class UserController {
 
 //    just for quick cluster test
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
     public List<User> findAll() {
         return userService.findAll();
     }
@@ -30,17 +27,15 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Valid @RequestBody User user) {
-        Preconditions.checkNotNull(user);
+    public String create(@RequestBody @Valid User user) {
         return userService.create(user);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody User user) {
-        Preconditions.checkNotNull(user);
+    public void update(@RequestBody @Valid User user) {
         userService.update(user);
     }
 

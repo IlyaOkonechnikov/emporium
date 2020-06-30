@@ -1,10 +1,7 @@
 package com.emporium.area.config;
 
-import com.emporium.area.exception.PersonalAreaErrorCode;
-import com.emporium.area.exception.PersonalAreaException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,25 +14,17 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import java.io.IOException;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 @Slf4j
 @Configuration
 @EnableResourceServer
 @SuppressWarnings("deprecation")
-@EnableConfigurationProperties(SecurityProperties.class)
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     private static final String ROOT_PATTERN = "/**";
+    private final String signingKey;
 
-    private final SecurityProperties securityProperties;
-
-    private TokenStore tokenStore;
-
-    public ResourceServerConfiguration(SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
+    public ResourceServerConfiguration(@Value("${jwt.signingKey}") String signingKey) {
+        this.signingKey = signingKey;
     }
 
     @Override
@@ -62,26 +51,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Bean
     public TokenStore tokenStore() {
-        if (tokenStore == null) {
-            tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
-        }
-        return tokenStore;
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setVerifierKey(getPublicKeyAsString());
+        converter.setSigningKey(signingKey);
         return converter;
     }
-
-    private String getPublicKeyAsString() {
-        try {
-            return IOUtils.toString(securityProperties.getJwt().getPublicKey().getInputStream(), UTF_8);
-        } catch (IOException e) {
-            log.error("getPublicKeyAsString() - error.\n" + e.getMessage(), e);
-            throw new PersonalAreaException(PersonalAreaErrorCode.PUBLIC_KEY_RECEIVING_ERROR);
-        }
-    }
-
 }

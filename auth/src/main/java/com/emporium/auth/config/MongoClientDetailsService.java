@@ -37,7 +37,6 @@ public class MongoClientDetailsService implements ClientDetailsService, ClientRe
                     Joiner.on(",").join(mongoClientDetails.getAuthorizedGrantTypes()),
                     Joiner.on(",").join(mongoClientDetails.getAuthorities()),
                     Joiner.on(",").join(mongoClientDetails.getRegisteredRedirectUri()));
-
             client.setAccessTokenValiditySeconds(mongoClientDetails.getAccessTokenValiditySeconds());
             client.setRefreshTokenValiditySeconds(mongoClientDetails.getRefreshTokenValiditySeconds());
             client.setClientSecret(mongoClientDetails.getClientSecret());

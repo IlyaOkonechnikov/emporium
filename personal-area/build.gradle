@@ -25,7 +25,6 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.boot:spring-boot-starter-web',
             "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springVersion}",
-            "org.springframework.boot:spring-boot-configuration-processor:${springVersion}",
             'com.google.guava:guava:28.2-jre',
             'commons-io:commons-io:2.7'
     )
