@@ -48,11 +48,11 @@ public class OauthClientDetailsRepositoryImpl implements OauthClientDetailsRepos
     }
 
     @Override
-    public OauthClientDetails findByClientId(String clientId) throws IllegalArgumentException {
+    public OauthClientDetails findByClientId(String clientId) {
         Query query = Query.query(Criteria.where("client_id").is(clientId));
         OauthClientDetails mongoClientDetails = mongoTemplate.findOne(query, OauthClientDetails.class);
         if (mongoClientDetails == null) {
-            throw new IllegalArgumentException("No valid client id");
+            throw new IllegalArgumentException("No such client id: " + clientId);
         }
         return mongoClientDetails;
     }

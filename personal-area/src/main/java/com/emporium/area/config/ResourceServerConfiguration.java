@@ -28,7 +28,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     }
 
     @Override
-    public void configure(final ResourceServerSecurityConfigurer resources) {
+    public void configure(ResourceServerSecurityConfigurer resources) {
         resources.tokenStore(tokenStore());
     }
 
@@ -43,7 +43,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     }
 
     @Bean
-    public DefaultTokenServices tokenServices(final TokenStore tokenStore) {
+    public DefaultTokenServices tokenServices(TokenStore tokenStore) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(tokenStore);
         return tokenServices;

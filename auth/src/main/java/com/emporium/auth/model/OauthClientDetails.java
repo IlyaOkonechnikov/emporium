@@ -1,5 +1,6 @@
 package com.emporium.auth.model;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Data
+@Builder
 @SuppressWarnings("deprecation")
 @Document(value = "oauth_client_details")
 public class OauthClientDetails implements ClientDetails {
@@ -50,28 +52,10 @@ public class OauthClientDetails implements ClientDetails {
     private Integer refreshTokenValiditySeconds;
 
     @Field("additional_information")
-    private Map<String, Object> additionalInformation;
+    private transient Map<String, Object> additionalInformation;
 
     @Field("auto_approve_scopes")
     private Set<String> autoApproveScopes;
-
-    public OauthClientDetails(String clientId, String clientSecret, Set<String> scope,
-                              Set<String> resourceIds, Set<String> authorizedGrantTypes,
-                              Set<String> registeredRedirectUris, List<GrantedAuthority> authorities,
-                              Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds,
-                              Map<String, Object> additionalInformation, Set<String> autoApproveScopes) {
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.scope = scope;
-        this.resourceIds = resourceIds;
-        this.authorizedGrantTypes = authorizedGrantTypes;
-        this.registeredRedirectUris = registeredRedirectUris;
-        this.authorities = authorities;
-        this.accessTokenValiditySeconds = accessTokenValiditySeconds;
-        this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
-        this.additionalInformation = additionalInformation;
-        this.autoApproveScopes = autoApproveScopes;
-    }
 
     public Set<String> getScope() {
         return Objects.isNull(scope) ? Collections.emptySet() : scope;

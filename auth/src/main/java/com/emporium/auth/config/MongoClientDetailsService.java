@@ -2,21 +2,14 @@ package com.emporium.auth.config;
 
 import com.emporium.auth.model.OauthClientDetails;
 import com.emporium.auth.repository.OauthClientDetailsRepository;
-import com.google.common.base.Joiner;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Sets.filter;
-import static com.google.common.collect.Sets.newHashSet;
 
 @Component
 @RequiredArgsConstructor
@@ -27,93 +20,107 @@ public class MongoClientDetailsService implements ClientDetailsService, ClientRe
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
+    public ClientDetails loadClientByClientId(String clientId) {
         try {
-            final OauthClientDetails mongoClientDetails = oauthClientDetailsRepository.findByClientId(clientId);
-
+            OauthClientDetails mongoClientDetails = oauthClientDetailsRepository.findByClientId(clientId);
             BaseClientDetails client = new BaseClientDetails(mongoClientDetails.getClientId(),
-                    Joiner.on(",").join(mongoClientDetails.getResourceIds()),
-                    Joiner.on(",").join(mongoClientDetails.getScope()),
-                    Joiner.on(",").join(mongoClientDetails.getAuthorizedGrantTypes()),
-                    Joiner.on(",").join(mongoClientDetails.getAuthorities()),
-                    Joiner.on(",").join(mongoClientDetails.getRegisteredRedirectUri()));
+                    toCommaSeparatedString(mongoClientDetails.getResourceIds()),
+                    toCommaSeparatedString(mongoClientDetails.getScope()),
+                    toCommaSeparatedString(mongoClientDetails.getAuthorizedGrantTypes()),
+                    toCommaSeparatedString(mongoClientDetails.getAuthorities()),
+                    toCommaSeparatedString(mongoClientDetails.getRegisteredRedirectUri()));
             client.setAccessTokenValiditySeconds(mongoClientDetails.getAccessTokenValiditySeconds());
             client.setRefreshTokenValiditySeconds(mongoClientDetails.getRefreshTokenValiditySeconds());
             client.setClientSecret(mongoClientDetails.getClientSecret());
             return client;
         } catch (IllegalArgumentException e) {
-            throw new ClientRegistrationException("No Client Details for client id", e);
+            throw new ClientRegistrationException("No client details found for client id: " + clientId, e);
         }
     }
 
     @Override
-    public void addClientDetails(final ClientDetails clientDetails) throws ClientAlreadyExistsException {
-        final OauthClientDetails mongoClientDetails = new OauthClientDetails(clientDetails.getClientId(),
-                passwordEncoder.encode(clientDetails.getClientSecret()),
-                clientDetails.getScope(),
-                clientDetails.getResourceIds(),
-                clientDetails.getAuthorizedGrantTypes(),
-                clientDetails.getRegisteredRedirectUri(),
-                newArrayList(clientDetails.getAuthorities()),
-                clientDetails.getAccessTokenValiditySeconds(),
-                clientDetails.getRefreshTokenValiditySeconds(),
-                clientDetails.getAdditionalInformation(),
-                null);
-        oauthClientDetailsRepository.save(mongoClientDetails);
+    public void addClientDetails(ClientDetails clientDetails) {
+        OauthClientDetails oauthClientDetails = OauthClientDetails.builder()
+                .clientId(clientDetails.getClientId())
+                .clientSecret(passwordEncoder.encode(clientDetails.getClientSecret()))
+                .scope(clientDetails.getScope())
+                .resourceIds(clientDetails.getResourceIds())
+                .authorizedGrantTypes(clientDetails.getAuthorizedGrantTypes())
+                .registeredRedirectUris(clientDetails.getRegisteredRedirectUri())
+                .authorities(new ArrayList<>(clientDetails.getAuthorities()))
+                .accessTokenValiditySeconds(clientDetails.getAccessTokenValiditySeconds())
+                .refreshTokenValiditySeconds(clientDetails.getRefreshTokenValiditySeconds())
+                .additionalInformation(clientDetails.getAdditionalInformation())
+                .build();
+        oauthClientDetailsRepository.save(oauthClientDetails);
     }
 
     @Override
-    public void updateClientDetails(ClientDetails clientDetails) throws NoSuchClientException {
-        final OauthClientDetails mongoClientDetails = new OauthClientDetails(clientDetails.getClientId(),
-                clientDetails.getClientSecret(),
-                clientDetails.getScope(),
-                clientDetails.getResourceIds(),
-                clientDetails.getAuthorizedGrantTypes(),
-                clientDetails.getRegisteredRedirectUri(),
-                newArrayList(clientDetails.getAuthorities()),
-                clientDetails.getAccessTokenValiditySeconds(),
-                clientDetails.getRefreshTokenValiditySeconds(),
-                clientDetails.getAdditionalInformation(),
-                getAutoApproveScopes(clientDetails));
-        final boolean result = oauthClientDetailsRepository.update(mongoClientDetails);
+    public void updateClientDetails(ClientDetails clientDetails) {
+        OauthClientDetails oauthClientDetails = OauthClientDetails.builder()
+                .clientId(clientDetails.getClientId())
+                .clientSecret(clientDetails.getClientSecret())
+                .scope(clientDetails.getScope())
+                .resourceIds(clientDetails.getResourceIds())
+                .authorizedGrantTypes(clientDetails.getAuthorizedGrantTypes())
+                .registeredRedirectUris(clientDetails.getRegisteredRedirectUri())
+                .authorities(new ArrayList<>(clientDetails.getAuthorities()))
+                .accessTokenValiditySeconds(clientDetails.getAccessTokenValiditySeconds())
+                .refreshTokenValiditySeconds(clientDetails.getRefreshTokenValiditySeconds())
+                .additionalInformation(clientDetails.getAdditionalInformation())
+                .autoApproveScopes(getAutoApproveScopes(clientDetails))
+                .build();
+        boolean result = oauthClientDetailsRepository.update(oauthClientDetails);
         if (!result) {
-            throw new NoSuchClientException("No such Client Id");
+            throw new NoSuchClientException("No such client id: " + clientDetails.getClientId());
         }
     }
 
     @Override
     public void updateClientSecret(String clientId, String secret) {
-        final boolean result = oauthClientDetailsRepository.updateClientSecret(clientId, passwordEncoder.encode(secret));
+        boolean result = oauthClientDetailsRepository.updateClientSecret(clientId, passwordEncoder.encode(secret));
         if (!result) {
-            throw new NoSuchClientException("No such client id");
+            throw new NoSuchClientException("No such client id: " + clientId);
         }
     }
 
     @Override
     public void removeClientDetails(String clientId) {
-        final boolean result = oauthClientDetailsRepository.deleteByClientId(clientId);
+        boolean result = oauthClientDetailsRepository.deleteByClientId(clientId);
         if (!result) {
-            throw new NoSuchClientException("No such client id");
+            throw new NoSuchClientException("No such client id: " + clientId);
         }
     }
 
     @Override
     public List<ClientDetails> listClientDetails() {
-
         return oauthClientDetailsRepository.findAll().stream()
                 .map(mongoClientDetails -> new BaseClientDetails(mongoClientDetails.getClientId(),
-                        Joiner.on(",").join(mongoClientDetails.getResourceIds()),
-                        Joiner.on(",").join(mongoClientDetails.getScope()),
-                        Joiner.on(",").join(mongoClientDetails.getAuthorizedGrantTypes()),
-                        Joiner.on(",").join(mongoClientDetails.getAuthorities()),
-                        Joiner.on(",").join(mongoClientDetails.getRegisteredRedirectUri())))
+                        toCommaSeparatedString(mongoClientDetails.getResourceIds()),
+                        toCommaSeparatedString(mongoClientDetails.getScope()),
+                        toCommaSeparatedString(mongoClientDetails.getAuthorizedGrantTypes()),
+                        toCommaSeparatedString(mongoClientDetails.getAuthorities()),
+                        toCommaSeparatedString(mongoClientDetails.getRegisteredRedirectUri())))
                 .collect(Collectors.toList());
     }
 
-    private Set<String> getAutoApproveScopes(final ClientDetails clientDetails) {
+    private Set<String> getAutoApproveScopes(ClientDetails clientDetails) {
         if (clientDetails.isAutoApprove("true")) {
-            return newHashSet("true");
+            return new HashSet<>(Collections.singletonList("true"));
         }
-        return filter(clientDetails.getScope(), clientDetails::isAutoApprove);
+        return clientDetails.getScope().stream().filter(clientDetails::isAutoApprove).collect(Collectors.toSet());
+    }
+
+    private String toCommaSeparatedString(Iterable<?> collection) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Iterator<?> iterator = collection.iterator();
+        if (iterator.hasNext()) {
+            stringBuilder.append(iterator.next());
+            while (iterator.hasNext()) {
+                stringBuilder.append(",");
+                stringBuilder.append(iterator.next());
+            }
+        }
+        return stringBuilder.toString();
     }
 }
