@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestContextConfig.class)
-public class UserServiceTest {
+public class UserRegisterDTOServiceTest {
 
   @Autowired
   UserService userService;

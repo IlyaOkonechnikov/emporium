@@ -1,6 +1,6 @@
 package com.emporium.auth.repository;
 
-import com.emporium.auth.model.OauthClientDetails;
+import com.emporium.auth.model.oauth.OauthClientDetails;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.RequiredArgsConstructor;

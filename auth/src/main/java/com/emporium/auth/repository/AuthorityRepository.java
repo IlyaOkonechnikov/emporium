@@ -1,6 +1,6 @@
 package com.emporium.auth.repository;
 
-import com.emporium.lib.auth.Authority;
+import com.emporium.auth.model.jpa.Authority;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

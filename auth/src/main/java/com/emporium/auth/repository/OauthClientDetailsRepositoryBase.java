@@ -1,6 +1,6 @@
 package com.emporium.auth.repository;
 
-import com.emporium.auth.model.OauthClientDetails;
+import com.emporium.auth.model.oauth.OauthClientDetails;
 
 public interface OauthClientDetailsRepositoryBase {
 

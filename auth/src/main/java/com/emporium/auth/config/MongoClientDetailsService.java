@@ -1,6 +1,6 @@
 package com.emporium.auth.config;
 
-import com.emporium.auth.model.OauthClientDetails;
+import com.emporium.auth.model.oauth.OauthClientDetails;
 import com.emporium.auth.repository.OauthClientDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

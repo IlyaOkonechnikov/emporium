@@ -1,4 +1,4 @@
-package com.emporium.auth.model;
+package com.emporium.auth.model.oauth;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

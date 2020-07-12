@@ -10,12 +10,12 @@ db.oauth_client_details.insertOne({
 })
 
 db.users.insertOne({{
-    "username": "user",
+    "username": "userDTO",
     "password": "{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC",
     "enabled": true
 })
 
 db.users.insertOne({{
-    "username": "user",
+    "username": "userDTO",
     "authority": "ROLE_USER"
 })

@@ -10,9 +10,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personal-area/user")
+@RequestMapping("/personal-area")
 @RequiredArgsConstructor
-public class UserController {
+public class PersonalAreaController {
 
     private final UserService userService;
 
