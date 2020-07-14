@@ -1,4 +1,4 @@
-package com.emporium.area.exception;
+package com.emporium.lib.common;
 
 public abstract class ClientKnownException extends RuntimeException {
 

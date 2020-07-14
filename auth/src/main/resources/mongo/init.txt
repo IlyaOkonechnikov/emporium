@@ -11,6 +11,7 @@ db.oauth_client_details.insertOne({
 
 db.users.insertOne({{
     "username": "userDTO",
+    "email": "user@gmail.com"
     "password": "{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC",
     "enabled": true
 })

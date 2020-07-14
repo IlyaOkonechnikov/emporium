@@ -32,6 +32,7 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-test'
     )
 
+    compile project(':common-lib')
     compile project(':auth-lib')
 }
 
