@@ -1,11 +1,8 @@
 package com.emporium.auth.service;
 
-import com.emporium.lib.auth.UserRegisterDTO;
+import com.emporium.lib.auth.UserBasicDTO;
 
-/**
- * @author <a href="mailto:ilya.okonechnikov@waveaccess.ru">Ilya Okonechnikov</a>
- */
 public interface UserService {
 
-    String create(UserRegisterDTO userDTO);
+    String create(UserBasicDTO userBasicDTO);
 }
