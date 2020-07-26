@@ -2,6 +2,7 @@ package com.emporium.area.controller;
 
 import com.emporium.area.model.User;
 import com.emporium.area.service.UserService;
+import com.emporium.lib.auth.UserBasicDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ public class PersonalAreaController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestBody @Valid User user) {
-        return userService.create(user);
+    public String create(@RequestBody @Valid UserBasicDTO dto) {
+        return userService.create(dto);
     }
 
     @PutMapping

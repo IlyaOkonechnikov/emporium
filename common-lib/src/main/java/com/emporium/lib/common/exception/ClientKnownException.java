@@ -1,4 +1,4 @@
-package com.emporium.lib.common;
+package com.emporium.lib.common.exception;
 
 public abstract class ClientKnownException extends RuntimeException {
 
@@ -6,7 +6,7 @@ public abstract class ClientKnownException extends RuntimeException {
         super(exceptionReason.getReason());
     }
 
-    public ClientKnownException(ExceptionReason exceptionReason, Throwable cause) {
+    protected ClientKnownException(ExceptionReason exceptionReason, Throwable cause) {
         super(exceptionReason.getReason(), cause);
     }
 }

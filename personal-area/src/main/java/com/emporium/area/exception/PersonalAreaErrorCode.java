@@ -1,6 +1,6 @@
 package com.emporium.area.exception;
 
-import com.emporium.lib.common.ExceptionReason;
+import com.emporium.lib.common.exception.ExceptionReason;
 
 public enum PersonalAreaErrorCode implements ExceptionReason {
     USER_NOT_FOUND_ERROR;

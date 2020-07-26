@@ -1,4 +1,4 @@
-package com.emporium.lib.common;
+package com.emporium.lib.common.exception;
 
 public interface ExceptionReason {
     String getReason();

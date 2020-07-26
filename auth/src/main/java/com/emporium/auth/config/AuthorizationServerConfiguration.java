@@ -32,7 +32,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                                             UserDetailsService userDetailsService,
                                             AuthenticationManager authenticationManager,
                                             MongoClientDetailsService mongoClientDetailsService,
-                                            @Value("${jwt.signingKey}") String signingKey) {
+                                            @Value("${jwt.signing-key}") String signingKey) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;

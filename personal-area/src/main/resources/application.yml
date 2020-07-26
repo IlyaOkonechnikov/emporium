@@ -9,4 +9,4 @@ spring:
       database: ${MONGO_DATABASE}
 
 jwt:
-  signingKey: eHXcK2RfLg55yYqh
+  signing-key: eHXcK2RfLg55yYqh

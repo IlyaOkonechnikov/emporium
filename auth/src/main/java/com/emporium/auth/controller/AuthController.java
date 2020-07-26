@@ -18,12 +18,12 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody @Valid UserBasicDTO userBasicDTO) {
-        return userService.create(userBasicDTO);
+    public String register(@RequestBody @Valid UserBasicDTO dto) {
+        return userService.create(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserBasicDTO userBasicDTO) {
+    public String login(@RequestBody @Valid UserBasicDTO dto) {
         return null;
     }
 }

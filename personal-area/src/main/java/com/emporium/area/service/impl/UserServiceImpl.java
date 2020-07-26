@@ -2,10 +2,12 @@ package com.emporium.area.service.impl;
 
 import com.emporium.area.exception.PersonalAreaErrorCode;
 import com.emporium.area.exception.PersonalAreaException;
+import com.emporium.area.model.mapper.UserMapper;
 import com.emporium.area.repository.UserRepository;
 import com.emporium.area.service.UserService;
 
 import com.emporium.area.model.User;
+import com.emporium.lib.auth.UserBasicDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+  private final UserMapper userMapper;
   private final UserRepository userRepository;
 
   @Override
@@ -43,8 +46,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public String create(User user) {
-    log.debug("create() - start. user: {}", user);
+  public String create(UserBasicDTO dto) {
+    log.debug("create() - start. dto: {}", dto);
+    User user = userMapper.toEntity(dto);
     String id = userRepository.insert(user).getId();
     log.debug("create() - end. id: {}", id);
     return id;

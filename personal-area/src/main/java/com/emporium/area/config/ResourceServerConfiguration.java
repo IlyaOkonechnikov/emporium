@@ -23,7 +23,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     private static final String ROOT_PATTERN = "/**";
     private final String signingKey;
 
-    public ResourceServerConfiguration(@Value("${jwt.signingKey}") String signingKey) {
+    public ResourceServerConfiguration(@Value("${jwt.signing-key}") String signingKey) {
         this.signingKey = signingKey;
     }
 
