@@ -11,8 +11,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personal-area")
 @RequiredArgsConstructor
+@RequestMapping("/personal-area")
 public class PersonalAreaController {
 
     private final UserService userService;

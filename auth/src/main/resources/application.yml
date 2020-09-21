@@ -11,7 +11,4 @@ spring:
 jwt:
   signing-key: eHXcK2RfLg55yYqh
 
-personal-area:
-  host: ${PERSONAL_AREA_HOST}
-  port: ${PERSONAL_AREA_PORT}
-  path: ${PERSONAL_AREA_PATH}
+personal-area-url: ${PERSONAL_AREA_URL}
