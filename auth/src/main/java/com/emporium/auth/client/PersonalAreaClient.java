@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 /**
  * @author <a href="mailto:ilya.okonechnikov@waveaccess.ru">Ilya Okonechnikov</a>
  */
-@FeignClient(name = "personal-area", url = "${personal-area-url}")
+@FeignClient(name = "personal-area", url = "${external-urls.personal-area}")
 public interface PersonalAreaClient {
 
     @PostMapping("/personal-area/register")
