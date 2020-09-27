@@ -9,14 +9,14 @@ db.oauth_client_details.insertOne({
     "access_token_validity": 300
 })
 
-db.users.insertOne({{
+db.accounts.insertOne({{
     "username": "userDTO",
-    "email": "user@gmail.com"
+    "email": "account@gmail.com"
     "password": "{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC",
     "enabled": true
 })
 
-db.users.insertOne({{
+db.accounts.insertOne({{
     "username": "userDTO",
     "authority": "ROLE_USER"
 })

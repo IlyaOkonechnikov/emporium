@@ -2,11 +2,11 @@ package com.emporium.area.service.impl;
 
 import com.emporium.area.exception.PersonalAreaErrorCode;
 import com.emporium.area.exception.PersonalAreaException;
-import com.emporium.area.model.mapper.UserMapper;
-import com.emporium.area.repository.UserRepository;
-import com.emporium.area.service.UserService;
+import com.emporium.area.model.mapper.AccountMapper;
+import com.emporium.area.repository.AccountRepository;
+import com.emporium.area.service.AccountService;
 
-import com.emporium.area.model.User;
+import com.emporium.area.model.Account;
 import com.emporium.lib.auth.UserBasicDTO;
 import org.springframework.stereotype.Service;
 
@@ -19,58 +19,58 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AccountServiceImpl implements AccountService {
 
-  private final UserMapper userMapper;
-  private final UserRepository userRepository;
+  private final AccountMapper accountMapper;
+  private final AccountRepository accountRepository;
 
   @Override
-  public List<User> findAll() {
+  public List<Account> findAll() {
     log.debug("findAll() - start.");
-    List<User> users = userRepository.findAll();
-    log.debug("findAll() - end. users count: {}", users.size());
-    return users;
+    List<Account> accounts = accountRepository.findAll();
+    log.debug("findAll() - end. users count: {}", accounts.size());
+    return accounts;
   }
 
   @Override
-  public User findById(String id) {
+  public Account findById(String id) {
     log.debug("findById() - start. id: {}", id);
-    Optional<User> optionalUser = userRepository.findById(id);
+    Optional<Account> optionalUser = accountRepository.findById(id);
     if (optionalUser.isEmpty()) {
       log.error("An error occurred due to the attempt to find a nonexistent user. id: {}", id);
       throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
-    User user = optionalUser.get();
-    log.debug("findById() - end. user: {}", user);
-    return user;
+    Account account = optionalUser.get();
+    log.debug("findById() - end. user: {}", account);
+    return account;
   }
 
   @Override
   public String create(UserBasicDTO dto) {
     log.debug("create() - start. dto: {}", dto);
-    User user = userMapper.toEntity(dto);
-    String id = userRepository.insert(user).getId();
+    Account account = accountMapper.toEntity(dto);
+    String id = accountRepository.insert(account).getId();
     log.debug("create() - end. id: {}", id);
     return id;
   }
 
   @Override
-  public void update(User user) {
-    log.debug("update() - start. user: {}", user);
-    if (userRepository.findById(user.getId()).isEmpty()) {
-      log.error("An error occurred due to the attempt to update a nonexistent user. id: {}", user.getId());
+  public void update(Account account) {
+    log.debug("update() - start. user: {}", account);
+    if (accountRepository.findById(account.getId()).isEmpty()) {
+      log.error("An error occurred due to the attempt to update a nonexistent user. id: {}", account.getId());
       throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
-    userRepository.save(user);
+    accountRepository.save(account);
   }
 
   @Override
   public void delete(String id) {
     log.debug("delete() - start. id: {}", id);
-    if (userRepository.findById(id).isEmpty()) {
+    if (accountRepository.findById(id).isEmpty()) {
       log.error("An error occurred due to the attempt to delete a nonexistent user. id: {}", id);
       throw new PersonalAreaException(PersonalAreaErrorCode.USER_NOT_FOUND_ERROR);
     }
-    userRepository.deleteById(id);
+    accountRepository.deleteById(id);
   }
 }

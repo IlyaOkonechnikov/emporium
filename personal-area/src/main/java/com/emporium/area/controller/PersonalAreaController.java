@@ -1,7 +1,7 @@
 package com.emporium.area.controller;
 
-import com.emporium.area.model.User;
-import com.emporium.area.service.UserService;
+import com.emporium.area.model.Account;
+import com.emporium.area.service.AccountService;
 import com.emporium.lib.auth.UserBasicDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,34 +15,34 @@ import java.util.List;
 @RequestMapping("/personal-area")
 public class PersonalAreaController {
 
-    private final UserService userService;
+    private final AccountService accountService;
 
 //    just for quick cluster test
     @GetMapping
-    public List<User> findAll() {
-        return userService.findAll();
+    public List<Account> findAll() {
+        return accountService.findAll();
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable String id) {
-        return userService.findById(id);
+    public Account findById(@PathVariable String id) {
+        return accountService.findById(id);
     }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public String create(@RequestBody @Valid UserBasicDTO dto) {
-        return userService.create(dto);
+        return accountService.create(dto);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void update(@RequestBody @Valid User user) {
-        userService.update(user);
+    public void update(@RequestBody @Valid Account account) {
+        accountService.update(account);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") String id) {
-        userService.delete(id);
+        accountService.delete(id);
     }
 }

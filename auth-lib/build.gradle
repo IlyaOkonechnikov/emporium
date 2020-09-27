@@ -1,6 +1,6 @@
 plugins {
     id "io.freefair.lombok" version "5.0.1"
-    id 'java'
+    id 'java-library'
 }
 
 group = 'com.emporium.lib'
@@ -17,9 +17,9 @@ repositories {
 }
 
 dependencies {
-    implementation(
-            'org.springframework.data:spring-data-mongodb:3.0.2.RELEASE',
-            'javax.validation:validation-api:2.0.1.Final',
+    api(
+            'org.springframework.data:spring-data-mongodb:3.0.4.RELEASE',
+            'javax.validation:validation-api:2.0.1.Final'
     )
 }
 

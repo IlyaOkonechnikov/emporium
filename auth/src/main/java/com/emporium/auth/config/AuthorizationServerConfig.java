@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 @SuppressWarnings("deprecation")
-public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -28,11 +28,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private final MongoClientDetailsService mongoClientDetailsService;
     private final String signingKey;
 
-    public AuthorizationServerConfiguration(PasswordEncoder passwordEncoder,
-                                            UserDetailsService userDetailsService,
-                                            AuthenticationManager authenticationManager,
-                                            MongoClientDetailsService mongoClientDetailsService,
-                                            @Value("${jwt.signing-key}") String signingKey) {
+    public AuthorizationServerConfig(PasswordEncoder passwordEncoder,
+                                     UserDetailsService userDetailsService,
+                                     AuthenticationManager authenticationManager,
+                                     MongoClientDetailsService mongoClientDetailsService,
+                                     @Value("${jwt.signing-key}") String signingKey) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.authenticationManager = authenticationManager;

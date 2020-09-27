@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MongoUserDetailsService mongoUserDetailsService;
 
@@ -26,8 +26,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/register*").not().fullyAuthenticated()
-                .antMatchers("/auth/login*").permitAll();
+                .antMatchers("/auth/register/**").not().fullyAuthenticated()
+                .antMatchers("/auth/login/**").permitAll();
     }
 
     @Bean

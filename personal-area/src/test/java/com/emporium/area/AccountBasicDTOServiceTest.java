@@ -1,7 +1,7 @@
 package com.emporium.area;
 
-import com.emporium.area.repository.UserRepository;
-import com.emporium.area.service.UserService;
+import com.emporium.area.repository.AccountRepository;
+import com.emporium.area.service.AccountService;
 import com.emporium.lib.auth.UserBasicDTO;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,13 +19,13 @@ import javax.validation.ValidatorFactory;
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestContextConfig.class)
-public class UserBasicDTOServiceTest {
+public class AccountBasicDTOServiceTest {
 
   @Autowired
-  UserService userService;
+  AccountService accountService;
 
   @Autowired
-  UserRepository repository;
+  AccountRepository repository;
 
   private UserBasicDTO dto;
   private Validator validator;
@@ -78,7 +78,7 @@ public class UserBasicDTOServiceTest {
 
   @Test
   public void deleteTest() {
-    String id = userService.create(dto);
+    String id = accountService.create(dto);
 //    assertEquals(userService.findById(id), dto);
 //    userService.delete(id);
 //    assertException(() -> userService.delete(id));

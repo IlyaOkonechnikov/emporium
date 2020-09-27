@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
-@Document(value = "users")
-public class User {
+@Document(value = "accounts")
+public class Account {
 
     @Id
     @Field("_id")

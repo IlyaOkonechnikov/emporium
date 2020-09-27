@@ -1,19 +1,19 @@
 package com.emporium.area.service;
 
-import com.emporium.area.model.User;
+import com.emporium.area.model.Account;
 import com.emporium.lib.auth.UserBasicDTO;
 
 import java.util.List;
 
-public interface UserService {
+public interface AccountService {
 
-    List<User> findAll();
+    List<Account> findAll();
 
-    User findById(String id);
+    Account findById(String id);
 
     String create(UserBasicDTO dto);
 
-    void update(User user);
+    void update(Account account);
 
     void delete(String id);
 }

@@ -7,8 +7,22 @@ spring:
       host: 127.0.0.1
       port: 27017
       database: auth
+  security:
+    oauth2:
+      client:
+        provider:
+          emporium:
+            token-uri: ${OAUTH_TOKEN_PROVIDER_URI}
+        registration:
+          emporium:
+            id: ${OAUTH_REGISTRATION_ID}
+            client-id: ${OAUTH_CLIENT_ID}
+            client-secret: ${OAUTH_CLIENT_SECRET}
+            authorization-grant-type: ${OAUTH_GRANT_TYPE}
 
 jwt:
   signing-key: eHXcK2RfLg55yYqh
 
-personal-area-url: ${PERSONAL_AREA_URL}
+external-services:
+  personal-area:
+    url: ${PERSONAL_AREA_URL}
