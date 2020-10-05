@@ -2,8 +2,9 @@ package com.emporium.area.controller;
 
 import com.emporium.area.model.Account;
 import com.emporium.area.service.AccountService;
-import com.emporium.lib.auth.UserBasicDTO;
+import com.emporium.lib.auth.RegistrationDTO;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,13 @@ public class PersonalAreaController {
     }
 
     @GetMapping("/{id}")
-    public Account findById(@PathVariable String id) {
+    public Account findById(@PathVariable ObjectId id) {
         return accountService.findById(id);
     }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String create(@RequestBody @Valid UserBasicDTO dto) {
+    public String create(@RequestBody @Valid RegistrationDTO dto) {
         return accountService.create(dto);
     }
 
@@ -42,7 +43,7 @@ public class PersonalAreaController {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") ObjectId id) {
         accountService.delete(id);
     }
 }

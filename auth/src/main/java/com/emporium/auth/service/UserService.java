@@ -1,8 +1,8 @@
 package com.emporium.auth.service;
 
-import com.emporium.lib.auth.UserBasicDTO;
+import com.emporium.lib.auth.RegistrationDTO;
 
 public interface UserService {
 
-    String create(UserBasicDTO userBasicDTO);
+    String create(RegistrationDTO registrationDTO);
 }

@@ -2,7 +2,7 @@ package com.emporium.area;
 
 import com.emporium.area.repository.AccountRepository;
 import com.emporium.area.service.AccountService;
-import com.emporium.lib.auth.UserBasicDTO;
+import com.emporium.lib.auth.RegistrationDTO;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -27,14 +27,14 @@ public class AccountBasicDTOServiceTest {
   @Autowired
   AccountRepository repository;
 
-  private UserBasicDTO dto;
+  private RegistrationDTO dto;
   private Validator validator;
 
   @Before
   public void setUp() {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     validator = factory.getValidator();
-    dto = new UserBasicDTO();
+    dto = new RegistrationDTO();
     dto.setUsername("test nickname");
     dto.setEmail("test@gmail.com");
     dto.setPassword("test");

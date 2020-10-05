@@ -1,7 +1,7 @@
 package com.emporium.auth.controller;
 
 import com.emporium.auth.service.UserService;
-import com.emporium.lib.auth.UserBasicDTO;
+import com.emporium.lib.auth.RegistrationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +18,12 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody @Valid UserBasicDTO dto) {
+    public String register(@RequestBody @Valid RegistrationDTO dto) {
         return userService.create(dto);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserBasicDTO dto) {
+    public String login(@RequestBody @Valid RegistrationDTO dto) {
         return null;
     }
 }

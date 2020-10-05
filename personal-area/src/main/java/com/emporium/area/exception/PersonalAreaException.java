@@ -1,11 +1,12 @@
 package com.emporium.area.exception;
 
-import com.emporium.lib.common.exception.ClientKnownException;
-import com.emporium.lib.common.exception.ExceptionReason;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class PersonalAreaException extends ClientKnownException {
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class PersonalAreaException extends RuntimeException {
 
-  public PersonalAreaException(ExceptionReason exceptionReason) {
-    super(exceptionReason);
+  public PersonalAreaException(String msg) {
+    super(msg);
   }
 }

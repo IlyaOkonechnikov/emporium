@@ -7,6 +7,7 @@ spring:
       host: ${MONGO_HOST}
       port: ${MONGO_PORT}
       database: ${MONGO_DATABASE}
+      auto-index-creation: true
 
 jwt:
   signing-key: eHXcK2RfLg55yYqh

@@ -1,6 +1,7 @@
 package com.emporium.area.model;
 
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,7 +20,7 @@ public class Account {
 
     @Id
     @Field("_id")
-    private String id;
+    private ObjectId id;
 
     @Indexed(unique = true)
     @Pattern(regexp = "[A-Za-z0-9_]+", message = "Username must contain only letters and numbers")

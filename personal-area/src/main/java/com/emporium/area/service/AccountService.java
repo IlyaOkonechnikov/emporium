@@ -1,7 +1,8 @@
 package com.emporium.area.service;
 
 import com.emporium.area.model.Account;
-import com.emporium.lib.auth.UserBasicDTO;
+import com.emporium.lib.auth.RegistrationDTO;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -9,11 +10,11 @@ public interface AccountService {
 
     List<Account> findAll();
 
-    Account findById(String id);
+    Account findById(ObjectId id);
 
-    String create(UserBasicDTO dto);
+    String create(RegistrationDTO dto);
 
     void update(Account account);
 
-    void delete(String id);
+    void delete(ObjectId id);
 }
