@@ -1,5 +1,7 @@
 package com.emporium.auth.service;
 
+import com.emporium.auth.exception.AuthErrorCode;
+import com.emporium.auth.exception.AuthException;
 import com.emporium.auth.model.jpa.User;
 import com.emporium.auth.model.mapper.UserMapper;
 import com.emporium.auth.repository.UserRepository;
@@ -13,7 +15,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
 @Service
-// todo: transactionality
 public class UserServiceImpl implements UserService {
 
     private final String registrationUrl;
@@ -41,9 +42,15 @@ public class UserServiceImpl implements UserService {
         dto.setPassword(passwordEncoder.encode(authenticPassword));
         User user = userMapper.toEntity(dto);
         dto.setId(userRepository.insert(user).getId());
-        String registeredAccountId = registerAccount(dto);
-        log.debug("create() - end. registeredAccountId: {}", registeredAccountId);
-        return registeredAccountId;
+        try {
+            String registeredAccountId = registerAccount(dto);
+            log.debug("create() - end. registeredAccountId: {}", registeredAccountId);
+            return registeredAccountId;
+        } catch (Exception e) {
+            log.error("Failed to create account. id: " + dto.getId() + "\n" + e.getMessage(), e);
+            userRepository.deleteById(dto.getId().toString());
+            throw new AuthException(AuthErrorCode.ACCOUNT_CREATION_ERROR);
+        }
     }
 
     public String registerAccount(RegistrationDTO dto) {

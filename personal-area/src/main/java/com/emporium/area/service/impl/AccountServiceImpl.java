@@ -1,6 +1,5 @@
 package com.emporium.area.service.impl;
 
-import com.emporium.area.exception.PersonalAreaErrorCode;
 import com.emporium.area.exception.PersonalAreaException;
 import com.emporium.area.model.mapper.AccountMapper;
 import com.emporium.area.repository.AccountRepository;
