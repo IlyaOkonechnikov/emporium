@@ -1,20 +1,19 @@
 package com.emporium.area.service.impl;
 
-import com.emporium.area.exception.PersonalAreaException;
+import com.emporium.area.model.Account;
 import com.emporium.area.model.mapper.AccountMapper;
 import com.emporium.area.repository.AccountRepository;
 import com.emporium.area.service.AccountService;
-
-import com.emporium.area.model.Account;
 import com.emporium.lib.auth.RegistrationDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -38,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     Optional<Account> optionalUser = accountRepository.findById(id);
     if (optionalUser.isEmpty()) {
       log.error("An error occurred due to the attempt to find a nonexistent user. id: {}", id);
-      throw new PersonalAreaException("PersonalAreaErrorCode.ACCOUNT_NOT_FOUND_ERROR");
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Account not found.");
     }
     Account account = optionalUser.get();
     log.debug("findById() - end. user: {}", account);
@@ -59,7 +58,7 @@ public class AccountServiceImpl implements AccountService {
     log.debug("update() - start. user: {}", account);
     if (accountRepository.findById(account.getId()).isEmpty()) {
       log.error("An error occurred due to the attempt to update a nonexistent user. id: {}", account.getId());
-      throw new PersonalAreaException("PersonalAreaErrorCode.ACCOUNT_NOT_FOUND_ERROR");
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Account not found.");
     }
     accountRepository.save(account);
   }
@@ -69,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
     log.debug("delete() - start. id: {}", id);
     if (accountRepository.findById(id).isEmpty()) {
       log.error("An error occurred due to the attempt to delete a nonexistent user. id: {}", id);
-      throw new PersonalAreaException("PersonalAreaErrorCode.ACCOUNT_NOT_FOUND_ERROR");
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Account not found.");
     }
     accountRepository.deleteById(id);
   }

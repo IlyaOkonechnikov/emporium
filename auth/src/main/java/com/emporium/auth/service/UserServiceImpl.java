@@ -1,17 +1,17 @@
 package com.emporium.auth.service;
 
-import com.emporium.auth.exception.AuthErrorCode;
-import com.emporium.auth.exception.AuthException;
 import com.emporium.auth.model.jpa.User;
 import com.emporium.auth.model.mapper.UserMapper;
 import com.emporium.auth.repository.UserRepository;
 import com.emporium.lib.auth.RegistrationDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             log.error("Failed to create account. id: " + dto.getId() + "\n" + e.getMessage(), e);
             userRepository.deleteById(dto.getId().toString());
-            throw new AuthException(AuthErrorCode.ACCOUNT_CREATION_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }
     }
 
