@@ -22,17 +22,19 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MailConfirmationService mailConfirmationService;
 
     public UserServiceImpl(@Value("${external-services.personal-area.registration-url}") String registrationUrl,
                            WebClient webClient,
                            UserMapper userMapper,
                            UserRepository userRepository,
-                           PasswordEncoder passwordEncoder) {
+                           PasswordEncoder passwordEncoder, MailConfirmationService mailConfirmationService) {
         this.registrationUrl = registrationUrl;
         this.webClient = webClient;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailConfirmationService = mailConfirmationService;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService {
         try {
             String registeredAccountId = registerAccount(dto);
             log.debug("create() - end. registeredAccountId: {}", registeredAccountId);
+            mailConfirmationService.sendMailConfirmLetter(dto.getUsername(),dto.getEmail());
             return registeredAccountId;
         } catch (Exception e) {
             log.error("Failed to create account. id: " + dto.getId() + "\n" + e.getMessage(), e);

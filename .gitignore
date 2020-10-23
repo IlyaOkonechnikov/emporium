@@ -28,3 +28,8 @@ nbdist/
 
 ### Environment ###
 logs/*
+
+### Local Files ###
+/auth/src/main/resources/application-local.yml
+/personal-area/src/main/resources/application-local.yml
+
