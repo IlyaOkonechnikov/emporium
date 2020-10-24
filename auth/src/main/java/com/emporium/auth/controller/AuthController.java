@@ -28,10 +28,8 @@ public class AuthController {
         return null;
     }
 
-    @GetMapping("/mail-confirmation/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/mail-confirmation/{id}")
     public void mailConfirmation(@PathVariable ObjectId id){
-        userService.mailConfirm(id);
+        userService.confirmMail(id);
     }
-
 }

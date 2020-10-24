@@ -31,7 +31,8 @@ public class UserServiceImpl implements UserService {
                            WebClient webClient,
                            UserMapper userMapper,
                            UserRepository userRepository,
-                           PasswordEncoder passwordEncoder, MailConfirmationService mailConfirmationService) {
+                           PasswordEncoder passwordEncoder,
+                           MailConfirmationService mailConfirmationService) {
         this.registrationUrl = registrationUrl;
         this.webClient = webClient;
         this.userMapper = userMapper;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
         try {
             String registeredAccountId = registerAccount(dto);
             log.debug("create() - end. registeredAccountId: {}", registeredAccountId);
-            mailConfirmationService.sendMailConfirmLetter(dto.getUsername(),dto.getEmail(),dto.getId());
+            mailConfirmationService.sendConfirmationMail(dto.getUsername(), dto.getEmail(), dto.getId());
             return registeredAccountId;
         } catch (Exception e) {
             log.error("Failed to create account. id: " + dto.getId() + "\n" + e.getMessage(), e);
@@ -60,23 +61,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        log.debug("findByEmail() - start. email: {}",email);
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isEmpty()){
-            log.error("Failed to find user by email. email: {}",email);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User not found.");
-        }
-        log.debug("findByEmail() - end. user: {}", optionalUser.get());
-        return optionalUser.get();
-    }
-
-    @Override
     public User findById(ObjectId id) {
-        log.debug("findById() - start. id: {}",id.toString());
+        log.debug("findById() - start. id: {}", id.toString());
         Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()){
-            log.error("Failed to find user by id. id: {}",id);
+        if (optionalUser.isEmpty()) {
+            log.error("Failed to find user by id. id: {}", id);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User not found.");
         }
         log.debug("findById() - end. user: {}", optionalUser.get());
@@ -84,8 +73,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void mailConfirm(ObjectId id) {
-        log.debug("mailConfirm() - start. id: {}",id.toString());
+    public void confirmMail(ObjectId id) {
+        log.debug("mailConfirm() - start. id: {}", id.toString());
         User user = findById(id);
         user.setEnabled(true);
         log.debug("mailConfirm() - end. enable: {}", user.isEnabled());

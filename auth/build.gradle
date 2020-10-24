@@ -1,7 +1,7 @@
 //def springVersion = '2.3.4.RELEASE'
 plugins {
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
+    id 'org.springframework.boot' version "${springVersion}"
     id 'com.palantir.docker' version '0.25.0'
     id "io.freefair.lombok" version "5.0.1"
     id 'java'
@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     implementation(
-            'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.3.4.RELEASE',
+            "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springVersion}",
             'org.springframework.security:spring-security-oauth2-client:5.4.0',
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-security',

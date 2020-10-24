@@ -8,9 +8,7 @@ public interface UserService {
 
     String create(RegistrationDTO registrationDTO);
 
-    User findByEmail(String email);
-
     User findById(ObjectId id);
 
-    void mailConfirm(ObjectId id);
+    void confirmMail(ObjectId id);
 }
