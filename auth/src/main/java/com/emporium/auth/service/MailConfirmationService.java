@@ -2,7 +2,9 @@ package com.emporium.auth.service;
 
 import com.emporium.auth.config.MailConfirmationConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,13 +17,18 @@ import javax.mail.internet.MimeMultipart;
 @Slf4j
 @Service
 public class MailConfirmationService {
+
     private final MailConfirmationConfig mailConfirmationConfig;
+    private final String letter;
+
     @Autowired
-    public MailConfirmationService(MailConfirmationConfig mailConfirmationConfig) {
+    public MailConfirmationService(MailConfirmationConfig mailConfirmationConfig,
+                                   @Value("${mail.letter}") String letter) {
+        this.letter = letter;
         this.mailConfirmationConfig = mailConfirmationConfig;
     }
 
-    public void sendMailConfirmLetter(String name, String email){
+    public void sendMailConfirmLetter(String name, String email, ObjectId id){
         log.debug("sendMailConfirmLetter() - start. name: {}, email: {}",name,email);
         Session session = Session.getInstance(mailConfirmationConfig.getProperty());
         Message message = new MimeMessage(session);
@@ -29,9 +36,8 @@ public class MailConfirmationService {
             message.setFrom(new InternetAddress(mailConfirmationConfig.getFrom()));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(email));
-            //TODO оформит письмо со ссылкой
             message.setSubject("Mail-confirmation letter");
-            String msg = "Hello, " + name + ". Please, confirm your email in our service";
+            String msg = "Hello, " + name + letter + id.toString();
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html");
             Multipart multipart = new MimeMultipart();
@@ -43,10 +49,6 @@ public class MailConfirmationService {
         } catch (MessagingException e) {
             log.error("Failed to send mail-confirmation letter to email {}\n" + e.getMessage(), e,email);
             throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, e.getMessage(), e);
-
         }
-
     }
-
-
 }

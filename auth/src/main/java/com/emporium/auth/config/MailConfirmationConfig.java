@@ -49,7 +49,5 @@ public class MailConfirmationConfig {
         log.info("Letter sent from - {}",from);
         log.info("Mail Username - {}",mailUsername);
         log.info("Mail Password - {}",mailPassword);
-
     }
-
 }
