@@ -39,7 +39,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             message.setText(String.format(MSG_TEMPLATE, name, confirmationUrl, id));
             emailSender.send(message);
         } catch (MailException e) {
-            log.error("Failed to send mail-confirmation letter to email {}\n" + e.getMessage(), e, email);
+            log.error("Failed to send a confirmation email to: " + email + "\n" + e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), e);
         }
     }
