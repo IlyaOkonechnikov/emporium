@@ -24,3 +24,5 @@ spec:
               value: '27017'
             - name: MONGO_DATABASE
               value: personal-area
+            - name: JWT_SIGNING_KEY
+              value: eHXcK2RfLg55yYqh

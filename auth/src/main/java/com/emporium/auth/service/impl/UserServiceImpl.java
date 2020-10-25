@@ -1,8 +1,10 @@
-package com.emporium.auth.service;
+package com.emporium.auth.service.impl;
 
 import com.emporium.auth.model.jpa.User;
 import com.emporium.auth.model.mapper.UserMapper;
 import com.emporium.auth.repository.UserRepository;
+import com.emporium.auth.service.EmailSenderService;
+import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.RegistrationDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -14,8 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,33 +25,33 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final MailConfirmationService mailConfirmationService;
+    private final EmailSenderService emailSenderService;
 
-    public UserServiceImpl(@Value("${external-services.personal-area.registration-url}") String registrationUrl,
+    public UserServiceImpl(@Value("${url.personal-area-registration}") String registrationUrl,
                            WebClient webClient,
                            UserMapper userMapper,
                            UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
-                           MailConfirmationService mailConfirmationService) {
+                           EmailSenderService emailSenderService) {
         this.registrationUrl = registrationUrl;
         this.webClient = webClient;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.mailConfirmationService = mailConfirmationService;
+        this.emailSenderService = emailSenderService;
     }
 
     @Override
-    public String create(RegistrationDTO dto) {
+    public String create(String requestUrl, RegistrationDTO dto) {
         log.debug("create() - start. dto: {}", dto);
         String authenticPassword = dto.getPassword();
         dto.setPassword(passwordEncoder.encode(authenticPassword));
         User user = userMapper.toEntity(dto);
         dto.setId(userRepository.insert(user).getId());
         try {
+            emailSenderService.sendConfirmationEmail(dto.getId(), dto.getUsername(), dto.getEmail());
             String registeredAccountId = registerAccount(dto);
             log.debug("create() - end. registeredAccountId: {}", registeredAccountId);
-            mailConfirmationService.sendConfirmationMail(dto.getUsername(), dto.getEmail(), dto.getId());
             return registeredAccountId;
         } catch (Exception e) {
             log.error("Failed to create account. id: " + dto.getId() + "\n" + e.getMessage(), e);
@@ -60,24 +60,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public User findById(ObjectId id) {
-        log.debug("findById() - start. id: {}", id.toString());
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) {
-            log.error("Failed to find user by id. id: {}", id);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User not found.");
-        }
-        log.debug("findById() - end. user: {}", optionalUser.get());
-        return optionalUser.get();
-    }
-
-    @Override
-    public void confirmMail(ObjectId id) {
-        log.debug("mailConfirm() - start. id: {}", id.toString());
-        User user = findById(id);
+    public void enable(ObjectId id) {
+        log.debug("enable() - start. id: {}", id.toString());
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User not found."));
         user.setEnabled(true);
-        log.debug("mailConfirm() - end. enable: {}", user.isEnabled());
+        log.debug("enable() - end. enabled: {}", user.isEnabled());
         userRepository.save(user);
     }
 

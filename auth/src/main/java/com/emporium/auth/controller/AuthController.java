@@ -7,8 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 
 @RestController
 @RequestMapping("/auth")
@@ -19,8 +19,8 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody @Valid RegistrationDTO dto) {
-        return userService.create(dto);
+    public String register(HttpServletRequest request, @RequestBody @Valid RegistrationDTO dto) {
+        return userService.create(request.getRequestURL().toString(), dto);
     }
 
     @PostMapping("/login")
@@ -28,8 +28,8 @@ public class AuthController {
         return null;
     }
 
-    @PatchMapping("/mail-confirmation/{id}")
-    public void mailConfirmation(@PathVariable ObjectId id){
-        userService.confirmMail(id);
+    @GetMapping("/confirm-email/{id}")
+    public void confirmEmail(@PathVariable ObjectId id) {
+        userService.enable(id);
     }
 }

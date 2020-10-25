@@ -12,4 +12,4 @@ spring:
       auto-index-creation: true
 
 jwt:
-  signing-key: eHXcK2RfLg55yYqh
+  signing-key: ${JWT_SIGNING_KEY}

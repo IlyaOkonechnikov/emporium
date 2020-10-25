@@ -23,6 +23,7 @@ repositories {
 dependencies {
     implementation(
             "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springVersion}",
+            "org.springframework.boot:spring-boot-starter-mail:${springVersion}",
             'org.springframework.security:spring-security-oauth2-client:5.4.0',
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-security',
