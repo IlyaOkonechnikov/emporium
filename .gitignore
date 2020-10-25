@@ -28,3 +28,14 @@ nbdist/
 
 ### Environment ###
 logs/*
+
+### Local Files ###
+/auth/src/main/resources/application-local.yml
+/auth/lombok.config
+/personal-area/src/main/resources/application-local.yml
+/personal-area/lombok.config
+gradlew
+/gradle
+gradlew.bat
+/auth-lib/lombok.config
+

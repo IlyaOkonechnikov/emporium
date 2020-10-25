@@ -9,9 +9,9 @@ db.oauth_client_details.insertOne({
     "access_token_validity": 300
 })
 
-db.accounts.insertOne({{
+db.accounts.insertOne({
     "username": "userDTO",
-    "email": "account@gmail.com"
+    "email": "account@gmail.com",
     "password": "{bcrypt}$2a$10$cyf5NfobcruKQ8XGjUJkEegr9ZWFqaea6vjpXWEaSqTa2xL9wjgQC",
     "enabled": true
 })

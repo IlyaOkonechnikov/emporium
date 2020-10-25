@@ -3,6 +3,7 @@ package com.emporium.auth.controller;
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.RegistrationDTO;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,5 +26,10 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody @Valid RegistrationDTO dto) {
         return null;
+    }
+
+    @PatchMapping("/mail-confirmation/{id}")
+    public void mailConfirmation(@PathVariable ObjectId id){
+        userService.confirmMail(id);
     }
 }
