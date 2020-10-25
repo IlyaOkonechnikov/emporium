@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -19,8 +18,8 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(HttpServletRequest request, @RequestBody @Valid RegistrationDTO dto) {
-        return userService.create(request.getRequestURL().toString(), dto);
+    public String register(@RequestBody @Valid RegistrationDTO dto) {
+        return userService.create(dto);
     }
 
     @PostMapping("/login")

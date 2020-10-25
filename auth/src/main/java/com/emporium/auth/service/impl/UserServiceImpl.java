@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String create(String requestUrl, RegistrationDTO dto) {
+    public String create(RegistrationDTO dto) {
         log.debug("create() - start. dto: {}", dto);
         String authenticPassword = dto.getPassword();
         dto.setPassword(passwordEncoder.encode(authenticPassword));

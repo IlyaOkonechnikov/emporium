@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 
 public interface UserService {
 
-    String create(String requestUrl, RegistrationDTO registrationDTO);
+    String create(RegistrationDTO dto);
 
     void enable(ObjectId id);
 }
