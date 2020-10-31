@@ -94,14 +94,7 @@ public class OauthClientDetails implements ClientDetails {
 
     @Override
     public boolean isAutoApprove(String scope) {
-        if (autoApproveScopes == null) {
-            return false;
-        }
-        for (String auto : autoApproveScopes) {
-            if (auto.equals("true") || scope.matches(auto)) {
-                return true;
-            }
-        }
-        return false;
+        return Objects.nonNull(autoApproveScopes) &&
+                autoApproveScopes.stream().anyMatch(auto -> auto.equals("true") || scope.matches(auto));
     }
 }

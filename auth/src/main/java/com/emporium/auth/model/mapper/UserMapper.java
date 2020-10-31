@@ -9,5 +9,6 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "enabled", ignore = true)
     User toEntity(RegistrationDTO registrationDTO);
 }
