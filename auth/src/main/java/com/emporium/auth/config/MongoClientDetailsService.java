@@ -105,10 +105,8 @@ public class MongoClientDetailsService implements ClientDetailsService, ClientRe
     }
 
     private Set<String> getAutoApproveScopes(ClientDetails clientDetails) {
-        if (clientDetails.isAutoApprove("true")) {
-            return new HashSet<>(Collections.singletonList("true"));
-        }
-        return clientDetails.getScope().stream().filter(clientDetails::isAutoApprove).collect(Collectors.toSet());
+        return clientDetails.isAutoApprove("true") ? new HashSet<>(Collections.singletonList("true")) :
+                clientDetails.getScope().stream().filter(clientDetails::isAutoApprove).collect(Collectors.toSet());
     }
 
     private String toCommaSeparatedString(Iterable<?> collection) {

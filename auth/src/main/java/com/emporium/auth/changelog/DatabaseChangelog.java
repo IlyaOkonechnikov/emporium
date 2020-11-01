@@ -1,8 +1,7 @@
 package com.emporium.auth.changelog;
 
 import com.emporium.auth.model.oauth.OauthClientDetails;
-import com.github.mongobee.changeset.ChangeLog;
-import com.github.mongobee.changeset.ChangeSet;
+import com.kuliginstepan.mongration.annotation.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -10,10 +9,10 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@ChangeLog
+@Changelog
 public class DatabaseChangelog {
 
-    @ChangeSet(order = "001", id = "initOauthClientDetails", author = "iokonechnikov")
+    @Changeset(order = 1, id = "initOauthClientDetails", author = "iokonechnikov")
     public void initOauthClientDetails(MongoTemplate mongoTemplate) {
         OauthClientDetails oauthClientDetails = OauthClientDetails.builder()
                 .clientId("clientId")
