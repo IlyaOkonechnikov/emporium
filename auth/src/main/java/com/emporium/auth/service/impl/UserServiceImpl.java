@@ -5,7 +5,7 @@ import com.emporium.auth.model.mapper.UserMapper;
 import com.emporium.auth.repository.UserRepository;
 import com.emporium.auth.service.EmailSenderService;
 import com.emporium.auth.service.UserService;
-import com.emporium.lib.auth.RegistrationDTO;
+import com.emporium.lib.auth.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String create(RegistrationDTO dto) {
+    public String create(UserDTO dto) {
         log.debug("create() - start. dto: {}", dto);
         String authenticPassword = dto.getPassword();
         dto.setPassword(passwordEncoder.encode(authenticPassword));
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public String registerAccount(RegistrationDTO dto) {
+    public String registerAccount(UserDTO dto) {
         return webClient.post().uri(registrationUrl)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(dto)

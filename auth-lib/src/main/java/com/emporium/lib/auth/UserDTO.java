@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class RegistrationDTO {
+public class UserDTO {
 
     private ObjectId id;
 

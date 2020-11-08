@@ -4,7 +4,7 @@ import com.emporium.area.model.Account;
 import com.emporium.area.model.mapper.AccountMapper;
 import com.emporium.area.repository.AccountRepository;
 import com.emporium.area.service.AccountService;
-import com.emporium.lib.auth.RegistrationDTO;
+import com.emporium.lib.auth.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String create(RegistrationDTO dto) {
+    public String create(UserDTO dto) {
         log.debug("create() - start. dto: {}", dto);
         Account account = accountMapper.toEntity(dto);
         String id = accountRepository.insert(account).getId().toString();

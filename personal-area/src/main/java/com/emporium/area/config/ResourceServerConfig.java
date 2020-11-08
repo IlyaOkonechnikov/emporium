@@ -18,12 +18,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableResourceServer
 @SuppressWarnings("deprecation")
-public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String ROOT_PATTERN = "/**";
     private final String signingKey;
 
-    public ResourceServerConfiguration(@Value("${jwt.signing-key}") String signingKey) {
+    public ResourceServerConfig(@Value("${jwt.signing-key}") String signingKey) {
         this.signingKey = signingKey;
     }
 
