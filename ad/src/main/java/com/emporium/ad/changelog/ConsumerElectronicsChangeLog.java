@@ -149,7 +149,7 @@ public class ConsumerElectronicsChangeLog {
         ));
 
         category.setSubCategories(Set.of(audioVideo,games,desktops,laptops, officeEquipment,
-                tablets,phones,forComputers,phones,photo));
+                tablets,phones,forComputers,photo));
         mongoTemplate.save(category);
     }
 }
