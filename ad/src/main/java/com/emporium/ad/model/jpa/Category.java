@@ -35,4 +35,8 @@ public class Category {
         this.id = id;
         this.name = name;
     }
+    public Category(String name, Set<Category> subCategories) {
+        this.name = name;
+        this.subCategories = subCategories;
+    }
 }
