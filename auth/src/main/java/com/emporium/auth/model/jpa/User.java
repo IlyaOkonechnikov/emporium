@@ -1,6 +1,7 @@
 package com.emporium.auth.model.jpa;
 
 import lombok.Data;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,21 +16,21 @@ import javax.validation.constraints.Size;
 @Document(value = "users")
 public class User {
 
-    @Id
-    @Field("_id")
-    private ObjectId id;
+  @Id
+  @Field("_id")
+  private ObjectId id;
 
-    @Indexed(name = "account_username", unique = true)
-    @Pattern(regexp = "[A-Za-z0-9_]+", message = "Username must contain only letters and numbers")
-    @Size(min = 4, max = 16, message = "Username must be between 4 and 16 characters")
-    private String username;
+  @Indexed(name = "account_username", unique = true)
+  @Pattern(regexp = "[A-Za-z0-9_]+", message = "Username must contain only letters and numbers")
+  @Size(min = 4, max = 16, message = "Username must be between 4 and 16 characters")
+  private String username;
 
-    @Indexed(unique = true)
-    @Email(message = "Email should be valid")
-    private String email;
+  @Indexed(unique = true)
+  @Email(message = "Email should be valid")
+  private String email;
 
-    @Size(min = 4, max = 16, message = "Password must be between 4 and 16 characters")
-    private String password;
+  @Size(min = 4, max = 16, message = "Password must be between 4 and 16 characters")
+  private String password;
 
-    private boolean enabled;
+  private boolean enabled;
 }

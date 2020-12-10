@@ -21,16 +21,12 @@ repositories {
 
 dependencies {
     implementation(
-            "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springVersion}",
             "org.springframework.boot:spring-boot-starter-mail:${springVersion}",
-            'org.springframework.security:spring-security-oauth2-client:5.4.0',
             'org.springframework.boot:spring-boot-starter-data-mongodb',
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.boot:spring-boot-starter-webflux',
             'org.springframework.boot:spring-boot-starter-web',
-            'com.github.kuliginstepan:mongration:1.3.0',
             'org.mapstruct:mapstruct:1.4.1.Final',
-            'io.jsonwebtoken:jjwt:0.9.1',
     )
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     annotationProcessor('org.mapstruct:mapstruct-processor:1.4.1.Final')
