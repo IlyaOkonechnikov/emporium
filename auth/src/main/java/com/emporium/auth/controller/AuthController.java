@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,11 @@ import javax.validation.Valid;
 public class AuthController {
 
   private final UserService userService;
+
+  @GetMapping("/")
+  String home(@AuthenticationPrincipal OidcUser user) {
+    return "Hello " + user.getFullName();
+  }
 
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)

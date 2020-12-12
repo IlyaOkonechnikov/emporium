@@ -10,13 +10,21 @@ group = 'com.emporium'
 dependencies {
   implementation(
       'org.springframework.boot:spring-boot-starter-data-mongodb',
-      'org.springframework.boot:spring-boot-starter-webflux',
-      'org.springframework.boot:spring-boot-starter-mail',
       'org.springframework.boot:spring-boot-starter-web',
       'com.okta.spring:okta-spring-boot-starter:1.5.1',
-      "org.mapstruct:mapstruct:${mapstructVersion}"
+      "org.mapstruct:mapstruct:${mapstructVersion}",
+      'commons-io:commons-io:2.7'
   )
-  testImplementation('org.springframework.boot:spring-boot-starter-test')
+  testImplementation(
+      'org.springframework.boot:spring-boot-starter-test',
+      'junit:junit:4.13.1'
+  )
   annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
   implementation project(':auth-lib')
+}
+
+docker {
+  name 'scarron95/emporium-account'
+  files jar.archiveFile
+  buildArgs([JAR_FILE: "${jar.archiveFileName.get()}"])
 }
