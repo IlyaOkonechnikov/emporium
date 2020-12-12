@@ -14,10 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserServiceImpl implements UserService {
 
-  private String accountServiceUrl;
+  private final String accountServiceUrl;
   private final WebClient webClient;
 
-  public UserServiceImpl(@Value("${spring.security.oauth2.resource.account-service}") String accountServiceUrl,
+  public UserServiceImpl(@Value("${okta.oauth2.audience}") String accountServiceUrl,
                          WebClient webClient) {
     this.accountServiceUrl = accountServiceUrl;
     this.webClient = webClient;

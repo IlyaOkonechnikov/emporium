@@ -15,10 +15,10 @@ spring:
     port: 587
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+    confirmation-url: ${EMAIL_CONFIRMATION_URL}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-
 okta:
   oauth2:
     clientId: ${CLIENT_ID}
