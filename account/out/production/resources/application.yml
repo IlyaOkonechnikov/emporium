@@ -11,5 +11,9 @@ spring:
       database: ${MONGO_DATABASE}
       auto-index-creation: true
 
-jwt:
-  signing-key: ${JWT_SIGNING_KEY}
+okta:
+  oauth2:
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
+    issuer: ${TOKEN_ISSUER}
+    audience: ${ACCOUNT_SERVICE_URL}

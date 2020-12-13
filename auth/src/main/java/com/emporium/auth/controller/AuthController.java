@@ -22,7 +22,7 @@ public class AuthController {
   private final UserService userService;
 
   @GetMapping("/")
-  String home(@AuthenticationPrincipal OidcUser user) {
+  public String home(@AuthenticationPrincipal OidcUser user) {
     return "Hello " + user.getFullName();
   }
 

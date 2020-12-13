@@ -21,6 +21,11 @@ public class AccountController {
 
   private final AccountService accountService;
 
+  @GetMapping("/api")
+  String api() {
+    return "Made it to protected api on resource server!";
+  }
+
   //    just for quick cluster test
   @GetMapping
   public List<Account> findAll() {

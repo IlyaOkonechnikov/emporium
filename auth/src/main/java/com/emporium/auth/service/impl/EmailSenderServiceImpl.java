@@ -24,7 +24,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
   private final String confirmationUrl;
   private final JavaMailSender emailSender;
 
-  public EmailSenderServiceImpl(@Value("${soring.mail.confirmation-url}") String confirmationUrl,
+  public EmailSenderServiceImpl(@Value("${spring.mail.confirmation-url}") String confirmationUrl,
                                 JavaMailSender emailSender) {
     this.confirmationUrl = confirmationUrl;
     this.emailSender = emailSender;
