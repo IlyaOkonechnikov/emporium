@@ -3,7 +3,6 @@ package com.emporium.ad.changelog;
 import com.emporium.ad.model.jpa.Category;
 import com.kuliginstepan.mongration.annotation.Changelog;
 import com.kuliginstepan.mongration.annotation.Changeset;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Set;
@@ -11,145 +10,145 @@ import java.util.Set;
 @Changelog
 public class ConsumerElectronicsChangeLog {
 
-    @Changeset(order = 1,id = "initElectronic",author = "afakherutdinov")
-    public void electronicInit(MongoTemplate mongoTemplate){
+    @Changeset(order = 1, id = "initElectronic", author = "afakherutdinov")
+    public void electronicInit(MongoTemplate mongoTemplate) {
         Category category = new Category("Consumer Electronics");
 
-        Category audioVideo = new Category(ObjectId.get(),"Audio and video", Set.of(
-                new Category(ObjectId.get(),"MP3 players"),
-                new Category(ObjectId.get(),"Acoustics, speakers, subwoofers"),
-                new Category(ObjectId.get(),"Video, DVD and Blu-ray players"),
-                new Category(ObjectId.get(),"Camcorders"),
-                new Category(ObjectId.get(),"Cables and adapters"),
-                new Category(ObjectId.get(),"Microphones"),
-                new Category(ObjectId.get(),"Music and films"),
-                new Category(ObjectId.get(),"Music centers, radio tape recorders"),
-                new Category(ObjectId.get(),"Headphones"),
-                new Category(ObjectId.get(),"Amplifiers and Receivers"),
-                new Category(ObjectId.get(),"Accessories"),
-                new Category(ObjectId.get(),"TVs and Projectors", Set.of(
-                        new Category(ObjectId.get(),"TV sets"),
-                        new Category(ObjectId.get(),"Projectors"),
-                        new Category(ObjectId.get(),"Other")
+        Category audioVideo = new Category("Audio and video", Set.of(
+                new Category("MP3 players"),
+                new Category("Acoustics, speakers, subwoofers"),
+                new Category("Video, DVD and Blu-ray players"),
+                new Category("Camcorders"),
+                new Category("Cables and adapters"),
+                new Category("Microphones"),
+                new Category("Music and films"),
+                new Category("Music centers, radio tape recorders"),
+                new Category("Headphones"),
+                new Category("Amplifiers and Receivers"),
+                new Category("Accessories"),
+                new Category("TVs and Projectors", Set.of(
+                        new Category("TV sets"),
+                        new Category("Projectors"),
+                        new Category("Other")
                 ))
         ));
 
-        Category games = new Category(ObjectId.get(),"Games, consoles and programs", Set.of(
-                new Category(ObjectId.get(),"Games for consoles"),
-                new Category(ObjectId.get(),"Gaming consoles"),
-                new Category(ObjectId.get(),"Computer games"),
-                new Category(ObjectId.get(),"Programs")
+        Category games = new Category("Games, consoles and programs", Set.of(
+                new Category("Games for consoles"),
+                new Category("Gaming consoles"),
+                new Category("Computer games"),
+                new Category("Programs")
         ));
 
-        Category desktops = new Category(ObjectId.get(),"Desktop computers");
-        Category laptops = new Category(ObjectId.get(),"Laptops");
-        Category officeEquipment = new Category(ObjectId.get(),"Office equipment and consumables", Set.of(
-                new Category(ObjectId.get(),"Printers"),
-                new Category(ObjectId.get(),"Telephony"),
-                new Category(ObjectId.get(),"Paper shredders"),
-                new Category(ObjectId.get(),"Chancery"),
-                new Category(ObjectId.get(),"MFPs, Copiers and Scanners", Set.of(
-                        new Category(ObjectId.get(),"IFI"),
-                        new Category(ObjectId.get(),"Copiers"),
-                        new Category(ObjectId.get(),"Scanners"),
-                        new Category(ObjectId.get(),"Other")
+        Category desktops = new Category("Desktop computers");
+        Category laptops = new Category("Laptops");
+        Category officeEquipment = new Category("Office equipment and consumables", Set.of(
+                new Category("Printers"),
+                new Category("Telephony"),
+                new Category("Paper shredders"),
+                new Category("Chancery"),
+                new Category("MFPs, Copiers and Scanners", Set.of(
+                        new Category("IFI"),
+                        new Category("Copiers"),
+                        new Category("Scanners"),
+                        new Category("Other")
                 )),
-                new Category(ObjectId.get(),"UPS, surge protectors", Set.of(
-                        new Category(ObjectId.get(),"UPS"),
-                        new Category(ObjectId.get(),"Surge Protectors"),
-                        new Category(ObjectId.get(),"Network filters"),
-                        new Category(ObjectId.get(),"Other")
+                new Category("UPS, surge protectors", Set.of(
+                        new Category("UPS"),
+                        new Category("Surge Protectors"),
+                        new Category("Network filters"),
+                        new Category("Other")
                 )),
-                new Category(ObjectId.get(),"Expendable materials", Set.of(
-                        new Category(ObjectId.get(),"Power supplies and batteries"),
-                        new Category(ObjectId.get(),"Blanks"),
-                        new Category(ObjectId.get(),"Paper"),
-                        new Category(ObjectId.get(),"Cables and adapters"),
-                        new Category(ObjectId.get(),"Cartridges")
+                new Category("Expendable materials", Set.of(
+                        new Category("Power supplies and batteries"),
+                        new Category("Blanks"),
+                        new Category("Paper"),
+                        new Category("Cables and adapters"),
+                        new Category("Cartridges")
                 ))
         ));
 
-        Category tablets = new Category(ObjectId.get(), "Tablets and e-books", Set.of(
-                new Category(ObjectId.get(),"Tablets"),
-                new Category(ObjectId.get(),"EBooks"),
-                new Category(ObjectId.get(),"Accessories", Set.of(
-                        new Category(ObjectId.get(),"Batteries"),
-                        new Category(ObjectId.get(),"Headsets and headphones"),
-                        new Category(ObjectId.get(),"Docking stations"),
-                        new Category(ObjectId.get(),"Charging device"),
-                        new Category(ObjectId.get(),"Cables and adapters"),
-                        new Category(ObjectId.get(),"Modems and routers"),
-                        new Category(ObjectId.get(),"Styluses"),
-                        new Category(ObjectId.get(),"Covers and tapes"),
-                        new Category(ObjectId.get(),"Other")
+        Category tablets = new Category("Tablets and e-books", Set.of(
+                new Category("Tablets"),
+                new Category("EBooks"),
+                new Category("Accessories", Set.of(
+                        new Category("Batteries"),
+                        new Category("Headsets and headphones"),
+                        new Category("Docking stations"),
+                        new Category("Charging device"),
+                        new Category("Cables and adapters"),
+                        new Category("Modems and routers"),
+                        new Category("Styluses"),
+                        new Category("Covers and tapes"),
+                        new Category("Other")
                 ))
         ));
 
-        Category phones = new Category(ObjectId.get(), "Phones", Set.of(
-                new Category(ObjectId.get(),"Acer"),
-                new Category(ObjectId.get(),"HTC"),
-                new Category(ObjectId.get(),"LG"),
-                new Category(ObjectId.get(),"Huawei"),
-                new Category(ObjectId.get(),"iPhone"),
-                new Category(ObjectId.get(),"Lenovo"),
-                new Category(ObjectId.get(),"LG"),
-                new Category(ObjectId.get(),"Meizu"),
-                new Category(ObjectId.get(),"Microsoft"),
-                new Category(ObjectId.get(),"Nokia"),
-                new Category(ObjectId.get(),"Panasonic"),
-                new Category(ObjectId.get(),"Siemens"),
-                new Category(ObjectId.get(),"Sony"),
-                new Category(ObjectId.get(),"Xiaomi"),
-                new Category(ObjectId.get(),"Other brands"),
-                new Category(ObjectId.get(),"Landline telephones"),
-                new Category(ObjectId.get(),"Accessories", Set.of(
-                        new Category(ObjectId.get(),"Batteries"),
-                        new Category(ObjectId.get(),"Headsets and headphones"),
-                        new Category(ObjectId.get(),"Charging device"),
-                        new Category(ObjectId.get(),"Cables and adapters"),
-                        new Category(ObjectId.get(),"Modems and routers"),
-                        new Category(ObjectId.get(),"Covers and films"),
-                        new Category(ObjectId.get(),"Spare parts")
+        Category phones = new Category("Phones", Set.of(
+                new Category("Acer"),
+                new Category("HTC"),
+                new Category("LG"),
+                new Category("Huawei"),
+                new Category("iPhone"),
+                new Category("Lenovo"),
+                new Category("LG"),
+                new Category("Meizu"),
+                new Category("Microsoft"),
+                new Category("Nokia"),
+                new Category("Panasonic"),
+                new Category("Siemens"),
+                new Category("Sony"),
+                new Category("Xiaomi"),
+                new Category("Other brands"),
+                new Category("Landline telephones"),
+                new Category("Accessories", Set.of(
+                        new Category("Batteries"),
+                        new Category("Headsets and headphones"),
+                        new Category("Charging device"),
+                        new Category("Cables and adapters"),
+                        new Category("Modems and routers"),
+                        new Category("Covers and films"),
+                        new Category("Spare parts")
                 ))
         ));
 
-        Category forComputers = new Category(ObjectId.get(), "Computer products", Set.of(
-                new Category(ObjectId.get(),"Acoustics"),
-                new Category(ObjectId.get(),"Webcams"),
-                new Category(ObjectId.get(),"Joysticks and steering wheels"),
-                new Category(ObjectId.get(),"Keyboards and mice"),
-                new Category(ObjectId.get(),"Monitors"),
-                new Category(ObjectId.get(),"Portable hard drives"),
-                new Category(ObjectId.get(),"Network hardware"),
-                new Category(ObjectId.get(),"TV tuners"),
-                new Category(ObjectId.get(),"Flash drives and memory cards"),
-                new Category(ObjectId.get(),"Accessories"),
-                new Category(ObjectId.get(),"Components", Set.of(
-                        new Category(ObjectId.get(),"CD, DVD and Blu-ray drives"),
-                        new Category(ObjectId.get(),"Power supplies"),
-                        new Category(ObjectId.get(),"Video cards"),
-                        new Category(ObjectId.get(),"Hard drives"),
-                        new Category(ObjectId.get(),"Sound cards"),
-                        new Category(ObjectId.get(),"Controllers"),
-                        new Category(ObjectId.get(),"Housings"),
-                        new Category(ObjectId.get(),"Motherboards"),
-                        new Category(ObjectId.get(),"RAM"),
-                        new Category(ObjectId.get(),"Processors"),
-                        new Category(ObjectId.get(),"Cooling systems")
+        Category forComputers = new Category("Computer products", Set.of(
+                new Category("Acoustics"),
+                new Category("Webcams"),
+                new Category("Joysticks and steering wheels"),
+                new Category("Keyboards and mice"),
+                new Category("Monitors"),
+                new Category("Portable hard drives"),
+                new Category("Network hardware"),
+                new Category("TV tuners"),
+                new Category("Flash drives and memory cards"),
+                new Category("Accessories"),
+                new Category("Components", Set.of(
+                        new Category("CD, DVD and Blu-ray drives"),
+                        new Category("Power supplies"),
+                        new Category("Video cards"),
+                        new Category("Hard drives"),
+                        new Category("Sound cards"),
+                        new Category("Controllers"),
+                        new Category("Housings"),
+                        new Category("Motherboards"),
+                        new Category("RAM"),
+                        new Category("Processors"),
+                        new Category("Cooling systems")
                 ))
         ));
 
-        Category photo = new Category(ObjectId.get(), "Photography equipment", Set.of(
-                new Category(ObjectId.get(),"Compact Cameras"),
-                new Category(ObjectId.get(),"SLR Cameras"),
-                new Category(ObjectId.get(),"Film cameras"),
-                new Category(ObjectId.get(),"Binoculars and telescopes"),
-                new Category(ObjectId.get(),"Lenses"),
-                new Category(ObjectId.get(),"Equipment and accessories")
+        Category photo = new Category("Photography equipment", Set.of(
+                new Category("Compact Cameras"),
+                new Category("SLR Cameras"),
+                new Category("Film cameras"),
+                new Category("Binoculars and telescopes"),
+                new Category("Lenses"),
+                new Category("Equipment and accessories")
         ));
 
-        category.setSubCategories(Set.of(audioVideo,games,desktops,laptops, officeEquipment,
-                tablets,phones,forComputers,photo));
+        category.setSubCategories(Set.of(audioVideo, games, desktops, laptops, officeEquipment,
+                tablets, phones, forComputers, photo));
         mongoTemplate.save(category);
     }
 }

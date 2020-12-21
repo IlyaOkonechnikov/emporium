@@ -25,17 +25,15 @@ public class Category {
     private String name;
 
     @Field("subCategories")
-    private Set <Category> subCategories;
+    private Set<Category> subCategories;
 
     public Category(String name) {
+        this.id = ObjectId.get();
         this.name = name;
     }
 
-    public Category(ObjectId id, String name) {
-        this.id = id;
-        this.name = name;
-    }
     public Category(String name, Set<Category> subCategories) {
+        this.id = ObjectId.get();
         this.name = name;
         this.subCategories = subCategories;
     }
