@@ -1,0 +1,19 @@
+server:
+  port: 9999
+  error:
+    include-message: always
+
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+      database: account
+      auto-index-creation: true
+
+okta:
+  oauth2:
+    clientId: 0oa2a8z3bC6EayDaI5d6
+    clientSecret: 4iGDK_3_44hz_faHJPE_CJhqWxGdemlWiolZvbBa
+    issuer: https://dev-4423593.okta.com/oauth2/default
+    audience: http://localhost:9999

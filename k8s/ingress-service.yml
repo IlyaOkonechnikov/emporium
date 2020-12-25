@@ -9,7 +9,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /personal-area/?(.*)
+          - path: /account/?(.*)
             backend:
-              serviceName: personal-area-service
+              serviceName: account-service
               servicePort: 9999
