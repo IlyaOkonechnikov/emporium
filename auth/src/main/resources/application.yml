@@ -10,31 +10,18 @@ spring:
       port: ${MONGO_PORT}
       database: ${MONGO_DATABASE}
       auto-index-creation: true
-  security:
-    oauth2:
-      client:
-        provider:
-          emporium:
-            token-uri: ${OAUTH_TOKEN_PROVIDER_URI}
-        registration:
-          emporium:
-            id: ${OAUTH_REGISTRATION_ID}
-            client-id: ${OAUTH_CLIENT_ID}
-            client-secret: ${OAUTH_CLIENT_SECRET}
-            authorization-grant-type: ${OAUTH_GRANT_TYPE}
-
   mail:
     host: smtp.gmail.com
     port: 587
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+    confirmation-url: ${EMAIL_CONFIRMATION_URL}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-
-jwt:
-  signing-key: ${JWT_SIGNING_KEY}
-
-url:
-  personal-area-registration: ${PERSONAL_AREA_REGISTRATION_URL}
-  email-confirmation: ${EMAIL_CONFIRMATION_URL}
+okta:
+  oauth2:
+    clientId: ${CLIENT_ID}
+    clientSecret: ${CLIENT_SECRET}
+    issuer: ${TOKEN_ISSUER}
+    audience: ${ACCOUNT_SERVICE_URL}

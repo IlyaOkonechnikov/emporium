@@ -4,5 +4,5 @@ import org.bson.types.ObjectId;
 
 public interface EmailSenderService {
 
-    void sendConfirmationEmail(ObjectId id, String name, String email);
+  void sendConfirmationEmail(ObjectId id, String name, String email);
 }

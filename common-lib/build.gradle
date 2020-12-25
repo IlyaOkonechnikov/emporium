@@ -1,25 +1,10 @@
 plugins {
     id "io.freefair.lombok" version "${freefairLombokVersion}"
-    id 'java'
+    id 'java-library'
 }
 
 group = 'com.emporium.lib'
-sourceCompatibility = '13'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
 
-}
-
-test {
-    useJUnitPlatform()
 }

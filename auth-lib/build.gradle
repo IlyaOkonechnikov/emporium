@@ -1,28 +1,13 @@
 plugins {
-    id "io.freefair.lombok" version "${freefairLombokVersion}"
-    id 'java-library'
+  id "io.freefair.lombok" version "${freefairLombokVersion}"
+  id 'java-library'
 }
 
 group = 'com.emporium.lib'
-sourceCompatibility = '13'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
-    api(
-            'org.springframework.data:spring-data-mongodb:3.0.4.RELEASE',
-            'javax.validation:validation-api:2.0.1.Final'
-    )
-}
-
-test {
-    useJUnitPlatform()
+  api(
+      'org.springframework.data:spring-data-mongodb:3.0.4.RELEASE',
+      'javax.validation:validation-api:2.0.1.Final'
+  )
 }

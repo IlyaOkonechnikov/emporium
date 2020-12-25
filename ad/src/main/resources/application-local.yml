@@ -1,0 +1,19 @@
+server:
+  port: 9997
+  error:
+    include-message: always
+
+spring:
+  flyway:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=emporium
+    user: postgres
+    password: postgres
+    schemas: ['emporium']
+    locations: ['classpath:db/migration']
+    validate-on-migrate: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=emporium
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
