@@ -30,5 +30,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (405, 'Construction
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (406, 'Fitness, beauty salons', 395);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (407, 'Jurisprudence', 395);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (408, 'Other', 395);
-
-

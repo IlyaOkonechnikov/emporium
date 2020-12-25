@@ -16,6 +16,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (358, 'Reptiles', 3
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (359, 'Agricultural animals', 353);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (360, 'Ferrets', 353);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (361, 'Other', 353);
-
-
-

@@ -60,17 +60,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (343, 'Tourism', 33
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (344, 'Fitness and exercise equipment', 332);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (345, 'Sports nutrition', 332);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (346, 'Other', 332);
-
-
-
-
-
-
-
-
-
-
-
-
-
---category.setSubCategories(Set.of(ticketsAndTravel, bicycles, books, collecting,musicalInstruments, huntingAndFishing, sportsAndRecreation));

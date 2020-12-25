@@ -68,22 +68,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (504, 'Wheels', 500
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (505, 'Caps', 500);
 
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (506, 'Equipment', 481);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---category.setSubCategories(Set.of(cars, motorcycles, trucks, waterTransport, parts));

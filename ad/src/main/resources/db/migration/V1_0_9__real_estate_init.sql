@@ -13,4 +13,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (418, 'Garages and 
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (419, 'Real estate abroad', 409);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (420, 'Buyers of apartments', 409);
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (421, 'Apartment tenants', 409);
-

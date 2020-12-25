@@ -154,17 +154,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (179, 'Electrician'
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (180, 'Other', 167);
 
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (181, 'Plants', 69);
-
-
-
-
-
-
-
-
-
-
-
-
-
-

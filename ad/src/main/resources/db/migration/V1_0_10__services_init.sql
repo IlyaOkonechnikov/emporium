@@ -30,9 +30,3 @@ INSERT INTO emporium.categories (id, name, parent_id) VALUES (445, 'Moving', 439
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (446, 'Special equipment', 439);
 
 INSERT INTO emporium.categories (id, name, parent_id) VALUES (447, 'Other', 422);
-
-
-
-
-
-
