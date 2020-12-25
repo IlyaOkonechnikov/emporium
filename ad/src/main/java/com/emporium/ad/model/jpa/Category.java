@@ -1,40 +1,33 @@
 package com.emporium.ad.model.jpa;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import lombok.*;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(value = "categories")
+@Table(name = "categories")
+@Entity
 public class Category {
 
-    @Id
-    @Field("_id")
-    private ObjectId id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @NotNull
-    private String name;
+  @NotNull
+  @Column(name = "name")
+  private String name;
 
-    @Field("subCategories")
-    private Set<Category> subCategories;
+  @ManyToOne
+  @JoinColumn(name = "parent_id")
+  private Category parentCategory;
 
-    public Category(String name) {
-        this.id = ObjectId.get();
-        this.name = name;
-    }
-
-    public Category(String name, Set<Category> subCategories) {
-        this.id = ObjectId.get();
-        this.name = name;
-        this.subCategories = subCategories;
-    }
+  @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  private Set<Category> subCategories = new HashSet<>();
 }
