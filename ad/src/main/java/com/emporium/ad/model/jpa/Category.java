@@ -1,5 +1,7 @@
 package com.emporium.ad.model.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,8 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categories")
@@ -26,8 +27,11 @@ public class Category {
 
   @ManyToOne
   @JoinColumn(name = "parent_id")
+  @JsonIgnore
   private Category parentCategory;
 
-  @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Set<Category> subCategories = new HashSet<>();
 }
