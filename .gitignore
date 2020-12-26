@@ -3,6 +3,14 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -27,4 +35,4 @@ logs/*
 /auth/lombok.config
 /account/lombok.config
 /auth-lib/lombok.config
-
+/ad/lombok.config
