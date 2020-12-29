@@ -12,5 +12,5 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
   @Query(value = "SELECT * FROM public.categories WHERE parent_id IS NULL", nativeQuery = true)
   List<Category> findParents();
 
-  void deleteById(Integer id);
+  void deleteById(int id);
 }
