@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<Category> findMainCategories() {
     log.debug("findParents() - start");
-    List<Category> parents = categoryRepository.findParents();
+    List<Category> parents = categoryRepository.findMainCategories();
     log.debug("findParents() - end. parents count: {}", parents.size());
     return parents;
   }
