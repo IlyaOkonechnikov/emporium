@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface CategoryService {
 
-  List<Category> findALl();
+  List<Category> findAll();
 
-  List<Category> findParents();
+  List<Category> findMainCategories();
 
-  Category findById(Integer id);
+  Category findById(int id);
 
   String create(CategoryDTO dto);
 
   void update(Category category);
 
-  void delete(Integer id);
+  void delete(int id);
 }
