@@ -19,7 +19,7 @@ public class Category {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   @NotNull
   @Column(name = "name")
@@ -34,4 +34,9 @@ public class Category {
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
   private Set<Category> subCategories = new HashSet<>();
+
+  public Category(String name, Category parentCategory) {
+    this.name = name;
+    this.parentCategory = parentCategory;
+  }
 }
