@@ -1,6 +1,6 @@
 create table if not exists public.categories
 (
-    id        integer  not null primary key,
+    id        serial  not null primary key,
     name      varchar not null,
     parent_id integer default 0
 );
