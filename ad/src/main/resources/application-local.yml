@@ -5,15 +5,15 @@ server:
 
 spring:
   flyway:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=emporium
+    url: jdbc:postgresql://localhost:5432/ads
     user: postgres
     password: postgres
-    schemas: 'emporium'
+    schemas: 'public'
     locations: 'classpath:db/migration'
     validate-on-migrate: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=emporium
+    url: jdbc:postgresql://localhost:5432/ads
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
