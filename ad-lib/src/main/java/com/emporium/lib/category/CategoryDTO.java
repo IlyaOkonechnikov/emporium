@@ -5,8 +5,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CategoryDTO {
 
   private Integer id;
@@ -17,4 +19,9 @@ public class CategoryDTO {
 
   @NotNull
   private Integer parentId;
+
+  public CategoryDTO(String name, int parentId){
+    this.name = name;
+    this.parentId = parentId;
+  }
 }
