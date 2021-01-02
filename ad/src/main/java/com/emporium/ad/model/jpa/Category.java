@@ -35,8 +35,23 @@ public class Category {
   @ToString.Exclude
   private Set<Category> subCategories = new HashSet<>();
 
+  public Category(Integer id, @NotNull String name, Category parentCategory) {
+    this.id = id;
+    this.name = name;
+    this.parentCategory = parentCategory;
+  }
+
+  public Category(Integer id, Category parentCategory) {
+    this.id = id;
+    this.parentCategory = parentCategory;
+  }
+
   public Category(String name, Category parentCategory) {
     this.name = name;
     this.parentCategory = parentCategory;
+  }
+
+  public Category(Integer id) {
+    this.id = id;
   }
 }
