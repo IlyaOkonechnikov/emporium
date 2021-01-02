@@ -15,7 +15,7 @@ public interface CategoryService {
 
   String create(CategoryDTO dto);
 
-  void update(Category category);
+  void update(CategoryDTO dto);
 
   void delete(int id);
 }

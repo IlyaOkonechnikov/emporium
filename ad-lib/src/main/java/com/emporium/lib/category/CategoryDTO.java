@@ -20,7 +20,7 @@ public class CategoryDTO {
   @NotNull
   private Integer parentId;
 
-  public CategoryDTO(String name, int parentId){
+  public CategoryDTO(String name, Integer parentId){
     this.name = name;
     this.parentId = parentId;
   }
