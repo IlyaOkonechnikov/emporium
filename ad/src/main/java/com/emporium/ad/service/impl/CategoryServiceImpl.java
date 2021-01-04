@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public String create(CategoryDTO dto) {
     log.debug("create() - start. dto: {}", dto);
-    Category category = new Category(dto.getName(), new Category(dto.getParentId()));
+    Category category = new Category(dto.getName(), Category.builder().id(dto.getId()).build());
     categoryRepository.save(category);
     String id = Integer.toString(category.getId());
     log.debug("create() - end. category: {}", category);
@@ -78,7 +78,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     Category category = optionalCategory.get();
     category.setName(dto.getName());
-    category.setParentCategory(new Category(dto.getParentId()));
+    category.setParentCategory(Category.builder().id(dto.getId()).build());
     log.debug("update() - end. category: {}", category);
     categoryRepository.save(category);
   }

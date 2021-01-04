@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityExistsException;
 
 @SpringBootTest
-@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {CategoryRepositoryTestContextConfig.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -27,39 +25,43 @@ class CategoryRepositoryTest {
 
   @Autowired
   private CategoryRepository categoryRepository;
-  private static Category category = new Category(1, "test1", null);
 
   @Test
   void findAllTest() {
-    fillDB();
+    Category category = Category.builder().id(1).name("test1").parentCategory(null).build();
+    categoryRepository.save(category);
+    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(category).build());
+    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(category).build());
     List<Category> categories = categoryRepository.findAll();
-    Assertions.assertEquals(7, categories.size());
-    Assertions.assertTrue(categories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2, 3, 4, 5, 6, 7)));
+    Assertions.assertEquals(3, categories.size());
+    Assertions.assertTrue(categories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2, 3)));
   }
 
   @Test
   void findMainCategoriesTest() {
-    categoryRepository.save(new Category(1, null));
-    categoryRepository.save(new Category(2, null));
-    categoryRepository.save(new Category(3, null));
-    categoryRepository.save(new Category(4, null));
+    categoryRepository.save(Category.builder().id(1).name("test1").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(4).name("test4").parentCategory(Category.builder().id(2).build()).build());
     List<Category> mainCategories = categoryRepository.findMainCategories();
-    Assertions.assertEquals(4, mainCategories.size());
-    Assertions.assertTrue(mainCategories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2, 3, 4)));
+    Assertions.assertEquals(3, mainCategories.size());
+    Assertions.assertTrue(mainCategories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2, 3)));
   }
 
   @Test
   void findByIdTest() {
-    fillDB();
-    Optional<Category> optionalCategory = categoryRepository.findById(5);
+    categoryRepository.save(Category.builder().id(1).name("test1").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
+    Optional<Category> optionalCategory = categoryRepository.findById(2);
     Category category = optionalCategory.orElseThrow(() -> new EntityExistsException("Category not found"));
-    Assertions.assertEquals("test5", category.getName());
+    Assertions.assertEquals("test2", category.getName());
   }
 
   @Test
   void nameUpdateTest() {
-    fillDB();
-    Category category = new Category(1);
+    categoryRepository.save(Category.builder().id(1).name("test1").parentCategory(null).build());
+    Category category = Category.builder().id(1).build();
     category.setName("new name1");
     categoryRepository.save(category);
     Optional<Category> optionalCategory = categoryRepository.findById(1);
@@ -69,36 +71,29 @@ class CategoryRepositoryTest {
 
   @Test
   void parentCategoryUpdateTest() {
-    fillDB();
-    Category category = new Category(5);
-    category.setParentCategory(new Category(3));
+    categoryRepository.save(Category.builder().id(1).name("test1").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(Category.builder().id(1).build()).build());
+    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
+    Category category = Category.builder().id(2).build();
+    category.setParentCategory(Category.builder().id(3).build());
     categoryRepository.save(category);
-    Optional<Category> optionalCategory = categoryRepository.findById(5);
+    Optional<Category> optionalCategory = categoryRepository.findById(2);
     Category findCategory = optionalCategory.orElseThrow(() -> new EntityExistsException("Category not found"));
     Assertions.assertEquals(3, findCategory.getParentCategory().getId());
   }
 
   @Test
   void deleteTest() {
-    fillDB();
-    categoryRepository.deleteById(4);
-    Optional<Category> categoryOptional = categoryRepository.findById(4);
+    categoryRepository.save(Category.builder().id(1).name("test1").parentCategory(null).build());
+    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(Category.builder().id(1).build()).build());
+    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
+    categoryRepository.deleteById(3);
+    Optional<Category> categoryOptional = categoryRepository.findById(3);
     Assertions.assertTrue(categoryOptional.isEmpty());
-    categoryRepository.deleteById(6);
-    categoryOptional = categoryRepository.findById(6);
+    categoryRepository.deleteById(1);
+    categoryOptional = categoryRepository.findById(1);
     Assertions.assertTrue(categoryOptional.isEmpty());
-    categoryRepository.deleteById(7);
-    categoryOptional = categoryRepository.findById(7);
+    categoryOptional = categoryRepository.findById(2);
     Assertions.assertTrue(categoryOptional.isEmpty());
-  }
-
-  void fillDB() {
-    categoryRepository.save(category);
-    categoryRepository.save(new Category(2, "test2", category));
-    categoryRepository.save(new Category(3, "test3", category));
-    categoryRepository.save(new Category(4, "test4", new Category(2)));
-    categoryRepository.save(new Category(5, "test5", new Category(2)));
-    categoryRepository.save(new Category(6, "test6", new Category(3)));
-    categoryRepository.save(new Category(7, "test7", new Category(3)));
   }
 }

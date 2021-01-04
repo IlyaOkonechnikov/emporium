@@ -35,13 +35,13 @@ public class CategoryController {
     return categoryService.findById(id);
   }
 
-  @PostMapping("/create")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public String create(@RequestBody @Valid CategoryDTO dto) {
     return categoryService.create(dto);
   }
 
-  @PutMapping("/update")
+  @PutMapping
   @ResponseStatus(HttpStatus.OK)
   public void update(@RequestBody @Valid CategoryDTO dto) {
     categoryService.update(dto);
