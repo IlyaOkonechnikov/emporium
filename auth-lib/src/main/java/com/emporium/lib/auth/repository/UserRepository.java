@@ -1,4 +1,4 @@
-package com.emporium.auth.repository;
+package com.emporium.lib.auth.repository;
 
 import com.emporium.lib.auth.data.User;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-  User findByUsernameOrEmail(String username, String email);
+  User findByLogin(String login);
 }

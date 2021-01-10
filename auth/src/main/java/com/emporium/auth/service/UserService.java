@@ -1,12 +1,13 @@
 package com.emporium.auth.service;
 
 import com.emporium.lib.auth.UserDTO;
-
-import org.bson.types.ObjectId;
+import com.emporium.lib.auth.data.User;
 
 public interface UserService {
 
   String create(UserDTO dto);
 
-  void enable(ObjectId id);
+  void enable(long id);
+
+  User findByUsernameOrEmailAndValidatePassword(String username, String email, String password);
 }

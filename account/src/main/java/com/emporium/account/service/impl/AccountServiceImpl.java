@@ -9,7 +9,6 @@ import com.emporium.lib.auth.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public Account findById(ObjectId id) {
+  public Account findById(long id) {
     log.debug("findById() - start. id: {}", id);
     Optional<Account> optionalUser = accountRepository.findById(id);
     if (optionalUser.isEmpty()) {
@@ -47,10 +46,10 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public String create(UserDTO dto) {
+  public long create(UserDTO dto) {
     log.debug("create() - start. dto: {}", dto);
     Account account = accountMapper.toEntity(dto);
-    String id = accountRepository.insert(account).getId().toString();
+    long id = accountRepository.save(account).getId();
     log.debug("create() - end. id: {}", id);
     return id;
   }
@@ -66,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
   }
 
   @Override
-  public void delete(ObjectId id) {
+  public void delete(long id) {
     log.debug("delete() - start. id: {}", id);
     if (accountRepository.findById(id).isEmpty()) {
       log.error("An error occurred due to the attempt to delete a nonexistent user. id: {}", id);

@@ -1,25 +1,29 @@
 plugins {
-  id 'io.spring.dependency-management' version "${springManagementVersion}"
-  id 'org.springframework.boot' version "${springVersion}"
-  id 'com.palantir.docker' version "${palantirDockerVersion}"
-  id 'io.freefair.lombok' version "${freefairLombokVersion}"
+  id 'io.spring.dependency-management' version "${spring_management_version}"
+  id 'org.springframework.boot' version "${spring_version}"
+  id 'com.palantir.docker' version "${palantir_docker_version}"
+  id 'io.freefair.lombok' version "${freefair_lombok_version}"
 }
 
 group = 'com.emporium'
 
 dependencies {
   implementation(
-      'org.springframework.boot:spring-boot-starter-data-mongodb',
+//      spring
+      'org.springframework.boot:spring-boot-starter-security',
+      'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.springframework.boot:spring-boot-starter-web',
-      'com.okta.spring:okta-spring-boot-starter:1.5.1',
-      "org.mapstruct:mapstruct:${mapstructVersion}",
+//      db
+      "org.postgresql:postgresql:$postgresql_version",
+//      other
+      "org.mapstruct:mapstruct:$mapstruct_version",
       'commons-io:commons-io:2.7'
   )
   testImplementation(
       'org.springframework.boot:spring-boot-starter-test',
       'junit:junit:4.13.1'
   )
-  annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
   implementation project(':auth-lib')
 }
 

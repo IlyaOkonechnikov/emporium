@@ -6,7 +6,6 @@ import com.emporium.lib.auth.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,13 +32,13 @@ public class AccountController {
   }
 
   @GetMapping("/{id}")
-  public Account findById(@PathVariable ObjectId id) {
+  public Account findById(@PathVariable long id) {
     return accountService.findById(id);
   }
 
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
-  public String create(@RequestBody @Valid UserDTO dto) {
+  public long create(@RequestBody @Valid UserDTO dto) {
     return accountService.create(dto);
   }
 
@@ -51,7 +50,7 @@ public class AccountController {
 
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void delete(@PathVariable("id") ObjectId id) {
+  public void delete(@PathVariable("id") long id) {
     accountService.delete(id);
   }
 }

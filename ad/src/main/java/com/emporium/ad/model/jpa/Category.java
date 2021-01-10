@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "categories")
+@Table(name = "category")
 @Entity
 public class Category {
 

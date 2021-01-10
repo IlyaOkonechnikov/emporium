@@ -1,40 +1,55 @@
 package com.emporium.auth.service.impl;
 
+import com.emporium.auth.repository.UserRepository;
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.User;
 
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private final String accountServiceUrl;
-  private final WebClient webClient;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+//  private final String accountServiceUrl;
+//  private final WebClient webClient;
 
-  public UserServiceImpl(@Value("${okta.oauth2.audience}") String accountServiceUrl,
-                         WebClient webClient) {
-    this.accountServiceUrl = accountServiceUrl;
-    this.webClient = webClient;
-  }
+
+
+//  public UserServiceImpl(@Value("${okta.oauth2.audience}") String accountServiceUrl,
+//                         WebClient webClient) {
+//    this.accountServiceUrl = accountServiceUrl;
+//    this.webClient = webClient;
+//  }
 
   @Override
   public String create(UserDTO dto) {
-      return this.webClient
-          .get()
-          .uri(this.accountServiceUrl + "/api")
-          .retrieve()
-          .bodyToMono(String.class)
-          .block();
+//      return this.webClient
+//          .get()
+//          .uri(this.accountServiceUrl + "/account/api")
+//          .retrieve()
+//          .bodyToMono(String.class)
+//          .block();
+    return null;
+  }
+
+  public User findByUsernameOrEmailAndValidatePassword(String username, String email, String password) {
+    User user = userRepository.findByUsernameOrEmail(username, email);
+    if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+      return user;
+    }
+    return null;
   }
 
   @Override
-  public void enable(ObjectId id) {
+  public void enable(long id) {
 
   }
 

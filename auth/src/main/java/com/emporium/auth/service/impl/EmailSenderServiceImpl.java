@@ -2,7 +2,6 @@ package com.emporium.auth.service.impl;
 
 import com.emporium.auth.service.EmailSenderService;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
@@ -30,7 +29,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     this.emailSender = emailSender;
   }
 
-  public void sendConfirmationEmail(ObjectId id, String name, String email) {
+  public void sendConfirmationEmail(long id, String name, String email) {
     log.debug("sendConfirmationMail() - start. name: {}, email: {}", name, email);
     try {
       SimpleMailMessage message = new SimpleMailMessage();

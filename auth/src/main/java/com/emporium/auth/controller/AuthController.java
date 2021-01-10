@@ -2,17 +2,22 @@ package com.emporium.auth.controller;
 
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.config.jwt.JwtProvider;
+import com.emporium.lib.auth.data.User;
 
-import lombok.RequiredArgsConstructor;
-
-import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,21 +25,19 @@ import javax.validation.Valid;
 public class AuthController {
 
   private final UserService userService;
+  private final JwtProvider jwtProvider;
 
-  @GetMapping("/")
-  public String home(@AuthenticationPrincipal OidcUser user) {
-    return "Hello " + user.getFullName();
-  }
-
-  @PostMapping("/register")
+  @GetMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
-  public String register(@RequestBody @Valid UserDTO dto) {
+  public String register() {
+    UserDTO dto = new UserDTO();
     return userService.create(dto);
   }
 
   @PostMapping("/login")
   public String login(@RequestBody @Valid UserDTO dto) {
-    return null;
+    User user = userService.findByUsernameOrEmailAndValidatePassword(dto.getUsername(), dto.getEmail(), dto.getPassword());
+    return jwtProvider.generateToken(user.getUsername());
   }
 
   @GetMapping("/logout")
@@ -43,7 +46,7 @@ public class AuthController {
   }
 
   @GetMapping("/confirm-email/{id}")
-  public void confirmEmail(@PathVariable ObjectId id) {
+  public void confirmEmail(@PathVariable long id) {
     userService.enable(id);
   }
 }

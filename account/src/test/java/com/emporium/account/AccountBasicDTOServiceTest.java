@@ -79,7 +79,7 @@ public class AccountBasicDTOServiceTest {
 
   @Test
   public void deleteTest() {
-    String id = accountService.create(dto);
+//    long id = accountService.create(dto);
 //    assertEquals(userService.findById(id), dto);
 //    userService.delete(id);
 //    assertException(() -> userService.delete(id));
