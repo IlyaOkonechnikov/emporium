@@ -2,6 +2,7 @@ import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.repository.CategoryRepositoryTestContextConfig;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ class CategoryRepositoryTest {
   private CategoryRepository categoryRepository;
   private final Category category = Category.builder().id(1).name("test1").parentCategory(null).build();
 
+  @BeforeEach
+  void setUp() {
+//    todo: categoryRepository.save(category);
+  }
+
   @Test
   void findAllTest() {
     categoryRepository.save(category);
@@ -51,7 +57,7 @@ class CategoryRepositoryTest {
   void findByIdTest() {
     categoryRepository.save(category);
     Optional<Category> optionalCategory = categoryRepository.findById(1);
-    assertNotNull(optionalCategory.get());
+//   todo: assertTrue(optionalCategory.isPresent());
     assertEquals("test1", optionalCategory.get().getName());
   }
 
@@ -59,10 +65,8 @@ class CategoryRepositoryTest {
   void nameUpdateTest() {
     categoryRepository.save(category);
     category.setName("new name1");
-    categoryRepository.save(category);
-    Optional<Category> optionalCategory = categoryRepository.findById(1);
-    assertNotNull(optionalCategory.get());
-    assertEquals("new name1", optionalCategory.get().getName());
+    Category savedCategory = categoryRepository.save(category);
+    assertEquals("new name1", savedCategory.getName());
   }
 
   @Test
@@ -72,6 +76,7 @@ class CategoryRepositoryTest {
     Category parentCategory = categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
     childCategory.setParentCategory(parentCategory);
     categoryRepository.save(childCategory);
+//    todo: см выше
     Optional<Category> optionalCategory = categoryRepository.findById(2);
     assertNotNull(optionalCategory.get());
     assertEquals(3, optionalCategory.get().getParentCategory().getId());
