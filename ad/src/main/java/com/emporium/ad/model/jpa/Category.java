@@ -29,6 +29,8 @@ public class Category {
   @ManyToOne
   @JoinColumn(name = "parent_id")
   @JsonIgnore
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   private Category parentCategory;
 
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)

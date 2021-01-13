@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -31,12 +30,11 @@ class CategoryRepositoryTest {
 
   @BeforeEach
   void setUp() {
-//    todo: categoryRepository.save(category);
+    categoryRepository.save(category);
   }
 
   @Test
   void findAllTest() {
-    categoryRepository.save(category);
     categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(category).build());
     List<Category> categories = categoryRepository.findAll();
     assertEquals(2, categories.size());
@@ -45,7 +43,6 @@ class CategoryRepositoryTest {
 
   @Test
   void findMainCategoriesTest() {
-    categoryRepository.save(category);
     categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(null).build());
     categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(Category.builder().id(1).build()).build());
     List<Category> mainCategories = categoryRepository.findMainCategories();
@@ -55,15 +52,13 @@ class CategoryRepositoryTest {
 
   @Test
   void findByIdTest() {
-    categoryRepository.save(category);
     Optional<Category> optionalCategory = categoryRepository.findById(1);
-//   todo: assertTrue(optionalCategory.isPresent());
+    assertTrue(optionalCategory.isPresent());
     assertEquals("test1", optionalCategory.get().getName());
   }
 
   @Test
   void nameUpdateTest() {
-    categoryRepository.save(category);
     category.setName("new name1");
     Category savedCategory = categoryRepository.save(category);
     assertEquals("new name1", savedCategory.getName());
@@ -71,20 +66,15 @@ class CategoryRepositoryTest {
 
   @Test
   void parentCategoryUpdateTest() {
-    categoryRepository.save(category);
     Category childCategory = categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(category).build());
     Category parentCategory = categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
     childCategory.setParentCategory(parentCategory);
-    categoryRepository.save(childCategory);
-//    todo: см выше
-    Optional<Category> optionalCategory = categoryRepository.findById(2);
-    assertNotNull(optionalCategory.get());
-    assertEquals(3, optionalCategory.get().getParentCategory().getId());
+    Category savedCategory = categoryRepository.save(childCategory);
+    assertEquals(3, savedCategory.getParentCategory().getId());
   }
 
   @Test
   void deleteTest() {
-    categoryRepository.save(category);
     categoryRepository.deleteById(1);
     Optional<Category> categoryOptional = categoryRepository.findById(1);
     assertTrue(categoryOptional.isEmpty());
