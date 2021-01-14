@@ -60,7 +60,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public String create(CategoryDTO dto) {
     log.debug("create() - start. dto: {}", dto);
-    Category category = new Category(dto.getName(), findById(dto.getParentId()));
+    Category category = new Category(dto.getName(), Category.builder().id(dto.getId()).build());
     categoryRepository.save(category);
     String id = Integer.toString(category.getId());
     log.debug("create() - end. category: {}", category);
@@ -69,12 +69,16 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Transactional
   @Override
-  public void update(Category category) {
-    log.debug("update() - start. category: {}", category);
-    if (categoryRepository.findById(category.getId()).isEmpty()) {
-      log.error("An error occurred due to the attempt to update a nonexistent category. id: {}", category.getId());
+  public void update(CategoryDTO dto) {
+    log.debug("update() - start. dto: {}", dto);
+    Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
+    if (optionalCategory.isEmpty()) {
+      log.error("An error occurred due to the attempt to update a nonexistent category. id: {}", dto.getId());
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, CATEGORY_NOT_FOUND_MSG);
     }
+    Category category = optionalCategory.get();
+    category.setName(dto.getName());
+    category.setParentCategory(Category.builder().id(dto.getId()).build());
     log.debug("update() - end. category: {}", category);
     categoryRepository.save(category);
   }
