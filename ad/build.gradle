@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
 	implementation(
+			'org.springdoc:springdoc-openapi-ui:1.5.2',
 			'com.h2database:h2',
 			'org.springframework.boot:spring-boot-test-autoconfigure',
 			'junit:junit:4.12',

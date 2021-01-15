@@ -17,3 +17,10 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
+
+springdoc:
+  swagger-ui:
+    path: /open-api-definition.html
+    operations-sorter: method
+  api-docs:
+    path: /api-docs
