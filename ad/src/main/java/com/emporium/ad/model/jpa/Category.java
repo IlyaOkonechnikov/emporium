@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "category")
 @Entity
+@Builder
 public class Category {
 
   @Id
@@ -33,6 +34,7 @@ public class Category {
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
+  @Builder.Default
   private Set<Category> subCategories = new HashSet<>();
 
   public Category(String name, Category parentCategory) {
