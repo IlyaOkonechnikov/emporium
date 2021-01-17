@@ -1,11 +1,11 @@
 package com.emporium.auth.service;
 
 import com.emporium.lib.auth.UserDTO;
-import com.emporium.lib.auth.data.User;
+import com.emporium.lib.auth.data.jpa.User;
 
 public interface UserService {
 
-  String create(UserDTO dto);
+  User create(UserDTO dto);
 
   void enable(long id);
 

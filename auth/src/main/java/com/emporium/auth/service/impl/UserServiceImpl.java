@@ -1,12 +1,17 @@
 package com.emporium.auth.service.impl;
 
-import com.emporium.auth.repository.UserRepository;
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
-import com.emporium.lib.auth.data.User;
+import com.emporium.lib.auth.data.jpa.Role;
+import com.emporium.lib.auth.data.jpa.User;
+import com.emporium.lib.auth.data.mapper.UserMapper;
+import com.emporium.lib.auth.repository.RoleRepository;
+import com.emporium.lib.auth.repository.UserRepository;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+  private static final String INVALID_USERNAME_OR_EMAIL_MSG = "Invalid username or email.";
+  private static final String INVALID_PASSWORD_MSG = "Invalid password.";
+
+  private final UserMapper userMapper;
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
+  private final RoleRepository roleRepository;
 //  private final String accountServiceUrl;
 //  private final WebClient webClient;
 
@@ -30,22 +40,27 @@ public class UserServiceImpl implements UserService {
 //  }
 
   @Override
-  public String create(UserDTO dto) {
+  public User create(UserDTO dto) {
 //      return this.webClient
 //          .get()
 //          .uri(this.accountServiceUrl + "/account/api")
 //          .retrieve()
 //          .bodyToMono(String.class)
 //          .block();
-    return null;
+    Role userRole = roleRepository.findByName("ROLE_USER");
+    User user = userMapper.toEntity(dto);
+    user.setRole(userRole);
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    return userRepository.save(user);
   }
 
   public User findByUsernameOrEmailAndValidatePassword(String username, String email, String password) {
-    User user = userRepository.findByUsernameOrEmail(username, email);
-    if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+    User user = userRepository.findByUsernameOrEmail(username, email)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, INVALID_USERNAME_OR_EMAIL_MSG));
+    if (passwordEncoder.matches(password, user.getPassword())) {
       return user;
     }
-    return null;
+    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, INVALID_PASSWORD_MSG);
   }
 
   @Override
