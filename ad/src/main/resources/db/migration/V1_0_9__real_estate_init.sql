@@ -1,28 +1,28 @@
 --Real estate--id409
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (409, 'Real estate', null);
 
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (410, 'All apartments', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (411, 'Apartments in new buildings', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (412, 'Apartments for rent', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (413, 'Daily rate apartments', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (414, 'Houses, summer cottages, cottages', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (415, 'Rooms', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (416, 'Commercial property', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (417, 'Land', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (418, 'Garages and parking spaces', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (419, 'Real estate abroad', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (420, 'Buyers of apartments', 409);
-INSERT INTO public.categories (id, name, parent_id)
+INSERT INTO public.category (id, name, parent_id)
 VALUES (421, 'Apartment tenants', 409);
