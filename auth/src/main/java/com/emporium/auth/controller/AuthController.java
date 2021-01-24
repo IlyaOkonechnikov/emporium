@@ -28,9 +28,15 @@ public class AuthController {
   private final UserService userService;
   private final JwtProvider jwtProvider;
 
+  @GetMapping("/test")
+  @ResponseStatus(HttpStatus.CREATED)
+  public void test() {
+    System.out.println("test");
+  }
+
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
-  public User register(UserDTO dto) {
+  public User register(@RequestBody UserDTO dto) {
     return userService.create(dto);
   }
 
