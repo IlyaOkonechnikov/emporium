@@ -2,6 +2,7 @@ package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,14 +19,17 @@ import java.util.Set;
 @Builder
 public class Category {
 
+  @Schema(description = "Идентификатор")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @Schema(description = "Название")
   @NotNull
   @Column(name = "name")
   private String name;
 
+  @Schema(description = "Родительская категория")
   @ManyToOne
   @JoinColumn(name = "parent_id")
   @JsonIgnore
@@ -33,6 +37,7 @@ public class Category {
   @ToString.Exclude
   private Category parentCategory;
 
+  @Schema(description = "Дочерние категории")
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
