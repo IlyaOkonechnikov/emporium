@@ -6,5 +6,8 @@ plugins {
 group = 'com.emporium.lib'
 
 dependencies {
-    implementation 'javax.validation:validation-api:2.0.1.Final'
+  implementation(
+      'org.springdoc:springdoc-openapi-ui:1.5.2',
+      'javax.validation:validation-api:2.0.1.Final'
+  )
 }
