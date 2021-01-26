@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryDTO {
 
-  @Schema(description = "Идентификатор")
+  @Schema(description = "Identifier")
   private Integer id;
 
-  @Schema(description = "Название")
+  @Schema(description = "Name")
   @Pattern(regexp = "[A-Za-z0-9_]+", message = "Category name must contain only letters and numbers")
   @Size(min = 4, max = 16, message = "Category name must be between 4 and 16 characters")
   private String name;
 
-  @Schema(description = "Идентификатор родительской категории")
+  @Schema(description = "Identifier of parent category")
   @NotNull
   private Integer parentId;
 }
