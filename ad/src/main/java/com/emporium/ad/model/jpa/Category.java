@@ -19,17 +19,17 @@ import java.util.Set;
 @Builder
 public class Category {
 
-  @Schema(description = "Идентификатор")
+  @Schema(description = "Identifier")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Schema(description = "Название")
+  @Schema(description = "Name")
   @NotNull
   @Column(name = "name")
   private String name;
 
-  @Schema(description = "Родительская категория")
+  @Schema(description = "Parent category")
   @ManyToOne
   @JoinColumn(name = "parent_id")
   @JsonIgnore
@@ -37,7 +37,7 @@ public class Category {
   @ToString.Exclude
   private Category parentCategory;
 
-  @Schema(description = "Дочерние категории")
+  @Schema(description = "Child categories")
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
