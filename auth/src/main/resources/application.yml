@@ -19,9 +19,3 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
-okta:
-  oauth2:
-    clientId: ${CLIENT_ID}
-    clientSecret: ${CLIENT_SECRET}
-    issuer: ${TOKEN_ISSUER}
-    audience: ${ACCOUNT_SERVICE_URL}

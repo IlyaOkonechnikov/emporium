@@ -3,7 +3,8 @@ package com.emporium.auth.controller;
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
 import com.emporium.lib.auth.config.jwt.JwtProvider;
-import com.emporium.lib.auth.data.User;
+import com.emporium.lib.auth.data.dto.LoginResponseDTO;
+import com.emporium.lib.auth.data.jpa.User;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +28,22 @@ public class AuthController {
   private final UserService userService;
   private final JwtProvider jwtProvider;
 
-  @GetMapping("/register")
+  @GetMapping("/test")
   @ResponseStatus(HttpStatus.CREATED)
-  public String register() {
-    UserDTO dto = new UserDTO();
+  public void test() {
+    System.out.println("test");
+  }
+
+  @PostMapping("/register")
+  @ResponseStatus(HttpStatus.CREATED)
+  public User register(@RequestBody UserDTO dto) {
     return userService.create(dto);
   }
 
   @PostMapping("/login")
-  public String login(@RequestBody @Valid UserDTO dto) {
+  public LoginResponseDTO login(@RequestBody @Valid UserDTO dto) {
     User user = userService.findByUsernameOrEmailAndValidatePassword(dto.getUsername(), dto.getEmail(), dto.getPassword());
-    return jwtProvider.generateToken(user.getUsername());
+    return LoginResponseDTO.of(jwtProvider.generateToken(user.getUsername()));
   }
 
   @GetMapping("/logout")
