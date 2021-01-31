@@ -1,5 +1,4 @@
 plugins {
-  id "io.freefair.lombok" version "${freefair_lombok_version}"
   id 'java-library'
 }
 
@@ -8,6 +7,10 @@ group = 'com.emporium.lib'
 dependencies {
   implementation(
       'org.springdoc:springdoc-openapi-ui:1.5.2',
-      'javax.validation:validation-api:2.0.1.Final'
+      "javax.validation:validation-api:$javax_validation_version",
+      "org.mapstruct:mapstruct-processor:$mapstruct_version",
+      "org.projectlombok:lombok:$lombok_version"
   )
+  annotationProcessor ("org.projectlombok:lombok:$lombok_version")
+  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
 }

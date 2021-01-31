@@ -2,7 +2,6 @@ plugins {
   id 'io.spring.dependency-management' version "${spring_management_version}"
   id 'org.springframework.boot' version "${spring_version}"
   id 'com.palantir.docker' version "${palantir_docker_version}"
-  id 'io.freefair.lombok' version "${freefair_lombok_version}"
 }
 
 group = 'com.emporium'
@@ -17,14 +16,17 @@ dependencies {
       "org.postgresql:postgresql:$postgresql_version",
 //      other
       "org.mapstruct:mapstruct:$mapstruct_version",
-      'commons-io:commons-io:2.7'
+      'commons-io:commons-io:2.7',
+      "org.mapstruct:mapstruct-processor:$mapstruct_version",
+      "org.projectlombok:lombok:$lombok_version"
   )
   testImplementation(
       'org.springframework.boot:spring-boot-starter-test',
       'junit:junit:4.13.1'
   )
-  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
   implementation project(':auth-lib')
+  annotationProcessor ("org.projectlombok:lombok:$lombok_version")
+  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
 }
 
 docker {

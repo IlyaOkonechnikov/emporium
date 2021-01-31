@@ -1,5 +1,4 @@
 plugins {
-  id "io.freefair.lombok" version "${freefair_lombok_version}"
   id 'java-library'
 }
 
@@ -20,9 +19,12 @@ dependencies {
       'com.fasterxml.jackson.core:jackson-databind:2.12.1',
       'javax.persistence:javax.persistence-api:2.2',
       "org.mapstruct:mapstruct:$mapstruct_version",
-      'io.jsonwebtoken:jjwt:0.9.1'
+      'io.jsonwebtoken:jjwt:0.9.1',
+      "org.mapstruct:mapstruct-processor:$mapstruct_version",
+      "org.projectlombok:lombok:$lombok_version"
   )
-  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
   compileOnly('javax.servlet:javax.servlet-api:4.0.1')
-  api('javax.validation:validation-api:2.0.1.Final')
+  api("javax.validation:validation-api:$javax_validation_version")
+  annotationProcessor("org.projectlombok:lombok:$lombok_version")
+  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
 }
