@@ -7,10 +7,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -20,35 +21,40 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import static org.springframework.util.StringUtils.hasText;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class JwtFilter implements Filter {
 
-  public static final String AUTHORIZATION = "Authorization";
+  public static final String AUTHORIZATION_HEADER = "Authorization";
+  public static final String BEARER_PREFIX = "Bearer";
 
   private final JwtProvider jwtProvider;
   private final CustomUserDetailsService customUserDetailsService;
 
   @Override
-  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException,
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
-    logger.info("do filter...");
-    String token = getTokenFromRequest((HttpServletRequest) servletRequest);
-    if (!token.isEmpty()) {
-      String userLogin = jwtProvider.getLoginFromToken(token);
-      CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
-      UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null,
-          customUserDetails.getAuthorities());
-      SecurityContextHolder.getContext().setAuthentication(auth);
+    try {
+      String token = getTokenFromRequest((HttpServletRequest) request);
+      if (!token.isEmpty()) {
+        String userLogin = jwtProvider.getLoginFromToken(token);
+        CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null,
+            customUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+      }
+    } catch (Exception e) {
+      PrintWriter out = response.getWriter();
+      out.print(e.getMessage());
+      out.flush();
+      return;
     }
-    filterChain.doFilter(servletRequest, servletResponse);
+    chain.doFilter(request, response);
   }
 
   private String getTokenFromRequest(HttpServletRequest request) {
-    String bearer = request.getHeader(AUTHORIZATION);
-    return StringUtils.hasText(bearer) && bearer.startsWith("Bearer ") ? bearer.substring(7) : "";
+    String bearer = request.getHeader(AUTHORIZATION_HEADER);
+    return StringUtils.hasText(bearer) && bearer.startsWith(BEARER_PREFIX) ? bearer.substring(7) : "";
   }
 }

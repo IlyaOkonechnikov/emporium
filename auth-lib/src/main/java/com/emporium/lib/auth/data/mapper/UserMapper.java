@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-  @Mapping(target = "id", ignore = true)
   @Mapping(target = "enabled", ignore = true)
   User toEntity(UserDTO dto);
 }
