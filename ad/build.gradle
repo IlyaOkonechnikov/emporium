@@ -1,5 +1,5 @@
 plugins {
-  id "org.flywaydb.flyway" version "7.3.2"
+  id "org.flywaydb.flyway" version "${flywaydb_version}"
   id 'io.spring.dependency-management' version "${spring_management_version}"
   id 'org.springframework.boot' version "${spring_version}"
   id 'com.palantir.docker' version "${palantir_docker_version}"
@@ -21,24 +21,29 @@ repositories {
 
 dependencies {
   implementation(
-      'org.springdoc:springdoc-openapi-ui:1.5.2',
-      'com.h2database:h2',
-      'org.springframework.boot:spring-boot-test-autoconfigure',
-      'junit:junit:4.12',
-      'org.flywaydb:flyway-core',
-      "org.postgresql:postgresql:$postgresql_version",
+//      Spring
       'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.springframework.boot:spring-boot-starter-web',
-      'commons-io:commons-io:2.7',
-      "javax.validation:validation-api:$javax_validation_version",
-			"org.mapstruct:mapstruct:$mapstruct_version",
-			"org.mapstruct:mapstruct-processor:$mapstruct_version",
-      "org.projectlombok:lombok:$lombok_version"
+//      Database
+      "org.postgresql:postgresql:$postgresql_version",
+      'org.flywaydb:flyway-core',
+      'org.springdoc:springdoc-openapi-ui:1.5.2',
+//      Other
+      "org.mapstruct:mapstruct-processor:$mapstruct_version",
+      "org.mapstruct:mapstruct:$mapstruct_version",
+      "org.projectlombok:lombok:$lombok_version",
+      'commons-io:commons-io:2.7'
+  )
+  testImplementation(
+      'org.springframework.boot:spring-boot-test-autoconfigure',
+      'org.springframework.boot:spring-boot-starter-test',
+      'com.h2database:h2',
+      'junit:junit:4.12'
   )
   annotationProcessor("org.projectlombok:lombok:$lombok_version")
   annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
-  testImplementation('org.springframework.boot:spring-boot-starter-test')
   implementation project(':ad-lib')
+  implementation project(':common-lib')
 }
 
 test {

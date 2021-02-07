@@ -1,6 +1,6 @@
 package com.emporium.ad.controller;
 
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.Category;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

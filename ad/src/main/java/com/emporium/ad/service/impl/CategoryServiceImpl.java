@@ -1,31 +1,31 @@
 package com.emporium.ad.service.impl;
 
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.exception.CategoryException;
+import com.emporium.ad.exception.CategoryExceptionReason;
+import com.emporium.ad.model.Category;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-  private static final String CATEGORY_NOT_FOUND_MSG = "Category not found.";
   private final CategoryRepository categoryRepository;
 
-  @Transactional
   @Override
+  @Transactional
   public List<Category> findAll() {
     log.debug("findAll() - start");
     List<Category> categories = categoryRepository.findAll();
@@ -33,8 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
     return categories;
   }
 
-  @Transactional
   @Override
+  @Transactional
   public List<Category> findMainCategories() {
     log.debug("findParents() - start");
     List<Category> parents = categoryRepository.findMainCategories();
@@ -42,22 +42,22 @@ public class CategoryServiceImpl implements CategoryService {
     return parents;
   }
 
-  @Transactional(readOnly = true)
   @Override
+  @Transactional(readOnly = true)
   public Category findById(int id) {
     log.debug("findById() - start. id: {}", id);
     Optional<Category> optionalCategory = categoryRepository.findById(id);
     if (optionalCategory.isEmpty()) {
       log.error("An error occurred due to the attempt to find a nonexistent category. id: {}", id);
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, CATEGORY_NOT_FOUND_MSG);
+      throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     Category category = optionalCategory.get();
     log.debug("findById() - end. category: {}", category);
     return category;
   }
 
-  @Transactional
   @Override
+  @Transactional
   public String create(CategoryDTO dto) {
     log.debug("create() - start. dto: {}", dto);
     Category category = new Category(dto.getName(), Category.builder().id(dto.getId()).build());
@@ -67,14 +67,14 @@ public class CategoryServiceImpl implements CategoryService {
     return id;
   }
 
-  @Transactional
   @Override
+  @Transactional
   public void update(CategoryDTO dto) {
     log.debug("update() - start. dto: {}", dto);
     Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
     if (optionalCategory.isEmpty()) {
       log.error("An error occurred due to the attempt to update a nonexistent category. id: {}", dto.getId());
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, CATEGORY_NOT_FOUND_MSG);
+      throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     Category category = optionalCategory.get();
     category.setName(dto.getName());
@@ -83,13 +83,13 @@ public class CategoryServiceImpl implements CategoryService {
     categoryRepository.save(category);
   }
 
-  @Transactional
   @Override
+  @Transactional
   public void delete(int id) {
     log.debug("delete() - start. id: {}", id);
     if (categoryRepository.findById(id).isEmpty()) {
       log.error("An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, CATEGORY_NOT_FOUND_MSG);
+      throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     log.debug("delete() - end. id: {}", id);
     categoryRepository.deleteById(id);

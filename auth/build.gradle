@@ -22,6 +22,7 @@ dependencies {
       "org.projectlombok:lombok:$lombok_version"
   )
   implementation project(':auth-lib')
+  implementation project(':common-lib')
   testImplementation('org.springframework.boot:spring-boot-starter-test')
   annotationProcessor("org.projectlombok:lombok:$lombok_version")
   annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")

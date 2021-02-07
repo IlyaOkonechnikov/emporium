@@ -2,7 +2,6 @@ package com.emporium.auth.controller;
 
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
-import com.emporium.lib.auth.config.jwt.JwtProvider;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.User;
 
@@ -26,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
   private final UserService userService;
-  private final JwtProvider jwtProvider;
 
   @GetMapping("/test")
   @ResponseStatus(HttpStatus.CREATED)
@@ -42,8 +40,7 @@ public class AuthController {
 
   @PostMapping("/login")
   public LoginResponseDTO login(@RequestBody @Valid UserDTO dto) {
-    User user = userService.findByUsernameOrEmailAndValidatePassword(dto.getUsername(), dto.getEmail(), dto.getPassword());
-    return LoginResponseDTO.of(jwtProvider.generateToken(user.getUsername()));
+    return userService.login(dto);
   }
 
   @GetMapping("/logout")

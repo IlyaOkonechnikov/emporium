@@ -25,6 +25,7 @@ dependencies {
       'junit:junit:4.13.1'
   )
   implementation project(':auth-lib')
+  implementation project(':common-lib')
   annotationProcessor ("org.projectlombok:lombok:$lombok_version")
   annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
 }

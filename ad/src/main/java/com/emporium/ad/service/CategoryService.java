@@ -1,6 +1,6 @@
 package com.emporium.ad.service;
 
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.Category;
 import com.emporium.lib.category.CategoryDTO;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.emporium.ad.controller;
 
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.Category;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
 
@@ -18,7 +18,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -30,7 +30,7 @@ public class CategoryController {
     return categoryService.findAll();
   }
 
-  @GetMapping("/main-categories")
+  @GetMapping("/main")
   @DefaultResponses
   public List<Category> findMainCategories() {
     return categoryService.findMainCategories();

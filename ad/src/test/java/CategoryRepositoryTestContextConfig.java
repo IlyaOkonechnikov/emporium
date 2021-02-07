@@ -1,4 +1,4 @@
-package com.emporium.ad.repository;
+import com.emporium.ad.repository.CategoryRepository;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;

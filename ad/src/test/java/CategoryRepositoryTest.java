@@ -1,6 +1,5 @@
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.Category;
 import com.emporium.ad.repository.CategoryRepository;
-import com.emporium.ad.repository.CategoryRepositoryTestContextConfig;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

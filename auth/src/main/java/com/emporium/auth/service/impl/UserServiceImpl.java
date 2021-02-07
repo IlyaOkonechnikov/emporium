@@ -1,17 +1,19 @@
 package com.emporium.auth.service.impl;
 
+import com.emporium.auth.exception.AuthException;
+import com.emporium.auth.exception.AuthExceptionReason;
 import com.emporium.auth.service.UserService;
 import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.config.jwt.JwtProvider;
+import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.Role;
 import com.emporium.lib.auth.data.jpa.User;
 import com.emporium.lib.auth.data.mapper.UserMapper;
 import com.emporium.lib.auth.repository.RoleRepository;
 import com.emporium.lib.auth.repository.UserRepository;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  private static final String INVALID_USERNAME_OR_EMAIL_MSG = "Invalid username or email.";
-  private static final String INVALID_PASSWORD_MSG = "Invalid password.";
-
   private final UserMapper userMapper;
+  private final JwtProvider jwtProvider;
   private final UserRepository userRepository;
-  private final PasswordEncoder passwordEncoder;
   private final RoleRepository roleRepository;
+  private final PasswordEncoder passwordEncoder;
 //  private final String accountServiceUrl;
 //  private final WebClient webClient;
-
 
 
 //  public UserServiceImpl(@Value("${okta.oauth2.audience}") String accountServiceUrl,
@@ -54,13 +53,23 @@ public class UserServiceImpl implements UserService {
     return userRepository.save(user);
   }
 
-  public User findByUsernameOrEmailAndValidatePassword(String username, String email, String password) {
-    User user = userRepository.findByUsernameOrEmail(username, email)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, INVALID_USERNAME_OR_EMAIL_MSG));
-    if (passwordEncoder.matches(password, user.getPassword())) {
-      return user;
+  public LoginResponseDTO login(UserDTO dto) {
+    User user = validateCredentialsAndGetUser(dto.getUsername(), dto.getEmail());
+    if (passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
+      return LoginResponseDTO.of(jwtProvider.generateToken(user.getUsername()));
     }
-    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, INVALID_PASSWORD_MSG);
+    throw new AuthException(AuthExceptionReason.INVALID_PASSWORD);
+  }
+
+  private User validateCredentialsAndGetUser(String username, String email) {
+    if (username == null && email == null) {
+      throw new AuthException(AuthExceptionReason.EMAIL_AND_PASSWORD_ARE_NULL);
+    } else if (username != null) {
+      return userRepository.findByUsername(username)
+          .orElseThrow(() -> new AuthException(AuthExceptionReason.NON_EXISTENT_USERNAME));
+    }
+    return userRepository.findByEmail(email)
+        .orElseThrow(() -> new AuthException(AuthExceptionReason.NON_EXISTENT_EMAIL));
   }
 
   @Override
