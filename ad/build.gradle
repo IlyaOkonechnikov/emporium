@@ -1,19 +1,11 @@
 plugins {
-  id "org.flywaydb.flyway" version "${flywaydb_version}"
   id 'io.spring.dependency-management' version "${spring_management_version}"
-  id 'org.springframework.boot' version "${spring_version}"
   id 'com.palantir.docker' version "${palantir_docker_version}"
-  id 'java'
+  id 'org.springframework.boot' version "${spring_version}"
+  id "org.flywaydb.flyway" version "${flywaydb_version}"
 }
 
 group = 'com.emporium'
-sourceCompatibility = '13'
-
-configurations {
-  compileOnly {
-    extendsFrom annotationProcessor
-  }
-}
 
 repositories {
   mavenCentral()
@@ -26,8 +18,8 @@ dependencies {
       'org.springframework.boot:spring-boot-starter-web',
 //      Database
       "org.postgresql:postgresql:$postgresql_version",
-      'org.flywaydb:flyway-core',
       'org.springdoc:springdoc-openapi-ui:1.5.2',
+      'org.flywaydb:flyway-core',
 //      Other
       "org.mapstruct:mapstruct-processor:$mapstruct_version",
       "org.mapstruct:mapstruct:$mapstruct_version",
