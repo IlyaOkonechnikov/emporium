@@ -2,7 +2,7 @@ package com.emporium.ad.controller;
 
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.service.CategoryService;
-import com.emporium.lib.category.CategoryDTO;
+import com.emporium.ad.lib.dto.CategoryDTO;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

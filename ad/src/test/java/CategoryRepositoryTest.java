@@ -1,6 +1,6 @@
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
-import com.emporium.ad.repository.CategoryRepositoryTestContextConfig;
+import config.RepositoryTestConfig;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {CategoryRepositoryTestContextConfig.class})
+@ContextConfiguration(classes = {RepositoryTestConfig.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class CategoryRepositoryTest {
 

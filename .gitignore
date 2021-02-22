@@ -32,6 +32,7 @@ logs/*
 ### Local Files ###
 /auth/src/main/resources/application-local.yml
 /account/src/main/resources/application-local.yml
+/ad/src/main/resources/application-local.yml
 /auth/lombok.config
 /account/lombok.config
 /auth-lib/lombok.config

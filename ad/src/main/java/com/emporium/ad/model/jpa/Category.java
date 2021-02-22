@@ -1,22 +1,24 @@
 package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
-import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(exclude = {"parentCategory", "subCategories"})
+@ToString(exclude = {"parentCategory", "subCategories"})
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "category")
 @Entity
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Category {
 
   @Schema(description = "Identifier")
@@ -25,7 +27,6 @@ public class Category {
   private Integer id;
 
   @Schema(description = "Name")
-  @NotNull
   @Column(name = "name")
   private String name;
 
@@ -33,16 +34,20 @@ public class Category {
   @ManyToOne
   @JoinColumn(name = "parent_id")
   @JsonIgnore
-  @EqualsAndHashCode.Exclude
-  @ToString.Exclude
   private Category parentCategory;
 
   @Schema(description = "Child categories")
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-  @EqualsAndHashCode.Exclude
-  @ToString.Exclude
-  @Builder.Default
-  private Set<Category> subCategories = new HashSet<>();
+  private Set<Category> subCategories;
+
+  @Schema(description = "Available fields for ad filling")
+  @ManyToMany
+  @JoinTable(
+      name = "category_field",
+      joinColumns = @JoinColumn(name = "category_id"),
+      inverseJoinColumns = @JoinColumn(name = "field_id")
+  )
+  private Set<Field> fields;
 
   public Category(String name, Category parentCategory) {
     this.name = name;

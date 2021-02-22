@@ -3,7 +3,7 @@ package com.emporium.ad.service.impl;
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.CategoryService;
-import com.emporium.lib.category.CategoryDTO;
+import com.emporium.ad.lib.dto.CategoryDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
