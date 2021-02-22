@@ -9,9 +9,9 @@ public class AdFieldDTO {
 
   private Long id;
 
-  @NotNull(message = "adfield.validation.name")
+  @NotNull
   private String name;
 
-  @NotNull(message = "adfield.validation.value")
+  @NotNull
   private String value;
 }

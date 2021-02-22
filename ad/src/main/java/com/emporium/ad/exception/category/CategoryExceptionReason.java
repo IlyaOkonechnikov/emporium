@@ -1,4 +1,4 @@
-package com.emporium.ad.exception;
+package com.emporium.ad.exception.category;
 
 import com.emporium.lib.common.ExceptionReason;
 

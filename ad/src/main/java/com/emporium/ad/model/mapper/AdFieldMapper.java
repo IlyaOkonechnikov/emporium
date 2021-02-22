@@ -17,8 +17,10 @@ public interface AdFieldMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "textValue", ignore = true)
   @Mapping(target = "numericalValue", ignore = true)
+  @Mapping(target = "ad", ignore = true)
   AdField toEntity(AdFieldDTO dto);
 
+  @Mapping(target = "value", ignore = true)
   AdFieldDTO toDTO(AdField adField);
 
   @AfterMapping

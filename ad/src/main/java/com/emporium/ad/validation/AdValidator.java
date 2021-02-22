@@ -1,16 +1,15 @@
 package com.emporium.ad.validation;
 
+import com.emporium.ad.exception.ad.AdException;
+import com.emporium.ad.exception.ad.AdExceptionReason;
 import com.emporium.ad.lib.dto.AdDTO;
 import com.emporium.ad.lib.dto.AdFieldDTO;
-import com.emporium.ad.lib.service.MessageService;
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.model.jpa.Field;
 import com.emporium.ad.service.CategoryService;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,14 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 public class AdValidator {
 
   private final CategoryService categoryService;
-  private final MessageService messageService;
 
   //TODO: сделать валиадацию на дублирование полей
   public void fieldsValidation(AdDTO dto) {
     Category category = categoryService.findById(dto.getCategoryId());
     Set<Field> fields = category.getFields();
     Set<AdFieldDTO> adFields = dto.getAdFields();
-    fieldsSizeValidation(fields, adFields);
+    fieldsCountValidation(fields, adFields);
     fieldsNameValidation(fields, adFields, category);
     fieldValueValidation(fields, adFields);
   }
@@ -46,13 +44,10 @@ public class AdValidator {
    * @param fields   - fields of the selected category
    * @param adFields - ad fields
    */
-  private void fieldsSizeValidation(Set<Field> fields, Set<AdFieldDTO> adFields) {
+  private void fieldsCountValidation(Set<Field> fields, Set<AdFieldDTO> adFields) {
     if (fields.size() < adFields.size()) {
-      log.error(messageService.get("ad.validation.fields.count.invalid", fields.size(), adFields.size()));
-      throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          messageService.get("ad.validation.fields.count.invalid", fields.size(), adFields.size())
-      );
+      log.error("An error occurred due to the attempt to create/update an ad with fields count. count: {}", adFields.size());
+      throw new AdException(AdExceptionReason.AD_FIELD_COUNT_INVALID);
     }
   }
 
@@ -68,13 +63,14 @@ public class AdValidator {
   private void fieldsNameValidation(Set<Field> fields, Set<AdFieldDTO> adFields, Category category) {
     adFields.stream()
         .map(AdFieldDTO::getName)
-        .forEach(n -> {
-          if (!fields.stream().map(Field::getName).collect(Collectors.toList()).contains(n)) {
-            log.error(messageService.get("ad.validation.fields.name.invalid", n, category.getName()));
-            throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                messageService.get("ad.validation.fields.name.invalid", n, category.getName())
+        .forEach(fieldName -> {
+          if (!fields.stream().map(Field::getName).collect(Collectors.toList()).contains(fieldName)) {
+            log.error(
+                "An error occurred due to the attempt to create/update an ad with field name. name: {}, category: {}",
+                fieldName,
+                category.getName()
             );
+            throw new AdException(AdExceptionReason.AD_FIELD_NAME_INVALID);
           }
         });
   }
@@ -96,22 +92,13 @@ public class AdValidator {
           String value = adFieldDTO.getValue();
           String name = adFieldDTO.getName();
           boolean numeric = StringUtils.isNumeric(value);
-          if (map.get(name)) {
-            if (!numeric) {
-              log.error(messageService.get("ad.validation.fields.value.invalid", value, name));
-              throw new ResponseStatusException(
-                  HttpStatus.INTERNAL_SERVER_ERROR,
-                  messageService.get("ad.validation.fields.value.invalid", value, name)
-              );
-            }
-          } else {
-            if (numeric) {
-              log.error(messageService.get("ad.validation.fields.value.invalid", value, name));
-              throw new ResponseStatusException(
-                  HttpStatus.INTERNAL_SERVER_ERROR,
-                  messageService.get("ad.validation.fields.value.invalid", value, name)
-              );
-            }
+          if ((map.get(name) && !numeric) || (!map.get(name) && numeric)) {
+            log.error(
+                "An error occurred due to the attempt to create/update an ad with field value for field name. value: {}, name: {}",
+                value,
+                name
+            );
+            throw new AdException(AdExceptionReason.AD_FIELD_VALUE_INVALID);
           }
         }
     );

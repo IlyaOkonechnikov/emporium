@@ -1,7 +1,8 @@
 package com.emporium.ad.service.impl;
 
+import com.emporium.ad.exception.ad.AdException;
+import com.emporium.ad.exception.ad.AdExceptionReason;
 import com.emporium.ad.lib.dto.AdDTO;
-import com.emporium.ad.lib.service.MessageService;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
@@ -9,10 +10,8 @@ import com.emporium.ad.service.AdService;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.ad.validation.AdValidator;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -31,7 +30,6 @@ public class AdServiceImpl implements AdService {
   private final CategoryService categoryService;
   private final AdMapper mapper;
   private final AdValidator adValidator;
-  private final MessageService messageService;
 
   @Override
   public List<Ad> findAll() {
@@ -46,8 +44,8 @@ public class AdServiceImpl implements AdService {
     log.debug("findById() - start. id: {}", id);
     Optional<Ad> optionalAd = adRepository.findById(id);
     if (optionalAd.isEmpty()) {
-      log.error(messageService.get("ad.id.not.found", id), id);
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, messageService.get("ad.id.not.found", id));
+      log.error("An error occurred due to the attempt to find a nonexistent ad. id: {}", id);
+      throw new AdException(AdExceptionReason.AD_NOT_FOUND);
     }
     Ad ad = optionalAd.get();
     log.debug("findById() - end. ad: {}", ad);
@@ -77,12 +75,13 @@ public class AdServiceImpl implements AdService {
     ad.setUpdateDate(Instant.now());
   }
 
+  @Transactional
   @Override
   public void delete(long id) {
     log.debug("delete() - start. id: {}", id);
     if (!adRepository.existsById(id)) {
-      log.error(messageService.get("ad.id.not.found", id), id);
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, messageService.get("ad.id.not.found", id));
+      log.error("An error occurred due to the attempt to find a nonexistent ad. id: {}", id);
+      throw new AdException(AdExceptionReason.AD_NOT_FOUND);
     }
     log.debug("delete() - end. id: {}", id);
     adRepository.deleteById(id);
