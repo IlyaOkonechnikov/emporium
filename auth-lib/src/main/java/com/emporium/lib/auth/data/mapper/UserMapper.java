@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "role", ignore = true)
   @Mapping(target = "enabled", ignore = true)
   User toEntity(UserDTO dto);
 }

@@ -13,5 +13,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = {"com.emporium.ad.model.jpa"})
 @EnableJpaRepositories(basePackages = "com.emporium.ad.repository", includeFilters =
 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = CategoryRepository.class))
-public class RepositoryTestConfig {
+public class CategoryRepositoryTestConfig {
 }

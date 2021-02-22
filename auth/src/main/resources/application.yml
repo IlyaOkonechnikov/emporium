@@ -4,18 +4,26 @@ server:
     include-message: always
 
 spring:
-  data:
-    mongodb:
-      host: ${MONGO_HOST}
-      port: ${MONGO_PORT}
-      database: ${MONGO_DATABASE}
-      auto-index-creation: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  datasource:
+    url: ${AUTH_DATASOURCE_URL}
+    username: ${AUTH_DATASOURCE_USERNAME}
+    password: ${AUTH_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+  flyway:
+    locations: classpath:db/migration
+    mixed: true
   mail:
-    host: smtp.gmail.com
-    port: 587
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-    confirmation-url: ${EMAIL_CONFIRMATION_URL}
+    confirmation-url: ${MAIL_CONFIRMATION_URL}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true

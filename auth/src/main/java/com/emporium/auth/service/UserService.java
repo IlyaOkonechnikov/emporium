@@ -1,6 +1,7 @@
 package com.emporium.auth.service;
 
 import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.User;
 
 public interface UserService {
@@ -9,5 +10,5 @@ public interface UserService {
 
   void enable(long id);
 
-  User findByUsernameOrEmailAndValidatePassword(String username, String email, String password);
+  LoginResponseDTO login(UserDTO dto);
 }

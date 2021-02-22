@@ -1,50 +1,43 @@
 plugins {
-	id "org.flywaydb.flyway" version "7.3.2"
-	id 'io.spring.dependency-management' version "${spring_management_version}"
-	id 'org.springframework.boot' version "${spring_version}"
-	id 'com.palantir.docker' version "${palantir_docker_version}"
-	id "io.freefair.lombok" version "${freefair_lombok_version}"
-	id 'java'
+  id 'io.spring.dependency-management' version "${spring_management_version}"
+  id 'com.palantir.docker' version "${palantir_docker_version}"
+  id 'org.springframework.boot' version "${spring_version}"
+  id "org.flywaydb.flyway" version "${flywaydb_version}"
 }
 
 group = 'com.emporium'
-sourceCompatibility = '13'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-	implementation(
-			'org.springframework.boot:spring-boot-starter-validation',
-			'org.springdoc:springdoc-openapi-ui:1.5.2',
-			'com.h2database:h2',
-			'org.springframework.boot:spring-boot-test-autoconfigure',
-			'junit:junit:4.12',
-			'org.flywaydb:flyway-core',
-			"org.postgresql:postgresql:$postgresql_version",
-			'org.springframework.boot:spring-boot-starter-data-jpa',
-			'org.springframework.boot:spring-boot-starter-web',
-			"org.mapstruct:mapstruct:$mapstruct_version",
-			'commons-io:commons-io:2.7',
-			'javax.validation:validation-api:2.0.1.Final'
-	)
-
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-
-	annotationProcessor('org.mapstruct:mapstruct-processor:1.3.1.Final')
-
-	implementation project(':ad-lib')
-
-	implementation project(':account')
+  implementation(
+//      Spring
+      'org.springframework.boot:spring-boot-starter-data-jpa',
+      'org.springframework.boot:spring-boot-starter-web',
+//      Database
+      "org.postgresql:postgresql:$postgresql_version",
+      'org.springdoc:springdoc-openapi-ui:1.5.2',
+      'org.flywaydb:flyway-core',
+//      Other
+      "org.mapstruct:mapstruct-processor:$mapstruct_version",
+      "org.mapstruct:mapstruct:$mapstruct_version",
+      "org.projectlombok:lombok:$lombok_version",
+      'commons-io:commons-io:2.7'
+  )
+  testImplementation(
+      'org.springframework.boot:spring-boot-test-autoconfigure',
+      'org.springframework.boot:spring-boot-starter-test',
+      'com.h2database:h2',
+      'junit:junit:4.12'
+  )
+  annotationProcessor("org.projectlombok:lombok:$lombok_version")
+  annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
+  implementation project(':ad-lib')
+  implementation project(':common-lib')
 }
 
 test {
-	useJUnitPlatform()
+  useJUnitPlatform()
 }

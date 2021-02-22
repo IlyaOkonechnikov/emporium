@@ -1,9 +1,7 @@
 package com.emporium.lib.auth.config.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -16,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class JwtProvider {
+
+  public static final String TOKEN_PARSING_ERROR_MSG = "An error occurred while parsing the token";
 
   @Value("$(jwt.secret)")
   private String jwtSecret;
@@ -34,7 +34,7 @@ public class JwtProvider {
     try {
       return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Account not found.");
+      throw new IllegalArgumentException(TOKEN_PARSING_ERROR_MSG);
     }
   }
 }

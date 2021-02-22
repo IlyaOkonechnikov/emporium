@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
 
-  private long id;
-
   @Pattern(regexp = "[A-Za-z0-9_]+", message = "Username must contain only letters and numbers")
   @Size(min = 4, max = 16, message = "Username must be between 4 and 16 characters")
   private String username;
