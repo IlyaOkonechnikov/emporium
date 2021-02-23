@@ -1,4 +1,4 @@
-package com.emporium.ad.lib.dto;
+package com.emporium.lib.ad;
 
 import javax.validation.constraints.NotNull;
 

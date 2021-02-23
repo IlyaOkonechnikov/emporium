@@ -1,7 +1,7 @@
 package com.emporium.ad.model.mapper;
 
-import com.emporium.ad.lib.dto.AdDTO;
-import com.emporium.ad.model.jpa.Ad;
+import com.emporium.lib.ad.AdDTO;
+import com.emporium.ad.model.Ad;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;

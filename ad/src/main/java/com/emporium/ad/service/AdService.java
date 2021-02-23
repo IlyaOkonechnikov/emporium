@@ -1,7 +1,7 @@
 package com.emporium.ad.service;
 
-import com.emporium.ad.lib.dto.AdDTO;
-import com.emporium.ad.model.jpa.Ad;
+import com.emporium.lib.ad.AdDTO;
+import com.emporium.ad.model.Ad;
 
 import java.util.List;
 

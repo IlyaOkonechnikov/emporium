@@ -2,10 +2,10 @@ package com.emporium.ad.validation;
 
 import com.emporium.ad.exception.ad.AdException;
 import com.emporium.ad.exception.ad.AdExceptionReason;
-import com.emporium.ad.lib.dto.AdDTO;
-import com.emporium.ad.lib.dto.AdFieldDTO;
-import com.emporium.ad.model.jpa.Category;
-import com.emporium.ad.model.jpa.Field;
+import com.emporium.lib.ad.AdDTO;
+import com.emporium.lib.ad.AdFieldDTO;
+import com.emporium.ad.model.Category;
+import com.emporium.ad.model.Field;
 import com.emporium.ad.service.CategoryService;
 
 import org.apache.commons.lang3.StringUtils;

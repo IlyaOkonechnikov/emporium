@@ -1,8 +1,7 @@
-package com.emporium.ad.lib.dto;
+package com.emporium.lib.ad;
 
 import java.util.Set;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;

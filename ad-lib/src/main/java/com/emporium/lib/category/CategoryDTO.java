@@ -1,4 +1,4 @@
-package com.emporium.ad.lib.dto;
+package com.emporium.lib.category;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -1,6 +1,6 @@
 package com.emporium.ad.repository;
 
-import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.Category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

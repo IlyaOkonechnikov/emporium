@@ -1,4 +1,4 @@
-package com.emporium.ad.model.jpa;
+package com.emporium.ad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
