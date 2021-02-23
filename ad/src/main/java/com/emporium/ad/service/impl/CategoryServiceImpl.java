@@ -1,7 +1,7 @@
 package com.emporium.ad.service.impl;
 
-import com.emporium.ad.exception.category.CategoryException;
-import com.emporium.ad.exception.category.CategoryExceptionReason;
+import com.emporium.ad.exception.CategoryException;
+import com.emporium.ad.exception.CategoryExceptionReason;
 import com.emporium.ad.model.Category;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.CategoryService;
