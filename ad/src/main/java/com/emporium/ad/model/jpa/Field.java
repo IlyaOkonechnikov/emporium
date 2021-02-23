@@ -1,4 +1,4 @@
-package com.emporium.ad.model;
+package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

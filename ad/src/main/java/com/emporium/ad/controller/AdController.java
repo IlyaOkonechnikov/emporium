@@ -1,7 +1,7 @@
 package com.emporium.ad.controller;
 
 import com.emporium.lib.ad.AdDTO;
-import com.emporium.ad.model.Ad;
+import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.service.AdService;
 
 import org.springframework.http.HttpStatus;
