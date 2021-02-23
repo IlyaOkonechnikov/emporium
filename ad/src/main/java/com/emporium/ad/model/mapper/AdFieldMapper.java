@@ -1,7 +1,7 @@
 package com.emporium.ad.model.mapper;
 
 import com.emporium.lib.ad.AdFieldDTO;
-import com.emporium.ad.model.AdField;
+import com.emporium.ad.model.jpa.AdField;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;

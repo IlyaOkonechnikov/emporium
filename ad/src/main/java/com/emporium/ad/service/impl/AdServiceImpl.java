@@ -3,7 +3,7 @@ package com.emporium.ad.service.impl;
 import com.emporium.ad.exception.ad.AdException;
 import com.emporium.ad.exception.ad.AdExceptionReason;
 import com.emporium.lib.ad.AdDTO;
-import com.emporium.ad.model.Ad;
+import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
 import com.emporium.ad.service.AdService;

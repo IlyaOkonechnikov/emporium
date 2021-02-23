@@ -1,4 +1,4 @@
-import com.emporium.ad.model.Category;
+import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
 
 import org.junit.jupiter.api.BeforeEach;
