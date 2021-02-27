@@ -30,8 +30,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdController {
 
-  //TODO: добавить ControllerAdvice для перехвата валидационных сообщений
-
   private final AdService service;
 
   @DefaultResponses
@@ -60,7 +58,7 @@ public class AdController {
   @DefaultResponses
   @PutMapping("/{id}")
   public void update(
-      @Parameter(description = "id of category to be updated")
+      @Parameter(description = "id of ad to be updated")
       @PathVariable long id,
       @RequestBody @Valid AdDTO dto) {
     service.update(id, dto);
@@ -69,7 +67,7 @@ public class AdController {
   @ResponseStatus(HttpStatus.OK)
   @DefaultResponses
   @DeleteMapping("/{id}")
-  public void delete(@Parameter(description = "id of category to be deleted") @PathVariable int id) {
+  public void delete(@Parameter(description = "id of ad to be deleted") @PathVariable int id) {
     service.delete(id);
   }
 }

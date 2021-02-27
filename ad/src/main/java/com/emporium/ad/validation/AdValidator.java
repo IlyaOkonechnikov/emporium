@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,10 +62,11 @@ public class AdValidator {
    * @param category - category
    */
   private void fieldsNameValidation(Set<Field> fields, Set<AdFieldDTO> adFields, Category category) {
+    List<String> fieldNames = fields.stream().map(Field::getName).collect(Collectors.toList());
     adFields.stream()
         .map(AdFieldDTO::getName)
         .forEach(fieldName -> {
-          if (!fields.stream().map(Field::getName).collect(Collectors.toList()).contains(fieldName)) {
+          if (!fieldNames.contains(fieldName)) {
             log.error(
                 "An error occurred due to the attempt to create/update an ad with field name. name: {}, category: {}",
                 fieldName,

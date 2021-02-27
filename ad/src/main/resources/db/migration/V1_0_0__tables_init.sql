@@ -42,13 +42,13 @@ create unique index category_field_id_uindex
 
 create table ad
 (
-    id          bigserial        not null
+    id          bigserial     not null
         constraint ad_pkey
             primary key,
-    account_id  bigserial        not null,
-    category_id integer          not null,
-    description varchar(1500)    not null,
-    price       double precision not null,
+    account_id  bigserial     not null,
+    category_id integer       not null,
+    description varchar(1500) not null,
+    price       numeric       not null,
     active      boolean   default true,
     create_date timestamp default now(),
     update_date timestamp default now()
@@ -65,7 +65,7 @@ create table ad_field
     ad_id           integer   not null,
     name            varchar   not null,
     text_value      varchar,
-    numerical_value double precision
+    numerical_value numeric
 );
 
 create unique index ad_field_uindex

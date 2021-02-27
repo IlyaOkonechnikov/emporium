@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Mapper(componentModel = "spring")
@@ -27,7 +28,7 @@ public interface AdFieldMapper {
   default void setValueToDTO(AdFieldDTO source, @MappingTarget AdField target) {
     String value = source.getValue();
     if (StringUtils.isNumeric(value)) {
-      target.setNumericalValue(Float.parseFloat(value));
+      target.setNumericalValue(new BigDecimal(value));
     } else {
       target.setTextValue(value);
     }
@@ -35,11 +36,6 @@ public interface AdFieldMapper {
 
   @AfterMapping
   default void setValueToEntity(AdField source, @MappingTarget AdFieldDTO target) {
-    if (Objects.nonNull(source.getNumericalValue())) {
-      target.setValue(Float.toString(source.getNumericalValue()));
-    }
-    if (Objects.nonNull(source.getTextValue())) {
-      target.setValue(source.getTextValue());
-    }
+    target.setValue(source.getNumericalValue() == null ? source.getTextValue() : source.getNumericalValue().toString());
   }
 }

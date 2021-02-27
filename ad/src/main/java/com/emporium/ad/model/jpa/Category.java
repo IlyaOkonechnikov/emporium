@@ -10,8 +10,6 @@ import javax.persistence.*;
 
 import java.util.Set;
 
-@EqualsAndHashCode(exclude = {"parentCategory", "subCategories"})
-@ToString(exclude = {"parentCategory", "subCategories"})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,12 +28,16 @@ public class Category {
   @Column(name = "name")
   private String name;
 
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @Schema(description = "Parent category")
   @ManyToOne
   @JoinColumn(name = "parent_id")
   @JsonIgnore
   private Category parentCategory;
 
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @Schema(description = "Child categories")
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Category> subCategories;

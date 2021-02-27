@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,8 +62,8 @@ public class AdServiceImpl implements AdService {
     ad.setActive(Boolean.TRUE);
     ad.setCategory(categoryService.findById(dto.getCategoryId()));
     //TODO: сделать автоматическое заполнение времени
-    ad.setCreateDate(Instant.now());
-    ad.setUpdateDate(Instant.now());
+//    ad.setCreateDate(LocalDate.now());
+//    ad.setUpdateDate(LocalDate.now());
     return adRepository.save(ad).getId();
   }
 
@@ -72,7 +73,7 @@ public class AdServiceImpl implements AdService {
     Ad ad = findById(id);
     adValidator.fieldsValidation(dto);
     mapper.update(dto, ad);
-    ad.setUpdateDate(Instant.now());
+//    ad.setUpdateDate(LocalDate.now());
   }
 
   @Transactional

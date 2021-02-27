@@ -9,8 +9,6 @@ import javax.persistence.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-@EqualsAndHashCode(exclude = "categories")
-@ToString(exclude = "categories")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,6 +29,8 @@ public class Field {
   @Column(name = "numerical", nullable = false)
   private Boolean numerical;
 
+  @EqualsAndHashCode.Exclude
+  @ToString.Exclude
   @ManyToMany
   @JoinTable(
       name = "category_field",
