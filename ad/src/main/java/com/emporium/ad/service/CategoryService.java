@@ -13,7 +13,7 @@ public interface CategoryService {
 
   Category findById(int id);
 
-  String create(CategoryDTO dto);
+  Integer create(CategoryDTO dto);
 
   void update(CategoryDTO dto);
 

@@ -72,7 +72,7 @@ public class Ad {
   @Column(name = "update_date")
   @JsonProperty("updateDate")
   private LocalDate updateDate;
-
+// todo: ...
   @PrePersist
   public void prePersist(){
     createDate = LocalDate.now();

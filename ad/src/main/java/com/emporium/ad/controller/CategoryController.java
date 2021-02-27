@@ -47,7 +47,7 @@ public class CategoryController {
   @DefaultResponses
   @ApiResponse(responseCode = "201", description = "Successful creation", content = {
       @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class))})
-  public String create(@RequestBody @Valid CategoryDTO dto) {
+  public Integer create(@RequestBody @Valid CategoryDTO dto) {
     return categoryService.create(dto);
   }
 

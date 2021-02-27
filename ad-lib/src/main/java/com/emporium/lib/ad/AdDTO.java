@@ -6,10 +6,9 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
+// todo: примитивы и BigDecimal
 @Data
 public class AdDTO {
-
-  //TODO: нужно подумать обработку запроса для цены и айди категории (могут отправить неавалидный тип данных)
 
   private Long id;
 
@@ -22,7 +21,7 @@ public class AdDTO {
   private Boolean active;
 
   @NotNull(message = "Price of add must be not null")
-  private Integer categoryId;
+  private int categoryId;
 
   @NotNull(message = "Fields must be not null")
   private Set<AdFieldDTO> adFields;

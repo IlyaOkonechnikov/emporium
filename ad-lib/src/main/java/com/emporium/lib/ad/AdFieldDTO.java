@@ -6,12 +6,10 @@ import lombok.Data;
 
 @Data
 public class AdFieldDTO {
-
-  private Long id;
-
   @NotNull
   private String name;
-
   @NotNull
   private String value;
+  @NotNull
+  private long adId;
 }

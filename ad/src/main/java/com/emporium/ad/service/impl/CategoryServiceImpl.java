@@ -24,7 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
   private final CategoryRepository categoryRepository;
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
+//  todo AdDto instead of Ad
   public List<Category> findAll() {
     log.debug("findAll() - start");
     List<Category> categories = categoryRepository.findAll();
@@ -33,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public List<Category> findMainCategories() {
     log.debug("findParents() - start");
     List<Category> parents = categoryRepository.findMainCategories();
@@ -57,13 +58,12 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional
-  public String create(CategoryDTO dto) {
+  public Integer create(CategoryDTO dto) {
     log.debug("create() - start. dto: {}", dto);
     Category category = new Category(dto.getName(), Category.builder().id(dto.getId()).build());
     categoryRepository.save(category);
-    String id = Integer.toString(category.getId());
     log.debug("create() - end. category: {}", category);
-    return id;
+    return category.getId();
   }
 
   @Override

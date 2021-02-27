@@ -8,13 +8,10 @@ import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
 import com.emporium.ad.service.AdService;
 import com.emporium.ad.service.CategoryService;
-import com.emporium.ad.validation.AdValidator;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +19,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Transactional(readOnly = true)
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
 
   private final AdRepository adRepository;
   private final CategoryService categoryService;
   private final AdMapper mapper;
-  private final AdValidator adValidator;
 
   @Override
   public List<Ad> findAll() {
@@ -41,6 +37,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
+//  todo AdDto instead of Ad
   public Ad findById(long id) {
     log.debug("findById() - start. id: {}", id);
     Optional<Ad> optionalAd = adRepository.findById(id);
@@ -53,11 +50,9 @@ public class AdServiceImpl implements AdService {
     return ad;
   }
 
-  @Transactional
   @Override
   public Long create(AdDTO dto) {
     log.debug("create() - start. dto: {}", dto);
-    adValidator.fieldsValidation(dto);
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
     ad.setCategory(categoryService.findById(dto.getCategoryId()));
@@ -67,16 +62,13 @@ public class AdServiceImpl implements AdService {
     return adRepository.save(ad).getId();
   }
 
-  @Transactional
   @Override
   public void update(long id, AdDTO dto) {
     Ad ad = findById(id);
-    adValidator.fieldsValidation(dto);
     mapper.update(dto, ad);
 //    ad.setUpdateDate(LocalDate.now());
   }
 
-  @Transactional
   @Override
   public void delete(long id) {
     log.debug("delete() - start. id: {}", id);
