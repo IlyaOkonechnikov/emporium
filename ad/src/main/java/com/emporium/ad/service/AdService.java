@@ -1,6 +1,6 @@
 package com.emporium.ad.service;
 
-import com.emporium.lib.ad.AdDTO;
+import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
 
 import java.util.List;
@@ -11,9 +11,9 @@ public interface AdService {
 
   Ad findById(long id);
 
-  Long create(AdDTO dto);
+  Long create(AdCreationDTO dto);
 
-  void update(long id, AdDTO dto);
+  void update(long id, AdCreationDTO dto);
 
   void delete(long id);
 }

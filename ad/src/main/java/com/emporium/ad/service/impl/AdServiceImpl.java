@@ -2,7 +2,7 @@ package com.emporium.ad.service.impl;
 
 import com.emporium.ad.exception.ad.AdException;
 import com.emporium.ad.exception.ad.AdExceptionReason;
-import com.emporium.lib.ad.AdDTO;
+import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
@@ -51,7 +51,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public Long create(AdDTO dto) {
+  public Long create(AdCreationDTO dto) {
     log.debug("create() - start. dto: {}", dto);
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
@@ -63,7 +63,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-  public void update(long id, AdDTO dto) {
+  public void update(long id, AdCreationDTO dto) {
     Ad ad = findById(id);
     mapper.update(dto, ad);
 //    ad.setUpdateDate(LocalDate.now());

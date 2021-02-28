@@ -1,7 +1,7 @@
 package com.emporium.ad.model.mapper;
 
 import com.emporium.ad.model.jpa.Ad;
-import com.emporium.lib.ad.AdDTO;
+import com.emporium.lib.ad.AdCreationDTO;
 
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -16,20 +16,20 @@ public interface AdMapper {
   @Mapping(target = "category", ignore = true)
   @Mapping(target = "createDate", ignore = true)
   @Mapping(target = "updateDate", ignore = true)
-  Ad toEntity(AdDTO dto);
+  Ad toEntity(AdCreationDTO dto);
 
   @Mapping(target = "categoryId", ignore = true)
-  AdDTO toDTO(Ad ad);
+  AdCreationDTO toDTO(Ad ad);
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "active", ignore = true)
   @Mapping(target = "category", ignore = true)
   @Mapping(target = "createDate", ignore = true)
   @Mapping(target = "updateDate", ignore = true)
-  void update(AdDTO source, @MappingTarget Ad target);
+  void update(AdCreationDTO source, @MappingTarget Ad target);
 
   @AfterMapping
-  default void setCategoryId(Ad ad, @MappingTarget AdDTO target) {
+  default void setCategoryId(Ad ad, @MappingTarget AdCreationDTO target) {
     target.setCategoryId(ad.getCategory().getId());
   }
 }

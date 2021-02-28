@@ -1,6 +1,6 @@
 package com.emporium.ad.controller;
 
-import com.emporium.lib.ad.AdDTO;
+import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.service.AdService;
 
@@ -50,7 +50,7 @@ public class AdController {
       @Content(mediaType = "application/json", schema = @Schema(implementation = Ad.class))
   })
   @PostMapping
-  public Long create(@RequestBody @Valid AdDTO dto) {
+  public Long create(@RequestBody @Valid AdCreationDTO dto) {
     return service.create(dto);
   }
 
@@ -60,7 +60,7 @@ public class AdController {
   public void update(
       @Parameter(description = "id of ad to be updated")
       @PathVariable long id,
-      @RequestBody @Valid AdDTO dto) {
+      @RequestBody @Valid AdCreationDTO dto) {
     service.update(id, dto);
   }
 
