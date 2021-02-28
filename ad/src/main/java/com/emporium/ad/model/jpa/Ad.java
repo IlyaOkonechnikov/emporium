@@ -79,6 +79,7 @@ public class Ad {
     updateDate = LocalDate.now();
   }
 
+//  todo: fields in the String (JSON) attribute
   @PreUpdate
   public void preUpdate(){
     updateDate = LocalDate.now();
