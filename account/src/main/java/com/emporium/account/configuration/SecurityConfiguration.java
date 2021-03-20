@@ -1,6 +1,6 @@
-package com.emporium.auth.config;
+package com.emporium.account.configuration;
 
-import com.emporium.lib.auth.config.jwt.JwtFilter;
+import com.emporium.lib.auth.configuration.jwt.JwtFilter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final JwtFilter jwtFilter;
 
@@ -29,7 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/register", "/login", "/logout").permitAll()
+        .antMatchers("*").hasRole("USER")
+        .antMatchers("/api").permitAll()
         .and()
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
   }

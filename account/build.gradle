@@ -1,22 +1,24 @@
 plugins {
   id 'io.spring.dependency-management' version "${spring_management_version}"
-  id 'org.springframework.boot' version "${spring_version}"
   id 'com.palantir.docker' version "${palantir_docker_version}"
+  id 'org.springframework.boot' version "${spring_version}"
+  id "org.flywaydb.flyway" version "${flywaydb_version}"
 }
 
 group = 'com.emporium'
 
 dependencies {
   implementation(
-//      spring
+//      Spring
       'org.springframework.boot:spring-boot-starter-security',
       'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.springframework.boot:spring-boot-starter-web',
-//      db
+//      Database
       "org.postgresql:postgresql:$postgresql_version",
-//      other
-      "org.mapstruct:mapstruct:$mapstruct_version",
+      'org.flywaydb:flyway-core',
+//      Other
       'commons-io:commons-io:2.7',
+      "org.mapstruct:mapstruct:$mapstruct_version",
       "org.mapstruct:mapstruct-processor:$mapstruct_version",
       "org.projectlombok:lombok:$lombok_version"
   )
@@ -26,7 +28,7 @@ dependencies {
   )
   implementation project(':auth-lib')
   implementation project(':common-lib')
-  annotationProcessor ("org.projectlombok:lombok:$lombok_version")
+  annotationProcessor("org.projectlombok:lombok:$lombok_version")
   annotationProcessor("org.mapstruct:mapstruct-processor:$mapstruct_version")
 }
 

@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan
 @EntityScan("com.emporium.lib.auth.data.jpa")
 @EnableJpaRepositories("com.emporium.lib.auth.repository")
-public class AuthLibConfig {
+public class AuthLibConfiguration {
 }

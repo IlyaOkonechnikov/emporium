@@ -6,16 +6,16 @@ group = 'com.emporium.lib'
 
 dependencies {
   implementation(
-//      spring
+//      Spring
       "org.springframework.security:spring-security-config:$spring_security_version",
       "org.springframework.security:spring-security-core:$spring_security_version",
       "org.springframework.security:spring-security-web:$spring_security_version",
       'org.springframework.boot:spring-boot-autoconfigure:2.4.2',
       'org.springframework.data:spring-data-jpa:2.4.2',
       'org.springframework:spring-context:5.3.2',
-//      db
+//      Database
       "org.postgresql:postgresql:$postgresql_version",
-//      other
+//      Other
       'com.fasterxml.jackson.core:jackson-databind:2.12.1',
       'javax.persistence:javax.persistence-api:2.2',
       "org.mapstruct:mapstruct:$mapstruct_version",

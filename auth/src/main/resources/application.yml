@@ -27,3 +27,7 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+
+services:
+  account:
+    registration-url: ${ACCOUNT_SERVICE_REGISTRATION_URL}

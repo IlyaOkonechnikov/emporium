@@ -1,6 +1,6 @@
-package com.emporium.account.model.mapper;
+package com.emporium.account.data.mapper;
 
-import com.emporium.account.model.Account;
+import com.emporium.account.data.jpa.Account;
 import com.emporium.lib.auth.UserDTO;
 
 import org.mapstruct.Mapper;

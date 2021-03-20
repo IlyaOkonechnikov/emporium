@@ -1,6 +1,6 @@
 package com.emporium.account.service;
 
-import com.emporium.account.model.Account;
+import com.emporium.account.data.jpa.Account;
 import com.emporium.lib.auth.UserDTO;
 
 import java.util.List;

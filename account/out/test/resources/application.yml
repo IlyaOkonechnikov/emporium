@@ -1,7 +1,20 @@
+server:
+  port: 9998
+  error:
+    include-message: always
+    
 spring:
-  data:
-    mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: test
-      auto-index-creation: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  datasource:
+    url: ${ACCOUNT_DATASOURCE_URL}
+    username: ${ACCOUNT_DATASOURCE_USERNAME}
+    password: ${ACCOUNT_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+  flyway:
+    locations: classpath:db/migration
+    mixed: true

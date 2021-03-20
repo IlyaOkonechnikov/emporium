@@ -1,7 +1,7 @@
-package com.emporium.lib.auth.config.jwt;
+package com.emporium.lib.auth.configuration.jwt;
 
-import com.emporium.lib.auth.config.CustomUserDetails;
-import com.emporium.lib.auth.config.CustomUserDetailsService;
+import com.emporium.lib.auth.configuration.CustomUserDetails;
+import com.emporium.lib.auth.configuration.CustomUserDetailsService;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

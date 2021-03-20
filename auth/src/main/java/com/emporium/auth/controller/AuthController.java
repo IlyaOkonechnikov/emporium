@@ -1,6 +1,6 @@
 package com.emporium.auth.controller;
 
-import com.emporium.auth.service.UserService;
+import com.emporium.auth.service.AuthService;
 import com.emporium.lib.auth.UserDTO;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.User;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private final UserService userService;
+  private final AuthService authService;
 
   @GetMapping("/test")
   @ResponseStatus(HttpStatus.CREATED)
@@ -35,12 +35,12 @@ public class AuthController {
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   public User register(@RequestBody UserDTO dto) {
-    return userService.create(dto);
+    return authService.create(dto);
   }
 
   @PostMapping("/login")
   public LoginResponseDTO login(@RequestBody @Valid UserDTO dto) {
-    return userService.login(dto);
+    return authService.login(dto);
   }
 
   @GetMapping("/logout")
@@ -50,6 +50,6 @@ public class AuthController {
 
   @GetMapping("/confirm-email/{id}")
   public void confirmEmail(@PathVariable long id) {
-    userService.enable(id);
+    authService.enable(id);
   }
 }

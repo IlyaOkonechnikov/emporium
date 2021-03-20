@@ -4,7 +4,7 @@ import com.emporium.lib.auth.UserDTO;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.User;
 
-public interface UserService {
+public interface AuthService {
 
   User create(UserDTO dto);
 

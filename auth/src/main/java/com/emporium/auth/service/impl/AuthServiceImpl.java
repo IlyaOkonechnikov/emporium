@@ -2,9 +2,9 @@ package com.emporium.auth.service.impl;
 
 import com.emporium.auth.exception.AuthException;
 import com.emporium.auth.exception.AuthExceptionReason;
-import com.emporium.auth.service.UserService;
+import com.emporium.auth.service.AuthService;
 import com.emporium.lib.auth.UserDTO;
-import com.emporium.lib.auth.config.jwt.JwtProvider;
+import com.emporium.lib.auth.configuration.jwt.JwtProvider;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.Role;
 import com.emporium.lib.auth.data.jpa.User;
@@ -12,31 +12,39 @@ import com.emporium.lib.auth.data.mapper.UserMapper;
 import com.emporium.lib.auth.repository.RoleRepository;
 import com.emporium.lib.auth.repository.UserRepository;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
   private final UserMapper userMapper;
   private final JwtProvider jwtProvider;
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
-//  private final String accountServiceUrl;
 //  private final WebClient webClient;
+  private final String accountRegistrationUrl;
 
-
-//  public UserServiceImpl(@Value("${okta.oauth2.audience}") String accountServiceUrl,
-//                         WebClient webClient) {
-//    this.accountServiceUrl = accountServiceUrl;
+  public AuthServiceImpl(UserMapper userMapper,
+                         JwtProvider jwtProvider,
+                         UserRepository userRepository,
+                         RoleRepository roleRepository,
+                         PasswordEncoder passwordEncoder,
+//                         WebClient webClient,
+                         @Value("${services.account.registration-url}") String accountRegistrationUrl) {
+    this.userMapper = userMapper;
+    this.jwtProvider = jwtProvider;
+    this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
+    this.passwordEncoder = passwordEncoder;
 //    this.webClient = webClient;
-//  }
+    this.accountRegistrationUrl = accountRegistrationUrl;
+  }
 
   @Override
   public User create(UserDTO dto) {
@@ -76,6 +84,15 @@ public class UserServiceImpl implements UserService {
   public void enable(long id) {
 
   }
+
+//  public String registerAccount(UserDTO dto) {
+//    return webClient.post().uri(accountRegistrationUrl)
+//        .contentType(MediaType.APPLICATION_JSON)
+//        .bodyValue(dto)
+//        .retrieve()
+//        .bodyToMono(String.class)
+//        .block();
+//  }
 
 //    public UserServiceImpl(@Value("${spring.security.oauth2.resource.account-service}") String accountServiceUrl,
 //                           WebClient webClient,
@@ -140,12 +157,4 @@ public class UserServiceImpl implements UserService {
 //        userRepository.save(user);
 //    }
 //
-//    public String registerAccount(UserDTO dto) {
-//        return webClient.post().uri(registrationUrl)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue(dto)
-//                .retrieve()
-//                .bodyToMono(String.class)
-//                .block();
-//    }
 }

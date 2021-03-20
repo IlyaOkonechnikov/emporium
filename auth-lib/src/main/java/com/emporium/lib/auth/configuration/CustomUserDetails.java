@@ -1,4 +1,4 @@
-package com.emporium.lib.auth.config;
+package com.emporium.lib.auth.configuration;
 
 import com.emporium.lib.auth.data.jpa.User;
 
