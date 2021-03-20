@@ -4,16 +4,15 @@ server:
     include-message: always
 
 spring:
-  data:
-    mongodb:
-      host: ${MONGO_HOST}
-      port: ${MONGO_PORT}
-      database: ${MONGO_DATABASE}
-      auto-index-creation: true
-
-okta:
-  oauth2:
-    clientId: ${CLIENT_ID}
-    clientSecret: ${CLIENT_SECRET}
-    issuer: ${TOKEN_ISSUER}
-    audience: ${ACCOUNT_SERVICE_URL}
+  jpa:
+    show-sql: true
+  datasource:
+    url: ${ACCOUNT_DATASOURCE_URL}
+    username: ${ACCOUNT_DATASOURCE_USERNAME}
+    password: ${ACCOUNT_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+  flyway:
+    locations: classpath:db/migration
+    mixed: true

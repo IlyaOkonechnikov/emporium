@@ -1,4 +1,4 @@
-package com.emporium.lib.auth;
+package com.emporium.lib.auth.data.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

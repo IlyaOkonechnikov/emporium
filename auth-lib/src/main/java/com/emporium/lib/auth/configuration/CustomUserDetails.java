@@ -19,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     CustomUserDetails userDetails = new CustomUserDetails();
     userDetails.username = user.getUsername();
     userDetails.password = user.getPassword();
-    userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
+    userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     return userDetails;
   }
 

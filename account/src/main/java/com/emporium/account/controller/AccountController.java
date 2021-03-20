@@ -2,7 +2,7 @@ package com.emporium.account.controller;
 
 import com.emporium.account.data.jpa.Account;
 import com.emporium.account.service.AccountService;
-import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,13 +20,9 @@ public class AccountController {
 
   private final AccountService accountService;
 
-  @GetMapping("/api")
-  String api() {
-    return "Made it to protected api on resource server!";
-  }
-
   //    just for quick cluster test
   @GetMapping
+//  todo: check token validation
   public List<Account> findAll() {
     return accountService.findAll();
   }

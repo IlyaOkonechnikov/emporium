@@ -6,7 +6,7 @@ import com.emporium.account.data.jpa.Account;
 import com.emporium.account.data.mapper.AccountMapper;
 import com.emporium.account.repository.AccountRepository;
 import com.emporium.account.service.AccountService;
-import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.dto.UserDTO;
 
 import org.springframework.stereotype.Service;
 

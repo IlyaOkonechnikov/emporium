@@ -10,13 +10,12 @@ group = 'com.emporium'
 dependencies {
   implementation(
 //      Spring
+      'org.springframework.boot:spring-boot-starter-data-redis',
       'org.springframework.boot:spring-boot-starter-security',
-      'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.springframework.boot:spring-boot-starter-webflux',
       'org.springframework.boot:spring-boot-starter-mail',
       'org.springframework.boot:spring-boot-starter-web',
 //      Database
-      "org.postgresql:postgresql:$postgresql_version",
       'org.flywaydb:flyway-core',
 //      Other
       "org.mapstruct:mapstruct:$mapstruct_version",

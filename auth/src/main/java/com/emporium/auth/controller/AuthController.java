@@ -1,10 +1,13 @@
 package com.emporium.auth.controller;
 
 import com.emporium.auth.service.AuthService;
-import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.configuration.jwt.JwtProvider;
+import com.emporium.lib.auth.data.dto.UserDTO;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
 import com.emporium.lib.auth.data.jpa.User;
+import com.emporium.lib.auth.repository.UserRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +29,6 @@ public class AuthController {
 
   private final AuthService authService;
 
-  @GetMapping("/test")
-  @ResponseStatus(HttpStatus.CREATED)
-  public void test() {
-    System.out.println("test");
-  }
-
   @PostMapping("/register")
   @ResponseStatus(HttpStatus.CREATED)
   public User register(@RequestBody UserDTO dto) {
@@ -45,11 +42,10 @@ public class AuthController {
 
   @GetMapping("/logout")
   public void logout(HttpServletRequest request) {
-
+    authService.logout(request);
   }
 
   @GetMapping("/confirm-email/{id}")
   public void confirmEmail(@PathVariable long id) {
-    authService.enable(id);
   }
 }

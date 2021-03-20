@@ -10,6 +10,7 @@ group = 'com.emporium'
 dependencies {
   implementation(
 //      Spring
+      'org.springframework.boot:spring-boot-starter-data-redis',
       'org.springframework.boot:spring-boot-starter-security',
       'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.springframework.boot:spring-boot-starter-web',

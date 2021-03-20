@@ -2,7 +2,7 @@ package com.emporium.account;
 
 import com.emporium.account.repository.AccountRepository;
 import com.emporium.account.service.AccountService;
-import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.dto.UserDTO;
 
 import org.junit.Before;
 import org.junit.Ignore;

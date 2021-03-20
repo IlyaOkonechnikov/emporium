@@ -26,9 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class JwtFilter implements Filter {
 
-  public static final String AUTHORIZATION_HEADER = "Authorization";
-  public static final String BEARER_PREFIX = "Bearer";
-
   private final JwtProvider jwtProvider;
   private final CustomUserDetailsService customUserDetailsService;
 
@@ -36,10 +33,10 @@ public class JwtFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
       ServletException {
     try {
-      String token = getTokenFromRequest((HttpServletRequest) request);
+      String token = JwtUtil.getTokenFromRequest((HttpServletRequest) request);
       if (!token.isEmpty()) {
-        String userLogin = jwtProvider.getLoginFromToken(token);
-        CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userLogin);
+        String username = jwtProvider.getUsernameFromToken(token);
+        CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null,
             customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
@@ -51,10 +48,5 @@ public class JwtFilter implements Filter {
       return;
     }
     chain.doFilter(request, response);
-  }
-
-  private String getTokenFromRequest(HttpServletRequest request) {
-    String bearer = request.getHeader(AUTHORIZATION_HEADER);
-    return StringUtils.hasText(bearer) && bearer.startsWith(BEARER_PREFIX) ? bearer.substring(7) : "";
   }
 }

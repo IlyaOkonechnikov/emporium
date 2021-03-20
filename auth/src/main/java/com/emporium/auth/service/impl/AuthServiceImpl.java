@@ -3,18 +3,18 @@ package com.emporium.auth.service.impl;
 import com.emporium.auth.exception.AuthException;
 import com.emporium.auth.exception.AuthExceptionReason;
 import com.emporium.auth.service.AuthService;
-import com.emporium.lib.auth.UserDTO;
+import com.emporium.lib.auth.data.dto.UserDTO;
 import com.emporium.lib.auth.configuration.jwt.JwtProvider;
 import com.emporium.lib.auth.data.dto.LoginResponseDTO;
-import com.emporium.lib.auth.data.jpa.Role;
 import com.emporium.lib.auth.data.jpa.User;
 import com.emporium.lib.auth.data.mapper.UserMapper;
-import com.emporium.lib.auth.repository.RoleRepository;
 import com.emporium.lib.auth.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,6 @@ public class AuthServiceImpl implements AuthService {
   private final UserMapper userMapper;
   private final JwtProvider jwtProvider;
   private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
 //  private final WebClient webClient;
   private final String accountRegistrationUrl;
@@ -33,30 +32,22 @@ public class AuthServiceImpl implements AuthService {
   public AuthServiceImpl(UserMapper userMapper,
                          JwtProvider jwtProvider,
                          UserRepository userRepository,
-                         RoleRepository roleRepository,
                          PasswordEncoder passwordEncoder,
 //                         WebClient webClient,
                          @Value("${services.account.registration-url}") String accountRegistrationUrl) {
     this.userMapper = userMapper;
     this.jwtProvider = jwtProvider;
     this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
 //    this.webClient = webClient;
     this.accountRegistrationUrl = accountRegistrationUrl;
   }
 
   @Override
+//  todo: check if exists
   public User create(UserDTO dto) {
-//      return this.webClient
-//          .get()
-//          .uri(this.accountServiceUrl + "/account/api")
-//          .retrieve()
-//          .bodyToMono(String.class)
-//          .block();
-    Role userRole = roleRepository.findByName("ROLE_USER");
     User user = userMapper.toEntity(dto);
-    user.setRole(userRole);
+    user.setRole("ROLE_USER");
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     return userRepository.save(user);
   }
@@ -69,6 +60,16 @@ public class AuthServiceImpl implements AuthService {
     throw new AuthException(AuthExceptionReason.INVALID_PASSWORD);
   }
 
+  @Override
+  public void enable(long id) {
+
+  }
+
+  @Override
+  public void logout(HttpServletRequest request) {
+    jwtProvider.invalidateToken(request);
+  }
+
   private User validateCredentialsAndGetUser(String username, String email) {
     if (username == null && email == null) {
       throw new AuthException(AuthExceptionReason.EMAIL_AND_PASSWORD_ARE_NULL);
@@ -78,11 +79,6 @@ public class AuthServiceImpl implements AuthService {
     }
     return userRepository.findByEmail(email)
         .orElseThrow(() -> new AuthException(AuthExceptionReason.NON_EXISTENT_EMAIL));
-  }
-
-  @Override
-  public void enable(long id) {
-
   }
 
 //  public String registerAccount(UserDTO dto) {
