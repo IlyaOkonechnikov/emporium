@@ -21,6 +21,7 @@ dependencies {
       'org.springdoc:springdoc-openapi-ui:1.5.2',
       'org.flywaydb:flyway-core',
 //      Other
+      "com.vladmihalcea:hibernate-types-52:2.11.1",
       "org.mapstruct:mapstruct-processor:$mapstruct_version",
       "org.mapstruct:mapstruct:$mapstruct_version",
       "org.projectlombok:lombok:$lombok_version",
