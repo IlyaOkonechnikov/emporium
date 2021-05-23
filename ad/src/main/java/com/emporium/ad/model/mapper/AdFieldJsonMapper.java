@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Named("AdFieldJsonMapper")
 public class AdFieldJsonMapper {
 
+
   @Named("toEntityString")
   public String toEntityString(AdDTO dto) {
     Map<String, String> nameValue = new HashMap<>();
