@@ -50,26 +50,14 @@ create table ad
     description varchar(1500) not null,
     price       numeric       not null,
     active      boolean   default true,
-    create_date timestamp default now(),
-    update_date timestamp default now()
+    fields      jsonb not null,
+    create_date timestamp not null,
+    update_date timestamp not null
 );
 
 create unique index ad_uindex
     on ad (id);
 
-create table ad_field
-(
-    id              bigserial not null
-        constraint ad_field_pkey
-            primary key,
-    ad_id           integer   not null,
-    name            varchar   not null,
-    text_value      varchar,
-    numerical_value numeric
-);
-
-create unique index ad_field_uindex
-    on ad_field (id);
 
 SELECT setval(pg_get_serial_sequence('category', 'id'),
               coalesce(max(id)+1, 1), false) FROM category;
@@ -79,8 +67,6 @@ SELECT setval(pg_get_serial_sequence('category_field', 'id'),
               coalesce(max(id)+1, 1), false) FROM category_field;
 SELECT setval(pg_get_serial_sequence('ad', 'id'),
               coalesce(max(id)+1, 1), false) FROM ad;
-SELECT setval(pg_get_serial_sequence('ad_field', 'id'),
-              coalesce(max(id)+1, 1), false) FROM ad_field;
 
 INSERT INTO public.category (id, name, parent_id) VALUES (1, 'Personal belongings', null);
 INSERT INTO public.category (id, name, parent_id) VALUES (2, 'Clothes, shoes, accessories', 1);
