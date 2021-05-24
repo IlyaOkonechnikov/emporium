@@ -43,6 +43,8 @@ public class AdFieldJsonMapper {
     stringValue = stringValue.replace("[", "");
     stringValue = stringValue.replace("]", "");
     stringValue = stringValue.replace("\", \"", "%_%");
+    stringValue = stringValue.replace("\",\"", "%_%");
+    stringValue = stringValue.replace("\" ,\"", "%_%");
     stringValue = stringValue.replace(":", "%_%");
     stringValue = stringValue.replace("\"", "%_%");
 
