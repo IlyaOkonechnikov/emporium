@@ -1,6 +1,5 @@
 package com.emporium.ad.model.jpa;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 import org.hibernate.annotations.Type;

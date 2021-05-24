@@ -23,8 +23,17 @@ public class AdFieldJsonMapper {
 
   @Named("toEntityString")
   public String toEntityString(AdDTO dto) {
+    return fromSet(dto.getFields());
+  }
+
+  @Named("toDTOSet")
+  public Set<AdFieldDTO> toDTOSet(Ad ad) throws JsonProcessingException {
+    return fromString(ad.getFields());
+  }
+
+  public String fromSet(Set<AdFieldDTO> adFields){
     Map<String, String> nameValue = new HashMap<>();
-    dto.getFields().forEach(f -> nameValue.put(f.getName(), f.getValue()));
+    adFields.forEach(f -> nameValue.put(f.getName(), f.getValue()));
 
     StringBuilder sb = new StringBuilder("[{");
     for (Map.Entry<String, String> map : nameValue.entrySet()) {
@@ -34,15 +43,15 @@ public class AdFieldJsonMapper {
     return sb.toString();
   }
 
-  @Named("toDTOSet")
-  public Set<AdFieldDTO> toDTOSet(Ad ad) throws JsonProcessingException {
-    String stringValue = ad.getFields();
+  public Set<AdFieldDTO> fromString(String stringValue) {
 
     stringValue = stringValue.replace("{", "");
     stringValue = stringValue.replace("}", "");
     stringValue = stringValue.replace("[", "");
     stringValue = stringValue.replace("]", "");
     stringValue = stringValue.replace("\", \"", "%_%");
+    stringValue = stringValue.replace("\",\"", "%_%");
+    stringValue = stringValue.replace("\" ,\"", "%_%");
     stringValue = stringValue.replace(":", "%_%");
     stringValue = stringValue.replace("\"", "%_%");
 
