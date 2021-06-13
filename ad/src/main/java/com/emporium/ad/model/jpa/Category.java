@@ -1,48 +1,49 @@
 package com.emporium.ad.model.jpa;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-
-import javax.persistence.*;
-
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "category")
 @Entity
-@Builder
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Table(name = "category")
 public class Category {
 
-  @Schema(description = "Identifier")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Schema(description = "Name")
   @Column(name = "name")
   private String name;
 
-  @EqualsAndHashCode.Exclude
+  @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
-  @Schema(description = "Parent category")
-  @ManyToOne
+  @EqualsAndHashCode.Exclude
   @JoinColumn(name = "parent_id")
-  @JsonIgnore
   private Category parentCategory;
 
-  @EqualsAndHashCode.Exclude
   @ToString.Exclude
-  @Schema(description = "Child categories")
+  @EqualsAndHashCode.Exclude
   @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Category> subCategories;
 
-  @Schema(description = "Available fields for ad filling")
   @ManyToMany
   @JoinTable(
       name = "category_field",
@@ -50,9 +51,4 @@ public class Category {
       inverseJoinColumns = @JoinColumn(name = "field_id")
   )
   private Set<Field> fields;
-
-  public Category(String name, Category parentCategory) {
-    this.name = name;
-    this.parentCategory = parentCategory;
-  }
 }
