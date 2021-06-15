@@ -7,11 +7,12 @@ import javax.persistence.*;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "field")
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "field")
+// todo убери name там, где они идентичны названию атрибутов
 public class Field {
 
   @Schema(description = "Identifier")

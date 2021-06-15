@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.*;
 import lombok.*;
 
+// todo го писать все аннотации в порядке убывания их длины?
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,10 +15,11 @@ import lombok.*;
 @Entity
 @Builder
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+// todo убери name там, где они идентичны названию атрибутов
 public class Category {
 
-  @Schema(description = "Identifier")
   @Id
+  @Schema(description = "Identifier")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 

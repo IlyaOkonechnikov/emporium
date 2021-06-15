@@ -35,24 +35,25 @@ public class AdFieldJsonMapper {
   @Named("toDTOSet")
   public Set<AdFieldDTO> toDTOSet(Ad ad) throws JsonProcessingException {
     String stringValue = ad.getFields();
-
+    //  todo есть просто replaceAll или методы из StringUtils. учти это при переделке на новые
+    // мапперы
     stringValue = stringValue.replace("{", "");
     stringValue = stringValue.replace("}", "");
     stringValue = stringValue.replace("[", "");
     stringValue = stringValue.replace("]", "");
+    //    todo мб я не совсем тебя понял, но похоже на говнокод. можем созвониться по этому поводу
     stringValue = stringValue.replace("\", \"", "%_%");
     stringValue = stringValue.replace("\",\"", "%_%");
     stringValue = stringValue.replace("\" ,\"", "%_%");
     stringValue = stringValue.replace(":", "%_%");
     stringValue = stringValue.replace("\"", "%_%");
-
     List<String> splited =
         Arrays.stream(stringValue.split("%_%"))
             .filter(StringUtils::isNotBlank)
             .collect(Collectors.toList());
 
     Set<AdFieldDTO> adFieldDTOS = new HashSet<>();
-
+    //    todo это тоже крайне напоминает его:)
     for (int i = 0; i < splited.size() - 1; i++) {
       adFieldDTOS.add(new AdFieldDTO(splited.get(i), splited.get(i + 1)));
       i++;

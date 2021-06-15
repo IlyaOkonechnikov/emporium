@@ -16,9 +16,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Entity
 @Table(name = "ad")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+// todo убери name там, где они идентичны названию атрибутов
 public class Ad {
-
-  //  private Account account;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

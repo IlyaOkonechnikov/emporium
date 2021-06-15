@@ -28,6 +28,7 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public List<AdDTO> findAll() {
+    //    todo убери все бессмысленные дебаг логи в проекте пж, в том числе, в моих сервисах
     List<Ad> ads = adRepository.findAll();
     log.debug("All ads were found. Size: {}", ads.size());
     return ads.stream().map(mapper::toDTO).collect(Collectors.toList());
@@ -45,7 +46,7 @@ public class AdServiceImpl implements AdService {
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
     ad.setCategory(categoryService.findById(dto.getCategoryId()));
-    // TODO: сделать автоматическое заполнение времени получится при настройке JPA аудита
+    // todo сделать автоматическое заполнение времени получится при настройке JPA аудита
     adRepository.save(ad);
     log.info("Ad was created: {}", ad);
     return ad.getId();

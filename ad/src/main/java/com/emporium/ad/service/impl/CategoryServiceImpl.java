@@ -22,7 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional(readOnly = true)
-  //  todo AdDto instead of Ad
   public List<Category> findAll() {
     log.debug("findAll() - start");
     List<Category> categories = categoryRepository.findAll();

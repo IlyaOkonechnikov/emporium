@@ -18,7 +18,7 @@ public class AccountController {
 
   //    just for quick cluster test
   @GetMapping
-  //  todo: check token validation
+  //  todo check token validation
   public List<Account> findAll() {
     return accountService.findAll();
   }

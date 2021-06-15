@@ -34,6 +34,7 @@ public class CategoryController {
 
   @GetMapping("/{id}")
   @DefaultResponses
+  //  todo можно не конкретизировать, что за айди, это ясно из типа запроса
   public Category findById(
       @Parameter(description = "id of category to be searched") @PathVariable int id) {
     return categoryService.findById(id);
@@ -62,6 +63,7 @@ public class CategoryController {
   @DeleteMapping("/{id}}")
   @ResponseStatus(HttpStatus.OK)
   @DefaultResponses
+  //  todo можно не конкретизировать, что за айди, это ясно из типа запроса
   public void delete(
       @Parameter(description = "id of category to be deleted") @PathVariable int id) {
     categoryService.delete(id);

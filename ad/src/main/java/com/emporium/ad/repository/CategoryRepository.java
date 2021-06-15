@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-  //  @Query(value = "SELECT * FROM public.category WHERE parent_id IS NULL", nativeQuery = true)
   @Query("select c from Category c where c.parentCategory.id = null")
   List<Category> findMainCategories();
 }
