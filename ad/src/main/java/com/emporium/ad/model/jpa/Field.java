@@ -1,12 +1,9 @@
 package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Set;
-
-import javax.persistence.*;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Set;
+import javax.persistence.*;
 import lombok.*;
 
 @Data
@@ -35,8 +32,7 @@ public class Field {
   @JoinTable(
       name = "category_field",
       joinColumns = @JoinColumn(name = "field_id"),
-      inverseJoinColumns = @JoinColumn(name = "category_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "category_id"))
   @JsonIgnore
   private Set<Category> categories;
 }

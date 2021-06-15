@@ -3,7 +3,9 @@ package com.emporium.account;
 import com.emporium.account.repository.AccountRepository;
 import com.emporium.account.service.AccountService;
 import com.emporium.lib.auth.data.dto.UserDTO;
-
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,20 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestContextConfig.class)
 public class AccountBasicDTOServiceTest {
 
-  @Autowired
-  AccountService accountService;
+  @Autowired AccountService accountService;
 
-  @Autowired
-  AccountRepository repository;
+  @Autowired AccountRepository repository;
 
   private UserDTO dto;
   private Validator validator;
@@ -43,50 +39,51 @@ public class AccountBasicDTOServiceTest {
 
   @Test
   public void createTest() {
-//    String id = userService.create(dto);
-//    assertEquals(userService.findById(id), dto);
-//    userService.delete(id);
+    //    String id = userService.create(dto);
+    //    assertEquals(userService.findById(id), dto);
+    //    userService.delete(id);
   }
 
   @Test
   public void updateTest() {
-//    String id = userService.create(dto);
-//    dto.setId(id);
-//    String newEmail = "newTest@gmail.com";
-//    dto.setEmail(newEmail);
-//    userService.update(dto);
-//    assertEquals(userService.findById(id).getEmail(), newEmail);
-//    userService.delete(id);
+    //    String id = userService.create(dto);
+    //    dto.setId(id);
+    //    String newEmail = "newTest@gmail.com";
+    //    dto.setEmail(newEmail);
+    //    userService.update(dto);
+    //    assertEquals(userService.findById(id).getEmail(), newEmail);
+    //    userService.delete(id);
   }
 
   @Test
   public void findByIdFailedTest() {
-//    assertException(() -> userService.findById(UUID.randomUUID().toString()));
+    //    assertException(() -> userService.findById(UUID.randomUUID().toString()));
   }
 
   @Test
   public void updateFailedTest() {
-//    dto.setId(UUID.randomUUID().toString());
-//    assertException(() -> userService.update(dto));
+    //    dto.setId(UUID.randomUUID().toString());
+    //    assertException(() -> userService.update(dto));
   }
 
   @Test
   public void invalidUsernameTest() {
-//    dto.setUsername(UUID.randomUUID().toString());
-//    Set<ConstraintViolation<User>> constraintViolations = validator.validate(dto);
-//    assertEquals(2, constraintViolations.size());
+    //    dto.setUsername(UUID.randomUUID().toString());
+    //    Set<ConstraintViolation<User>> constraintViolations = validator.validate(dto);
+    //    assertEquals(2, constraintViolations.size());
   }
 
   @Test
   public void deleteTest() {
-//    long id = accountService.create(dto);
-//    assertEquals(userService.findById(id), dto);
-//    userService.delete(id);
-//    assertException(() -> userService.delete(id));
+    //    long id = accountService.create(dto);
+    //    assertEquals(userService.findById(id), dto);
+    //    userService.delete(id);
+    //    assertException(() -> userService.delete(id));
   }
 
   public void assertException(Executable executable) {
-//    Exception exception = assertThrows(PersonalAreaException.class, executable);
-//    assertEquals(exception.getMessage(), PersonalAreaErrorCode.USER_NOT_FOUND_ERROR.getReason());
+    //    Exception exception = assertThrows(PersonalAreaException.class, executable);
+    //    assertEquals(exception.getMessage(),
+    // PersonalAreaErrorCode.USER_NOT_FOUND_ERROR.getReason());
   }
 }

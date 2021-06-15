@@ -1,14 +1,11 @@
 package com.emporium.lib.ad;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
-
 import javax.validation.constraints.NotNull;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data

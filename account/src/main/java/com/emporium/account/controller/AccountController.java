@@ -3,15 +3,11 @@ package com.emporium.account.controller;
 import com.emporium.account.data.jpa.Account;
 import com.emporium.account.service.AccountService;
 import com.emporium.lib.auth.data.dto.UserDTO;
-
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +18,7 @@ public class AccountController {
 
   //    just for quick cluster test
   @GetMapping
-//  todo: check token validation
+  //  todo: check token validation
   public List<Account> findAll() {
     return accountService.findAll();
   }

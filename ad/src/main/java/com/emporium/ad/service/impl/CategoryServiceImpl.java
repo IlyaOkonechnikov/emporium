@@ -6,15 +6,12 @@ import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -25,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional(readOnly = true)
-//  todo AdDto instead of Ad
+  //  todo AdDto instead of Ad
   public List<Category> findAll() {
     log.debug("findAll() - start");
     List<Category> categories = categoryRepository.findAll();
@@ -72,7 +69,9 @@ public class CategoryServiceImpl implements CategoryService {
     log.debug("update() - start. dto: {}", dto);
     Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
     if (optionalCategory.isEmpty()) {
-      log.error("An error occurred due to the attempt to update a nonexistent category. id: {}", dto.getId());
+      log.error(
+          "An error occurred due to the attempt to update a nonexistent category. id: {}",
+          dto.getId());
       throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     Category category = optionalCategory.get();
@@ -87,7 +86,8 @@ public class CategoryServiceImpl implements CategoryService {
   public void delete(int id) {
     log.debug("delete() - start. id: {}", id);
     if (categoryRepository.findById(id).isEmpty()) {
-      log.error("An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
+      log.error(
+          "An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
       throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     log.debug("delete() - end. id: {}", id);

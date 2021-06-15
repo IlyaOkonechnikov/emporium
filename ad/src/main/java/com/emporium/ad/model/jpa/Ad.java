@@ -1,21 +1,16 @@
 package com.emporium.ad.model.jpa;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import javax.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import javax.persistence.*;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @Data
 @Entity
@@ -23,7 +18,7 @@ import lombok.ToString;
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Ad {
 
-//  private Account account;
+  //  private Account account;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

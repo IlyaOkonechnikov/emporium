@@ -4,11 +4,6 @@ import com.emporium.ad.model.jpa.Ad;
 import com.emporium.lib.ad.AdDTO;
 import com.emporium.lib.ad.AdFieldDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.mapstruct.Named;
-import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,11 +11,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
+import org.mapstruct.Named;
+import org.springframework.stereotype.Component;
 
 @Component
 @Named("AdFieldJsonMapper")
 public class AdFieldJsonMapper {
-
 
   @Named("toEntityString")
   public String toEntityString(AdDTO dto) {
@@ -49,10 +46,10 @@ public class AdFieldJsonMapper {
     stringValue = stringValue.replace(":", "%_%");
     stringValue = stringValue.replace("\"", "%_%");
 
-    List<String> splited = Arrays
-        .stream(stringValue.split("%_%"))
-        .filter(StringUtils::isNotBlank)
-        .collect(Collectors.toList());
+    List<String> splited =
+        Arrays.stream(stringValue.split("%_%"))
+            .filter(StringUtils::isNotBlank)
+            .collect(Collectors.toList());
 
     Set<AdFieldDTO> adFieldDTOS = new HashSet<>();
 

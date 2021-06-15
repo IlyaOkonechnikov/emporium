@@ -1,6 +1,12 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.repository.CategoryRepository;
-
+import config.CategoryRepositoryTestConfig;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +17,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import config.CategoryRepositoryTestConfig;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @Transactional
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -27,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class CategoryRepositoryTest {
 
-  @Autowired
-  private CategoryRepository categoryRepository;
-  private final Category category = Category.builder().id(1).name("test1").parentCategory(null).build();
+  @Autowired private CategoryRepository categoryRepository;
+  private final Category category =
+      Category.builder().id(1).name("test1").parentCategory(null).build();
 
   @BeforeEach
   void setUp() {
@@ -38,19 +35,33 @@ class CategoryRepositoryTest {
 
   @Test
   void findAllTest() {
-    categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(category).build());
+    categoryRepository.save(
+        Category.builder().id(2).name("test2").parentCategory(category).build());
     List<Category> categories = categoryRepository.findAll();
     assertEquals(2, categories.size());
-    assertTrue(categories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2)));
+    assertTrue(
+        categories.stream()
+            .map(Category::getId)
+            .collect(Collectors.toList())
+            .containsAll(List.of(1, 2)));
   }
 
   @Test
   void findMainCategoriesTest() {
     categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(null).build());
-    categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(Category.builder().id(1).build()).build());
+    categoryRepository.save(
+        Category.builder()
+            .id(3)
+            .name("test3")
+            .parentCategory(Category.builder().id(1).build())
+            .build());
     List<Category> mainCategories = categoryRepository.findMainCategories();
     assertEquals(2, mainCategories.size());
-    assertTrue(mainCategories.stream().map(Category::getId).collect(Collectors.toList()).containsAll(List.of(1, 2)));
+    assertTrue(
+        mainCategories.stream()
+            .map(Category::getId)
+            .collect(Collectors.toList())
+            .containsAll(List.of(1, 2)));
   }
 
   @Test
@@ -69,8 +80,12 @@ class CategoryRepositoryTest {
 
   @Test
   void parentCategoryUpdateTest() {
-    Category childCategory = categoryRepository.save(Category.builder().id(2).name("test2").parentCategory(category).build());
-    Category parentCategory = categoryRepository.save(Category.builder().id(3).name("test3").parentCategory(null).build());
+    Category childCategory =
+        categoryRepository.save(
+            Category.builder().id(2).name("test2").parentCategory(category).build());
+    Category parentCategory =
+        categoryRepository.save(
+            Category.builder().id(3).name("test3").parentCategory(null).build());
     childCategory.setParentCategory(parentCategory);
     Category savedCategory = categoryRepository.save(childCategory);
     assertEquals(3, savedCategory.getParentCategory().getId());

@@ -1,10 +1,8 @@
 package com.emporium.lib.auth.configuration.jwt;
 
-import org.springframework.util.StringUtils;
-
 import javax.servlet.http.HttpServletRequest;
-
 import lombok.experimental.UtilityClass;
+import org.springframework.util.StringUtils;
 
 @UtilityClass
 public class JwtUtil {
@@ -14,6 +12,8 @@ public class JwtUtil {
 
   public String getTokenFromRequest(HttpServletRequest request) {
     String bearer = request.getHeader(AUTHORIZATION_HEADER);
-    return StringUtils.hasText(bearer) && bearer.startsWith(BEARER_PREFIX) ? bearer.substring(7) : "";
+    return StringUtils.hasText(bearer) && bearer.startsWith(BEARER_PREFIX)
+        ? bearer.substring(7)
+        : "";
   }
 }
