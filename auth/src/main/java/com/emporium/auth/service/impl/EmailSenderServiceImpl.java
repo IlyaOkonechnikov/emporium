@@ -1,7 +1,7 @@
 package com.emporium.auth.service.impl;
 
 import com.emporium.auth.service.EmailSenderService;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
@@ -11,20 +11,20 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService {
 
-  private static final String MSG_TEMPLATE = "Nice to meet you, %s!\nWe are glad that you have decided to use our " +
-      "service. Please confirm your email by following the link: %s/%s";
+  private static final String MSG_TEMPLATE =
+      "Nice to meet you, %s!\nWe are glad that you have decided to use our "
+          + "service. Please confirm your email by following the link: %s/%s";
 
   private final String confirmationUrl;
   private final JavaMailSender emailSender;
 
-  public EmailSenderServiceImpl(@Value("${spring.mail.confirmation-url}") String confirmationUrl,
-                                JavaMailSender emailSender) {
+  public EmailSenderServiceImpl(
+      @Value("${spring.mail.confirmation-url}") String confirmationUrl,
+      JavaMailSender emailSender) {
     this.confirmationUrl = confirmationUrl;
     this.emailSender = emailSender;
   }

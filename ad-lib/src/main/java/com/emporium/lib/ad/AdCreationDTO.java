@@ -1,9 +1,7 @@
 package com.emporium.lib.ad;
 
 import java.util.Set;
-
 import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 
 // todo: примитивы и BigDecimal
@@ -19,7 +17,7 @@ public class AdCreationDTO {
   @NotNull(message = "Price of add must be not null")
   private int categoryId;
 
-//  todo: сразу JSON, для апдейта создать отдельный DTO
+  //  todo: сразу JSON, для апдейта создать отдельный DTO
   @NotNull(message = "Fields must be not null")
   private Set<AdFieldDTO> adFields;
 }

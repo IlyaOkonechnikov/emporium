@@ -2,17 +2,13 @@ package com.emporium.lib.auth.configuration.jwt;
 
 import com.emporium.lib.auth.data.jpa.Token;
 import com.emporium.lib.auth.repository.TokenRepository;
-
-import org.springframework.stereotype.Component;
-
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
@@ -25,11 +21,12 @@ public class JwtProvider {
   private final TokenRepository repository;
 
   public String generateToken(String login) {
-    final String token = Jwts.builder()
-        .setIssuedAt(new Date())
-        .setSubject(login)
-        .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
-        .compact();
+    final String token =
+        Jwts.builder()
+            .setIssuedAt(new Date())
+            .setSubject(login)
+            .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+            .compact();
     repository.save(Token.of(token));
     return token;
   }

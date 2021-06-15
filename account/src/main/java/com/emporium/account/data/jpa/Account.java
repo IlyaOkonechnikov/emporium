@@ -1,10 +1,6 @@
 package com.emporium.account.data.jpa;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,10 +8,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @Entity
@@ -48,9 +45,7 @@ public class Account {
 
   private String photoStorageId;
 
-  @CreatedDate
-  private LocalDate created;
+  @CreatedDate private LocalDate created;
 
-  @LastModifiedDate
-  private LocalDate updated;
+  @LastModifiedDate private LocalDate updated;
 }

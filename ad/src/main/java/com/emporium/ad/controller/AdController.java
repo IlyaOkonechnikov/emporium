@@ -1,9 +1,15 @@
 package com.emporium.ad.controller;
 
-import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.service.AdService;
-
+import com.emporium.lib.ad.AdCreationDTO;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.util.List;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import javax.validation.Valid;
-
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/ad")
@@ -46,9 +42,12 @@ public class AdController {
 
   @ResponseStatus(HttpStatus.CREATED)
   @DefaultResponses
-  @ApiResponse(responseCode = "201", description = "Successful creation", content = {
-      @Content(mediaType = "application/json", schema = @Schema(implementation = Ad.class))
-  })
+  @ApiResponse(
+      responseCode = "201",
+      description = "Successful creation",
+      content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = Ad.class))
+      })
   @PostMapping
   public Long create(@RequestBody @Valid AdCreationDTO dto) {
     return service.create(dto);
@@ -58,8 +57,7 @@ public class AdController {
   @DefaultResponses
   @PutMapping("/{id}")
   public void update(
-      @Parameter(description = "id of ad to be updated")
-      @PathVariable long id,
+      @Parameter(description = "id of ad to be updated") @PathVariable long id,
       @RequestBody @Valid AdCreationDTO dto) {
     service.update(id, dto);
   }

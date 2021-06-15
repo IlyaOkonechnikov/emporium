@@ -1,14 +1,10 @@
 package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,18 +16,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @Entity
 @Table(name = "ad")
 public class Ad {
 
-//  private Account account;
+  //  private Account account;
 
   @Schema(description = "Identifier")
   @Id
@@ -72,16 +68,16 @@ public class Ad {
   @Column(name = "update_date")
   @JsonProperty("updateDate")
   private LocalDate updateDate;
-// todo: ...
+  // todo: ...
   @PrePersist
-  public void prePersist(){
+  public void prePersist() {
     createDate = LocalDate.now();
     updateDate = LocalDate.now();
   }
 
-//  todo: fields in the String (JSON) attribute
+  //  todo: fields in the String (JSON) attribute
   @PreUpdate
-  public void preUpdate(){
+  public void preUpdate() {
     updateDate = LocalDate.now();
   }
 }

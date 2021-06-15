@@ -1,13 +1,11 @@
 package com.emporium.lib.auth.configuration;
 
 import com.emporium.lib.auth.data.jpa.User;
-
+import java.util.Collection;
+import java.util.Collections;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -19,7 +17,8 @@ public class CustomUserDetails implements UserDetails {
     CustomUserDetails userDetails = new CustomUserDetails();
     userDetails.username = user.getUsername();
     userDetails.password = user.getPassword();
-    userDetails.grantedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+    userDetails.grantedAuthorities =
+        Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     return userDetails;
   }
 

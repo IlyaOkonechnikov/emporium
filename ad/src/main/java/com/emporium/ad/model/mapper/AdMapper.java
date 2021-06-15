@@ -2,7 +2,6 @@ package com.emporium.ad.model.mapper;
 
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.lib.ad.AdCreationDTO;
-
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

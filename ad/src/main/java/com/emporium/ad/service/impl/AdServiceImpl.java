@@ -2,21 +2,18 @@ package com.emporium.ad.service.impl;
 
 import com.emporium.ad.exception.ad.AdException;
 import com.emporium.ad.exception.ad.AdExceptionReason;
-import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
 import com.emporium.ad.service.AdService;
 import com.emporium.ad.service.CategoryService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.emporium.lib.ad.AdCreationDTO;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -37,7 +34,7 @@ public class AdServiceImpl implements AdService {
   }
 
   @Override
-//  todo AdDto instead of Ad
+  //  todo AdDto instead of Ad
   public Ad findById(long id) {
     log.debug("findById() - start. id: {}", id);
     Optional<Ad> optionalAd = adRepository.findById(id);
@@ -56,9 +53,9 @@ public class AdServiceImpl implements AdService {
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
     ad.setCategory(categoryService.findById(dto.getCategoryId()));
-    //TODO: сделать автоматическое заполнение времени
-//    ad.setCreateDate(LocalDate.now());
-//    ad.setUpdateDate(LocalDate.now());
+    // TODO: сделать автоматическое заполнение времени
+    //    ad.setCreateDate(LocalDate.now());
+    //    ad.setUpdateDate(LocalDate.now());
     return adRepository.save(ad).getId();
   }
 
@@ -66,7 +63,7 @@ public class AdServiceImpl implements AdService {
   public void update(long id, AdCreationDTO dto) {
     Ad ad = findById(id);
     mapper.update(dto, ad);
-//    ad.setUpdateDate(LocalDate.now());
+    //    ad.setUpdateDate(LocalDate.now());
   }
 
   @Override

@@ -1,11 +1,9 @@
 package com.emporium.lib.auth.repository;
 
 import com.emporium.lib.auth.data.jpa.User;
-
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {

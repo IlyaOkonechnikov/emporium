@@ -1,8 +1,7 @@
 package com.emporium.ad.service;
 
-import com.emporium.lib.ad.AdCreationDTO;
 import com.emporium.ad.model.jpa.Ad;
-
+import com.emporium.lib.ad.AdCreationDTO;
 import java.util.List;
 
 public interface AdService {

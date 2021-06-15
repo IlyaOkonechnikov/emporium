@@ -5,4 +5,3 @@ public abstract class ClientKnownException extends RuntimeException {
     super(exceptionReason.getReason());
   }
 }
-

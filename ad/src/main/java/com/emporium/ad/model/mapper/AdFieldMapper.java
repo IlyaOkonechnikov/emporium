@@ -3,15 +3,13 @@ package com.emporium.ad.model.mapper;
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.jpa.AdField;
 import com.emporium.lib.ad.AdFieldDTO;
-
+import java.math.BigDecimal;
 import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
-
-import java.math.BigDecimal;
 
 @Mapper(componentModel = "spring")
 public interface AdFieldMapper {
@@ -45,6 +43,9 @@ public interface AdFieldMapper {
 
   @AfterMapping
   default void setValueToEntity(AdField source, @MappingTarget AdFieldDTO target) {
-    target.setValue(source.getNumericalValue() == null ? source.getTextValue() : source.getNumericalValue().toString());
+    target.setValue(
+        source.getNumericalValue() == null
+            ? source.getTextValue()
+            : source.getNumericalValue().toString());
   }
 }
