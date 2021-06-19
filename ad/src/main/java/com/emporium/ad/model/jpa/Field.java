@@ -7,11 +7,11 @@ import javax.persistence.*;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "field")
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "field")
 public class Field {
 
   @Schema(description = "Identifier")
@@ -20,10 +20,10 @@ public class Field {
   @JsonIgnore
   private Integer id;
 
-  @Column(name = "name", nullable = false)
+  @Column(nullable = false)
   private String name;
 
-  @Column(name = "numerical", nullable = false)
+  @Column(nullable = false)
   private Boolean numerical;
 
   @EqualsAndHashCode.Exclude

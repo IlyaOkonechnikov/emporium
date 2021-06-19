@@ -7,9 +7,10 @@ import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
 import com.emporium.ad.service.AdService;
 import com.emporium.ad.service.CategoryService;
-import com.emporium.lib.ad.AdCreationDTO;
+import com.emporium.lib.ad.AdDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,54 +27,54 @@ public class AdServiceImpl implements AdService {
   private final AdMapper mapper;
 
   @Override
-  public List<Ad> findAll() {
-    log.debug("findAll() - start");
+  public List<AdDTO> findAll() {
+    //    todo убери все бессмысленные дебаг логи в проекте пж, в том числе, в моих сервисах
     List<Ad> ads = adRepository.findAll();
-    log.debug("findAll - end. ads count: {}", ads.size());
-    return ads;
+    log.debug("All ads were found. Size: {}", ads.size());
+    return ads.stream().map(mapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
-  //  todo AdDto instead of Ad
-  public Ad findById(long id) {
-    log.debug("findById() - start. id: {}", id);
+  public AdDTO findById(long id) {
+    Ad ad = getById(id);
+    log.debug("Ad was found {}", ad);
+    return mapper.toDTO(ad);
+  }
+
+  @Override
+  public Long create(AdDTO dto) {
+    Ad ad = mapper.toEntity(dto);
+    ad.setActive(Boolean.TRUE);
+    ad.setCategory(categoryService.findById(dto.getCategoryId()));
+    // todo сделать автоматическое заполнение времени получится при настройке JPA аудита
+    adRepository.save(ad);
+    log.info("Ad was created: {}", ad);
+    return ad.getId();
+  }
+
+  @Override
+  public void update(long id, AdDTO dto) {
+    Ad ad = getById(id);
+    mapper.update(dto, ad);
+    log.info("Ad was updated: {}", ad);
+  }
+
+  @Override
+  public void delete(long id) {
+    if (!adRepository.existsById(id)) {
+      log.error("An error occurred due to the attempt to find a nonexistent ad. id: {}", id);
+      throw new AdException(AdExceptionReason.AD_NOT_FOUND);
+    }
+    adRepository.deleteById(id);
+    log.info("Ad with id {} was deleted", id);
+  }
+
+  private Ad getById(long id) {
     Optional<Ad> optionalAd = adRepository.findById(id);
     if (optionalAd.isEmpty()) {
       log.error("An error occurred due to the attempt to find a nonexistent ad. id: {}", id);
       throw new AdException(AdExceptionReason.AD_NOT_FOUND);
     }
-    Ad ad = optionalAd.get();
-    log.debug("findById() - end. ad: {}", ad);
-    return ad;
-  }
-
-  @Override
-  public Long create(AdCreationDTO dto) {
-    log.debug("create() - start. dto: {}", dto);
-    Ad ad = mapper.toEntity(dto);
-    ad.setActive(Boolean.TRUE);
-    ad.setCategory(categoryService.findById(dto.getCategoryId()));
-    // TODO: сделать автоматическое заполнение времени
-    //    ad.setCreateDate(LocalDate.now());
-    //    ad.setUpdateDate(LocalDate.now());
-    return adRepository.save(ad).getId();
-  }
-
-  @Override
-  public void update(long id, AdCreationDTO dto) {
-    Ad ad = findById(id);
-    mapper.update(dto, ad);
-    //    ad.setUpdateDate(LocalDate.now());
-  }
-
-  @Override
-  public void delete(long id) {
-    log.debug("delete() - start. id: {}", id);
-    if (!adRepository.existsById(id)) {
-      log.error("An error occurred due to the attempt to find a nonexistent ad. id: {}", id);
-      throw new AdException(AdExceptionReason.AD_NOT_FOUND);
-    }
-    log.debug("delete() - end. id: {}", id);
-    adRepository.deleteById(id);
+    return optionalAd.get();
   }
 }

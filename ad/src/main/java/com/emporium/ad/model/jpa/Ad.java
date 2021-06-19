@@ -1,83 +1,59 @@
 package com.emporium.ad.model.jpa;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @Entity
 @Table(name = "ad")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Ad {
 
-  //  private Account account;
-
-  @Schema(description = "Identifier")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Schema(description = "Description")
-  @Column(name = "description", nullable = false)
+  @Column(nullable = false)
   private String description;
 
-  @Schema(description = "Price")
-  @Column(name = "price", nullable = false)
+  @Column(nullable = false)
   private BigDecimal price;
 
-  @Schema(description = "Active")
-  @Column(name = "active", nullable = false)
+  @Column(nullable = false)
   private Boolean active;
 
   @EqualsAndHashCode.Exclude
   @ToString.Exclude
-  @Schema(description = "Category")
-  @OneToOne
-  @JsonProperty("category")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
-  @Schema(description = "Ad fields")
-  @OneToMany(mappedBy = "ad", orphanRemoval = true, cascade = CascadeType.ALL)
-  private Set<AdField> adFields;
+  @Type(type = "jsonb")
+  @Column(nullable = false)
+  private String fields;
 
-  @Schema(description = "Create date")
   @CreatedDate
-  @Column(name = "create_date")
-  @JsonProperty("createDate")
+  @Column(nullable = false)
   private LocalDate createDate;
 
-  @Schema(description = "Update date")
   @LastModifiedDate
-  @Column(name = "update_date")
-  @JsonProperty("updateDate")
+  @Column(nullable = false)
   private LocalDate updateDate;
-  // todo: ...
-  @PrePersist
-  public void prePersist() {
-    createDate = LocalDate.now();
-    updateDate = LocalDate.now();
-  }
-
-  //  todo: fields in the String (JSON) attribute
-  @PreUpdate
-  public void preUpdate() {
-    updateDate = LocalDate.now();
-  }
 }

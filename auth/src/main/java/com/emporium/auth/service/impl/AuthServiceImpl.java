@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  //  todo: check if exists
+  //  todo check if exists
   public User create(UserDTO dto) {
     User user = userMapper.toEntity(dto);
     user.setRole("ROLE_USER");
