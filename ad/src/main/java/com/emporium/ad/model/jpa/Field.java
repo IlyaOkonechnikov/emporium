@@ -12,7 +12,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "field")
-// todo убери name там, где они идентичны названию атрибутов
 public class Field {
 
   @Schema(description = "Identifier")
@@ -21,10 +20,10 @@ public class Field {
   @JsonIgnore
   private Integer id;
 
-  @Column(name = "name", nullable = false)
+  @Column(nullable = false)
   private String name;
 
-  @Column(name = "numerical", nullable = false)
+  @Column(nullable = false)
   private Boolean numerical;
 
   @EqualsAndHashCode.Exclude

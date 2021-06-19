@@ -24,7 +24,7 @@ public class Category {
   private Integer id;
 
   @Schema(description = "Name")
-  @Column(name = "name")
+  @Column(nullable = false)
   private String name;
 
   @EqualsAndHashCode.Exclude
