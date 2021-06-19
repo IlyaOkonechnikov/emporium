@@ -1,19 +1,17 @@
 package com.emporium.lib.ad;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import javax.validation.constraints.NotNull;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 @Schema(description = "Ad field")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdFieldDTO {
 
   @NotNull(message = "Name of add field must be not null")

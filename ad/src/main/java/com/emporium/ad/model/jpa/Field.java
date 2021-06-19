@@ -1,20 +1,17 @@
 package com.emporium.ad.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Set;
-
-import javax.persistence.*;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Set;
+import javax.persistence.*;
 import lombok.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "field")
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "field")
 public class Field {
 
   @Schema(description = "Identifier")
@@ -23,10 +20,10 @@ public class Field {
   @JsonIgnore
   private Integer id;
 
-  @Column(name = "name", nullable = false)
+  @Column(nullable = false)
   private String name;
 
-  @Column(name = "numerical", nullable = false)
+  @Column(nullable = false)
   private Boolean numerical;
 
   @EqualsAndHashCode.Exclude
@@ -35,8 +32,7 @@ public class Field {
   @JoinTable(
       name = "category_field",
       joinColumns = @JoinColumn(name = "field_id"),
-      inverseJoinColumns = @JoinColumn(name = "category_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "category_id"))
   @JsonIgnore
   private Set<Category> categories;
 }

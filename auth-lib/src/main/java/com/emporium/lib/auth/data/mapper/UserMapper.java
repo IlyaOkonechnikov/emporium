@@ -2,7 +2,6 @@ package com.emporium.lib.auth.data.mapper;
 
 import com.emporium.lib.auth.data.dto.UserDTO;
 import com.emporium.lib.auth.data.jpa.User;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

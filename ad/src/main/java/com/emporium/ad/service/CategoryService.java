@@ -1,7 +1,6 @@
 package com.emporium.ad.service;
 
 import com.emporium.lib.category.CategoryDTO;
-
 import java.util.List;
 
 public interface CategoryService {

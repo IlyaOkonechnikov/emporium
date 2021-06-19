@@ -1,20 +1,17 @@
 package com.emporium.account.service.impl;
 
-import com.emporium.account.exception.AccountException;
-import com.emporium.account.exception.AccountExceptionReason;
 import com.emporium.account.data.jpa.Account;
 import com.emporium.account.data.mapper.AccountMapper;
+import com.emporium.account.exception.AccountException;
+import com.emporium.account.exception.AccountExceptionReason;
 import com.emporium.account.repository.AccountRepository;
 import com.emporium.account.service.AccountService;
 import com.emporium.lib.auth.data.dto.UserDTO;
-
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -58,7 +55,9 @@ public class AccountServiceImpl implements AccountService {
   public void update(Account account) {
     log.debug("update() - start. user: {}", account);
     if (accountRepository.findById(account.getId()).isEmpty()) {
-      log.error("An error occurred due to the attempt to update a nonexistent user. id: {}", account.getId());
+      log.error(
+          "An error occurred due to the attempt to update a nonexistent user. id: {}",
+          account.getId());
       throw new AccountException(AccountExceptionReason.ACCOUNT_NOT_FOUND);
     }
     accountRepository.save(account);

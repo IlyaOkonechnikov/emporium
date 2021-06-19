@@ -7,5 +7,4 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @ComponentScan
 @EnableRedisRepositories(basePackages = "com.emporium.lib.auth.repository")
-public class AuthLibConfiguration {
-}
+public class AuthLibConfiguration {}

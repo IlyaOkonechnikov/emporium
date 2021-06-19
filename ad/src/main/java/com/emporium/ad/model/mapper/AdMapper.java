@@ -2,16 +2,18 @@ package com.emporium.ad.model.mapper;
 
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.lib.ad.AdDTO;
-
+import java.util.Objects;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
-import java.util.Objects;
-
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = AdFieldJsonMapper.class)
+// todo предлагаю заменить нашу маппинг либу на "org.modelmapper:modelmapper" во всех сервисах
+@Mapper(
+    componentModel = "spring",
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    uses = AdFieldJsonMapper.class)
 public interface AdMapper {
 
   @Mapping(target = "id", ignore = true)
@@ -23,7 +25,7 @@ public interface AdMapper {
   Ad toEntity(AdDTO dto);
 
   @Mapping(target = "categoryId", ignore = true)
-  @Mapping(target = "fields",source = "ad", qualifiedByName =  "toDTOSet")
+  @Mapping(target = "fields", source = "ad", qualifiedByName = "toDTOSet")
   AdDTO toDTO(Ad ad);
 
   @Mapping(target = "id", ignore = true)
