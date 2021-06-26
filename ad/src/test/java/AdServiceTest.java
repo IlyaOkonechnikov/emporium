@@ -1,69 +1,101 @@
 import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.mapper.AdMapper;
+import com.emporium.ad.repository.AdRepository;
+import com.emporium.ad.repository.CategoryRepository;
+import com.emporium.ad.service.AdService;
+import com.emporium.ad.util.RandomData;
 import com.emporium.lib.ad.AdDTO;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-public class AdServiceTest extends BaseTest {
+import config.TestConfig;
 
-  private Category category;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@Transactional
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = TestConfig.class)
+public class AdServiceTest {
+
+  @Autowired
+  AdService service;
+
+  @Autowired
+  AdRepository adRepository;
+
+  @Autowired
+  AdMapper mapper;
+
+  @Autowired
+  CategoryRepository categoryRepository;
+
+  @Autowired
+  RandomData random;
+
+  Category category;
 
   @BeforeEach
-  void init(){
-    this.category = categoryRepository.findAll().stream().findFirst().orElse(null);
-    Assertions.assertNotNull(category);
+  void init() {
+    category = categoryRepository.save(random.category("test"));
   }
 
   @Test
-  void adMustBeCreated(){
+  void whenValidParams_thenAdShouldBeCreated() {
     //Given:
     AdDTO expected = mapper.toDTO(random.ad(true, category));
     //When:
     Long id = service.create(expected);
     //Then:
-    Assertions.assertNotNull(id);
-    Ad ad = repository.getOne(id);
-    Assertions.assertNotNull(ad);
-    AdDTO actual =  mapper.toDTO(ad);
-    exchangeAdFields(expected, actual);
-    Assertions.assertEquals(expected, mapper.toDTO(ad));
+    assertNotNull(id);
+    Ad ad = adRepository.getOne(id);
+    assertNotNull(ad);
+    AdDTO actual = mapper.toDTO(ad);
+    expected.setId(actual.getId());
+    assertEquals(expected, mapper.toDTO(ad));
   }
 
   @Test
-  void adMustBeObtainedById(){
+  void whenValidAdId_thenAdMustBeObtained() {
     //Given:
-    Ad ad = repository.save(random.ad(true, category));
+    Ad ad = adRepository.save(random.ad(true, category));
     AdDTO expected = mapper.toDTO(ad);
     //When:
-    AdDTO actual = mapper.toDTO(repository.getOne(ad.getId()));
+    AdDTO actual = mapper.toDTO(adRepository.getOne(ad.getId()));
     //Then:
-    Assertions.assertEquals(expected, actual);
+    assertEquals(expected, actual);
   }
 
   @Test
-  void adMustBeUpdated(){
+  void whenValidData_thenAdMustBeUpdated() {
     //Given:
-    Ad ad = repository.save(random.ad(true, category));
-    Assertions.assertNotNull(ad.getId());
+    Ad ad = adRepository.save(random.ad(true, category));
+    assertNotNull(ad.getId());
     AdDTO expected = mapper.toDTO(random.ad(true, category));
     //When:
     service.update(ad.getId(), expected);
     //Then:
-    AdDTO actual =  mapper.toDTO(repository.getOne(ad.getId()));
-    exchangeAdFields(expected, actual);
-    Assertions.assertEquals(expected, actual);
+    AdDTO actual = mapper.toDTO(adRepository.getOne(ad.getId()));
+    expected.setId(actual.getId());
+    assertEquals(expected, actual);
   }
 
   @Test
-  void adMustBeDeleted(){
+  void whenValidAdId_thenAdMustBeDeleted() {
     //Given:
-    Ad ad = repository.save(random.ad(true, category));
-    Assertions.assertNotNull(ad.getId());
+    Ad ad = adRepository.save(random.ad(true, category));
+    assertNotNull(ad.getId());
     //When:
     service.delete(ad.getId());
     //Then:
-    Assertions.assertTrue(repository.findById(ad.getId()).isEmpty());
+    assertTrue(adRepository.findById(ad.getId()).isEmpty());
   }
 }

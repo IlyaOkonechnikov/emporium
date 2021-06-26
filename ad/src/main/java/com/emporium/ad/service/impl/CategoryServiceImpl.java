@@ -31,21 +31,21 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<CategoryDTO> findAll() {
     List<Category> categories = categoryRepository.findAll();
-    log.debug("findAll - end. categories count: {}", categories.size());
+    log.debug("All categories found. Size: {}", categories.size());
     return categories.stream().map(categoryMapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
   public List<CategoryDTO> findMainCategories() {
     List<Category> mainCategories = categoryRepository.findMainCategories();
-    log.debug("findParents() - end. mainCategories count: {}", mainCategories.size());
+    log.debug("Main categories found. Size: {}", mainCategories.size());
     return mainCategories.stream().map(categoryMapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
   public CategoryDTO findById(int id) {
     Category category = getById(id);
-    log.debug("findById() - end. category: {}", category);
+    log.debug("Category with id {} was found: {}", id, category);
     return categoryMapper.toDTO(category);
   }
 
@@ -58,13 +58,15 @@ public class CategoryServiceImpl implements CategoryService {
         fieldRepository.findAllByIdIn(dto.getFieldsIds())
     );
     categoryRepository.save(category);
-    log.debug("create() - end. category: {}", category);
+    log.info("Category was created: {}", category);
     return category.getId();
   }
 
   @Override
   @Transactional
   public void update(int id, CategoryDTO dto) {
+    //TODO:нужна валидация, чтобы parentId был всегда выше по ветке, чем id обновляемой Category
+    //либо относиться к другой ветке
     Category category = getById(id);
     categoryMapper.merge(
         dto,
@@ -72,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
         fieldRepository.findAllByIdIn(dto.getFieldsIds()),
         category
     );
-    log.debug("update() - end. category: {}", category);
+    log.info("Category with id {} was updated: {}", id, category);
   }
 
   @Override
@@ -84,6 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     log.debug("delete() - end. id: {}", id);
     categoryRepository.deleteById(id);
+    log.info("Category with id {} was deleted", id);
   }
 
   private Category getById(int id) {

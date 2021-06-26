@@ -31,10 +31,16 @@ public class RandomData {
     ad.setPrice(new BigDecimal(new Random().nextInt(10000)));
     ad.setCategory(category);
     ad.setActive(active);
-    ad.setFields(adFieldJsonMapper.fromSet(adFields));
+    ad.setFields(adFieldJsonMapper.toEntityString(adFields));
     ad.setCreateDate(LocalDate.now());
     ad.setUpdateDate(LocalDate.now());
     return ad;
+  }
+
+  public Category category(String name) {
+    Category category = new Category();
+    category.setName(name);
+    return category;
   }
 
   public Ad ad(boolean active, Category category) {

@@ -2,19 +2,25 @@ package com.emporium.ad.service.impl;
 
 import com.emporium.ad.exception.ad.AdException;
 import com.emporium.ad.exception.ad.AdExceptionReason;
+import com.emporium.ad.exception.category.CategoryException;
+import com.emporium.ad.exception.category.CategoryExceptionReason;
 import com.emporium.ad.model.jpa.Ad;
+import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.model.mapper.AdMapper;
 import com.emporium.ad.repository.AdRepository;
+import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.AdService;
-import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.ad.AdDTO;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -23,12 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdServiceImpl implements AdService {
 
   private final AdRepository adRepository;
-  private final CategoryService categoryService;
+  private final CategoryRepository categoryRepository;
   private final AdMapper mapper;
 
   @Override
   public List<AdDTO> findAll() {
-    //    todo убери все бессмысленные дебаг логи в проекте пж, в том числе, в моих сервисах
     List<Ad> ads = adRepository.findAll();
     log.debug("All ads were found. Size: {}", ads.size());
     return ads.stream().map(mapper::toDTO).collect(Collectors.toList());
@@ -45,8 +50,8 @@ public class AdServiceImpl implements AdService {
   public Long create(AdDTO dto) {
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
-    ad.setCategory(categoryService.findById(dto.getCategoryId()));
-    // todo сделать автоматическое заполнение времени получится при настройке JPA аудита
+    ad.setCategory(getCategoryById(dto.getCategoryId()));
+    //TODO: сделать автоматическое заполнение времени получится при настройке JPA аудита
     adRepository.save(ad);
     log.info("Ad was created: {}", ad);
     return ad.getId();
@@ -76,5 +81,12 @@ public class AdServiceImpl implements AdService {
       throw new AdException(AdExceptionReason.AD_NOT_FOUND);
     }
     return optionalAd.get();
+  }
+
+  private Category getCategoryById(int id) {
+    return categoryRepository.findById(id).orElseThrow(() -> {
+      log.error("An error occurred due to the attempt to find a nonexistent category. id: {}", id);
+      return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
+    });
   }
 }

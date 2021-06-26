@@ -41,7 +41,7 @@ create table ad
     description varchar(1500) not null,
     price       numeric       not null,
     active      boolean   default true,
-    fields      jsonb not null,
+    fields      text not null,
     create_date timestamp not null,
     update_date timestamp not null
 );
@@ -1286,9 +1286,8 @@ INSERT INTO public.category_field (category_id, field_id) VALUES (504, 2);
 INSERT INTO public.category_field (category_id, field_id) VALUES (505, 1);
 INSERT INTO public.category_field (category_id, field_id) VALUES (505, 2);
 
+-- установление следующих значений секвенции после ручной записи идентификаторов (иначе будет с 1)
 SELECT setval(pg_get_serial_sequence('category', 'id'),
               coalesce(max(id)+1, 1), false) FROM category;
 SELECT setval(pg_get_serial_sequence('field', 'id'),
               coalesce(max(id)+1, 1), false) FROM field;
-SELECT setval(pg_get_serial_sequence('ad', 'id'),
-              coalesce(max(id)+1, 1), false) FROM ad;
