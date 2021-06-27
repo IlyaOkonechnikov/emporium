@@ -5,8 +5,6 @@ plugins {
   id "org.flywaydb.flyway" version "${flywaydb_version}"
 }
 
-group = 'com.emporium'
-
 dependencies {
   implementation(
 //      Spring
@@ -18,6 +16,7 @@ dependencies {
 //      Database
       'org.flywaydb:flyway-core',
 //      Other
+      "org.apache.commons:commons-lang3:$apache_commons_version",
       "org.mapstruct:mapstruct:$mapstruct_version",
       "org.mapstruct:mapstruct-processor:$mapstruct_version",
       "org.projectlombok:lombok:$lombok_version"

@@ -11,6 +11,7 @@ import com.emporium.lib.auth.data.mapper.UserMapper;
 import com.emporium.lib.auth.repository.UserRepository;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,8 +68,10 @@ public class AuthServiceImpl implements AuthService {
   }
 
   private User validateCredentialsAndGetUser(String username, String email) {
-    if (username == null && email == null) {
-      throw new AuthException(AuthExceptionReason.EMAIL_AND_PASSWORD_ARE_NULL);
+    if (ObjectUtils.allNull(username, email)) {
+      throw new AuthException(AuthExceptionReason.EMAIL_AND_USERNAME_ARE_NULL);
+    } else if (ObjectUtils.allNotNull(username, email)) {
+      throw new AuthException(AuthExceptionReason.ONLY_EMAIL_OR_USERNAME_SHOULD_BE_FILLED);
     } else if (username != null) {
       return userRepository
           .findByUsername(username)

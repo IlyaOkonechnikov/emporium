@@ -6,8 +6,6 @@ plugins {
   id "org.flywaydb.flyway" version "${flywaydb_version}"
 }
 
-group = 'com.emporium'
-
 dependencies {
   implementation(
 //      Spring
