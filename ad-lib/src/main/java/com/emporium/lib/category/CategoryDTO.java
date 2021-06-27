@@ -20,7 +20,7 @@ public class CategoryDTO {
   private Integer id;
 
   @Schema(description = "Name")
-  @Pattern(regexp = "[A-Za-z0-9_]+", message = "Category name must contain only letters and numbers")
+  @Pattern(regexp = "[A-Za-z0-9_ ]+", message = "Category name must contain only letters and numbers")
   @Size(min = 4, max = 16, message = "Category name must be between 4 and 16 characters")
   private String name;
 
@@ -32,6 +32,6 @@ public class CategoryDTO {
   private Set<CategoryDTO> subCategories = new HashSet<>();
 
   @NotNull
-  @Schema(description = "Identifiers of fields", required = true)
-  private Set<Integer> fieldsIds;
+  @Schema(description = "Fields", required = true)
+  private Set<FieldDTO> fields;
 }

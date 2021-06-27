@@ -8,15 +8,13 @@ import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.repository.FieldRepository;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.emporium.lib.category.FieldDTO;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -52,11 +50,12 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   @Transactional
   public Integer create(CategoryDTO dto) {
-    Category category = categoryMapper.toEntity(
-        dto,
-        getById(dto.getParentId()),
-        fieldRepository.findAllByIdIn(dto.getFieldsIds())
-    );
+    Category category =
+        categoryMapper.toEntity(
+            dto,
+            getById(dto.getParentId()),
+            fieldRepository.findAllByIdIn(
+                dto.getFields().stream().map(FieldDTO::getId).collect(Collectors.toSet())));
     categoryRepository.save(category);
     log.info("Category was created: {}", category);
     return category.getId();
@@ -65,15 +64,15 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   @Transactional
   public void update(int id, CategoryDTO dto) {
-    //TODO:нужна валидация, чтобы parentId был всегда выше по ветке, чем id обновляемой Category
-    //либо относиться к другой ветке
+    // TODO:нужна валидация, чтобы parentId был всегда выше по ветке, чем id обновляемой Category
+    // либо относиться к другой ветке
     Category category = getById(id);
     categoryMapper.merge(
         dto,
         getById(dto.getParentId()),
-        fieldRepository.findAllByIdIn(dto.getFieldsIds()),
-        category
-    );
+        fieldRepository.findAllByIdIn(
+            dto.getFields().stream().map(FieldDTO::getId).collect(Collectors.toSet())),
+        category);
     log.info("Category with id {} was updated: {}", id, category);
   }
 
@@ -81,7 +80,8 @@ public class CategoryServiceImpl implements CategoryService {
   @Transactional
   public void delete(int id) {
     if (categoryRepository.findById(id).isEmpty()) {
-      log.error("An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
+      log.error(
+          "An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
       throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
     }
     log.debug("delete() - end. id: {}", id);
@@ -90,10 +90,14 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   private Category getById(int id) {
-    return categoryRepository.findById(id).orElseThrow(() -> {
-          log.error("An error occurred due to the attempt to find a nonexistent category. id: {}", id);
-          return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
-        }
-    );
+    return categoryRepository
+        .findById(id)
+        .orElseThrow(
+            () -> {
+              log.error(
+                  "An error occurred due to the attempt to find a nonexistent category. id: {}",
+                  id);
+              return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
+            });
   }
 }

@@ -41,7 +41,7 @@ create table ad
     description varchar(1500) not null,
     price       numeric       not null,
     active      boolean   default true,
-    fields      text not null,
+    fields      json not null,
     create_date timestamp not null,
     update_date timestamp not null
 );

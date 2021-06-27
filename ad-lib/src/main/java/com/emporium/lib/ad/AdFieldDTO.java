@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdFieldDTO {
 
-  @NotNull(message = "Name of add field must be not null")
   @Schema(description = "Name")
+  @NotNull(message = "Name of add field must be not null")
   private String name;
 
-  @NotNull(message = "Value of add field must be not null")
   @Schema(description = "Value")
+  @NotNull(message = "Value of add field must be not null")
   private String value;
 }

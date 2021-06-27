@@ -2,7 +2,10 @@ package com.emporium.ad.controller;
 
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
-
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.util.List;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import javax.validation.Valid;
-
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,9 +45,7 @@ public class CategoryController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @DefaultResponses
-  @ApiResponse(
-      responseCode = "201",
-      description = "Successful creation")
+  @ApiResponse(responseCode = "201", description = "Successful creation")
   public Integer create(@RequestBody @Valid CategoryDTO dto) {
     return categoryService.create(dto);
   }
@@ -60,7 +54,7 @@ public class CategoryController {
   @ResponseStatus(HttpStatus.OK)
   @DefaultResponses
   public void update(@PathVariable int id, @RequestBody @Valid CategoryDTO dto) {
-    categoryService.update(id,dto);
+    categoryService.update(id, dto);
   }
 
   @DeleteMapping("/{id}}")

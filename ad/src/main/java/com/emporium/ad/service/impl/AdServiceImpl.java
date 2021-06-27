@@ -11,16 +11,13 @@ import com.emporium.ad.repository.AdRepository;
 import com.emporium.ad.repository.CategoryRepository;
 import com.emporium.ad.service.AdService;
 import com.emporium.lib.ad.AdDTO;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -51,7 +48,7 @@ public class AdServiceImpl implements AdService {
     Ad ad = mapper.toEntity(dto);
     ad.setActive(Boolean.TRUE);
     ad.setCategory(getCategoryById(dto.getCategoryId()));
-    //TODO: сделать автоматическое заполнение времени получится при настройке JPA аудита
+    // TODO: сделать автоматическое заполнение времени получится при настройке JPA аудита
     adRepository.save(ad);
     log.info("Ad was created: {}", ad);
     return ad.getId();
@@ -84,9 +81,14 @@ public class AdServiceImpl implements AdService {
   }
 
   private Category getCategoryById(int id) {
-    return categoryRepository.findById(id).orElseThrow(() -> {
-      log.error("An error occurred due to the attempt to find a nonexistent category. id: {}", id);
-      return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
-    });
+    return categoryRepository
+        .findById(id)
+        .orElseThrow(
+            () -> {
+              log.error(
+                  "An error occurred due to the attempt to find a nonexistent category. id: {}",
+                  id);
+              return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
+            });
   }
 }

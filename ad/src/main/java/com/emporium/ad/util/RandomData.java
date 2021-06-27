@@ -4,9 +4,6 @@ import com.emporium.ad.model.jpa.Ad;
 import com.emporium.ad.model.jpa.Category;
 import com.emporium.ad.model.mapper.AdFieldJsonMapper;
 import com.emporium.lib.ad.AdFieldDTO;
-
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Random;
@@ -14,8 +11,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +21,7 @@ public class RandomData {
   private final AdFieldJsonMapper adFieldJsonMapper;
   private final AtomicInteger nextNumber = new AtomicInteger(1);
 
-  //TODO: пока что такой беспонтовый класс для быстрого заполнения данными в тестах
+  // TODO: пока что такой беспонтовый класс для быстрого заполнения данными в тестах
   public Ad ad(boolean active, Category category, Set<AdFieldDTO> adFields) {
     Ad ad = new Ad();
     ad.setDescription("Description " + nextNumber.getAndIncrement());
@@ -49,11 +46,11 @@ public class RandomData {
 
   public Set<AdFieldDTO> adFields(int capacity) {
     return IntStream.range(0, capacity)
-        .mapToObj(i -> {
+        .mapToObj(
+            i -> {
               int number = nextNumber.getAndIncrement();
               return new AdFieldDTO("Field name " + number, "Field value " + number);
-            }
-        )
+            })
         .collect(Collectors.toSet());
   }
 }
