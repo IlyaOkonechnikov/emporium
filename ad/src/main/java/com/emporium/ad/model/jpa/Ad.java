@@ -1,6 +1,6 @@
 package com.emporium.ad.model.jpa;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Data
 @Entity
 @Table(name = "ad")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Ad {
 
   @Id
@@ -39,13 +39,13 @@ public class Ad {
   @Column(nullable = false)
   private Boolean active;
 
-  @EqualsAndHashCode.Exclude
   @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
-  @Type(type = "jsonb")
+  @Type(type = "json")
   @Column(nullable = false)
   private String fields;
 

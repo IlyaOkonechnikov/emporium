@@ -1,23 +1,24 @@
 package com.emporium.ad.model.jpa;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Set;
-import javax.persistence.*;
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "field")
 public class Field {
 
-  @Schema(description = "Identifier")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @JsonIgnore
   private Integer id;
 
   @Column(nullable = false)
@@ -26,13 +27,5 @@ public class Field {
   @Column(nullable = false)
   private Boolean numerical;
 
-  @EqualsAndHashCode.Exclude
-  @ToString.Exclude
-  @ManyToMany
-  @JoinTable(
-      name = "category_field",
-      joinColumns = @JoinColumn(name = "field_id"),
-      inverseJoinColumns = @JoinColumn(name = "category_id"))
-  @JsonIgnore
-  private Set<Category> categories;
+  @ManyToMany @ToString.Exclude @EqualsAndHashCode.Exclude private Set<Category> categories;
 }

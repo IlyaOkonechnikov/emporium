@@ -3,11 +3,14 @@ package com.emporium.ad.service.impl;
 import com.emporium.ad.exception.category.CategoryException;
 import com.emporium.ad.exception.category.CategoryExceptionReason;
 import com.emporium.ad.model.jpa.Category;
+import com.emporium.ad.model.mapper.CategoryMapper;
 import com.emporium.ad.repository.CategoryRepository;
+import com.emporium.ad.repository.FieldRepository;
 import com.emporium.ad.service.CategoryService;
 import com.emporium.lib.category.CategoryDTO;
+import com.emporium.lib.category.FieldDTO;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,74 +19,66 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
+  private final FieldRepository fieldRepository;
+  private final CategoryMapper categoryMapper;
 
   @Override
-  @Transactional(readOnly = true)
-  public List<Category> findAll() {
-    log.debug("findAll() - start");
+  public List<CategoryDTO> findAll() {
     List<Category> categories = categoryRepository.findAll();
-    log.debug("findAll - end. categories count: {}", categories.size());
-    return categories;
+    log.debug("All categories found. Size: {}", categories.size());
+    return categories.stream().map(categoryMapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
-  @Transactional(readOnly = true)
-  public List<Category> findMainCategories() {
-    log.debug("findParents() - start");
-    List<Category> parents = categoryRepository.findMainCategories();
-    log.debug("findParents() - end. parents count: {}", parents.size());
-    return parents;
+  public List<CategoryDTO> findMainCategories() {
+    List<Category> mainCategories = categoryRepository.findMainCategories();
+    log.debug("Main categories found. Size: {}", mainCategories.size());
+    return mainCategories.stream().map(categoryMapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
-  @Transactional(readOnly = true)
-  public Category findById(int id) {
-    log.debug("findById() - start. id: {}", id);
-    Optional<Category> optionalCategory = categoryRepository.findById(id);
-    if (optionalCategory.isEmpty()) {
-      log.error("An error occurred due to the attempt to find a nonexistent category. id: {}", id);
-      throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
-    }
-    Category category = optionalCategory.get();
-    log.debug("findById() - end. category: {}", category);
-    return category;
+  public CategoryDTO findById(int id) {
+    Category category = getById(id);
+    log.debug("Category with id {} was found: {}", id, category);
+    return categoryMapper.toDTO(category);
   }
 
   @Override
   @Transactional
   public Integer create(CategoryDTO dto) {
-    log.debug("create() - start. dto: {}", dto);
-    Category category = new Category(dto.getName(), Category.builder().id(dto.getId()).build());
+    Category category =
+        categoryMapper.toEntity(
+            dto,
+            getById(dto.getParentId()),
+            fieldRepository.findAllByIdIn(
+                dto.getFields().stream().map(FieldDTO::getId).collect(Collectors.toSet())));
     categoryRepository.save(category);
-    log.debug("create() - end. category: {}", category);
+    log.info("Category was created: {}", category);
     return category.getId();
   }
 
   @Override
   @Transactional
-  public void update(CategoryDTO dto) {
-    log.debug("update() - start. dto: {}", dto);
-    Optional<Category> optionalCategory = categoryRepository.findById(dto.getId());
-    if (optionalCategory.isEmpty()) {
-      log.error(
-          "An error occurred due to the attempt to update a nonexistent category. id: {}",
-          dto.getId());
-      throw new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
-    }
-    Category category = optionalCategory.get();
-    category.setName(dto.getName());
-    category.setParentCategory(Category.builder().id(dto.getId()).build());
-    log.debug("update() - end. category: {}", category);
-    categoryRepository.save(category);
+  public void update(int id, CategoryDTO dto) {
+    // TODO:нужна валидация, чтобы parentId был всегда выше по ветке, чем id обновляемой Category
+    // либо относиться к другой ветке
+    Category category = getById(id);
+    categoryMapper.merge(
+        dto,
+        getById(dto.getParentId()),
+        fieldRepository.findAllByIdIn(
+            dto.getFields().stream().map(FieldDTO::getId).collect(Collectors.toSet())),
+        category);
+    log.info("Category with id {} was updated: {}", id, category);
   }
 
   @Override
   @Transactional
   public void delete(int id) {
-    log.debug("delete() - start. id: {}", id);
     if (categoryRepository.findById(id).isEmpty()) {
       log.error(
           "An error occurred due to the attempt to delete a nonexistent category. id: {}", id);
@@ -91,5 +86,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
     log.debug("delete() - end. id: {}", id);
     categoryRepository.deleteById(id);
+    log.info("Category with id {} was deleted", id);
+  }
+
+  private Category getById(int id) {
+    return categoryRepository
+        .findById(id)
+        .orElseThrow(
+            () -> {
+              log.error(
+                  "An error occurred due to the attempt to find a nonexistent category. id: {}",
+                  id);
+              return new CategoryException(CategoryExceptionReason.CATEGORY_NOT_FOUND);
+            });
   }
 }

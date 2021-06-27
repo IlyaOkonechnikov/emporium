@@ -1,20 +1,19 @@
 package com.emporium.ad.service;
 
-import com.emporium.ad.model.jpa.Category;
 import com.emporium.lib.category.CategoryDTO;
 import java.util.List;
 
 public interface CategoryService {
 
-  List<Category> findAll();
+  List<CategoryDTO> findAll();
 
-  List<Category> findMainCategories();
+  List<CategoryDTO> findMainCategories();
 
-  Category findById(int id);
+  CategoryDTO findById(int id);
 
   Integer create(CategoryDTO dto);
 
-  void update(CategoryDTO dto);
+  void update(int id, CategoryDTO dto);
 
   void delete(int id);
 }

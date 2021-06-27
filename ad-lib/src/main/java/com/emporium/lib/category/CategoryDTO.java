@@ -1,29 +1,37 @@
 package com.emporium.lib.category;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CategoryDTO {
 
   @Schema(description = "Identifier")
   private Integer id;
 
   @Schema(description = "Name")
-  @Pattern(
-      regexp = "[A-Za-z0-9_]+",
-      message = "Category name must contain only letters and numbers")
+  @Pattern(regexp = "[A-Za-z0-9_ ]+", message = "Category name must contain only letters and numbers")
   @Size(min = 4, max = 16, message = "Category name must be between 4 and 16 characters")
   private String name;
 
-  @Schema(description = "Identifier of parent category")
   @NotNull
+  @Schema(description = "Identifier of parent category", required = true)
   private Integer parentId;
+
+  @Schema(description = "Sub categories")
+  private Set<CategoryDTO> subCategories = new HashSet<>();
+
+  @NotNull
+  @Schema(description = "Fields", required = true)
+  private Set<FieldDTO> fields;
 }
