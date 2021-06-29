@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +39,9 @@ public class JwtFilter implements Filter {
         SecurityContextHolder.getContext().setAuthentication(auth);
       }
     } catch (Exception e) {
-      PrintWriter out = response.getWriter();
+      HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+      httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      PrintWriter out = httpServletResponse.getWriter();
       out.print(e.getMessage());
       out.flush();
       return;

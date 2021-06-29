@@ -39,6 +39,8 @@ public class AuthController {
     authService.logout(request);
   }
 
-  @GetMapping("/confirm-email/{id}")
-  public void confirmEmail(@PathVariable long id) {}
+  @GetMapping("/confirm-email/{username}")
+  public void confirmEmail(@PathVariable String username) {
+    authService.confirmEmail(username);
+  }
 }

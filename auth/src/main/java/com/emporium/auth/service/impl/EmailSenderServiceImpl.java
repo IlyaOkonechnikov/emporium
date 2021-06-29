@@ -29,15 +29,14 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     this.emailSender = emailSender;
   }
 
-  public void sendConfirmationEmail(long id, String name, String email) {
-    log.debug("sendConfirmationMail() - start. name: {}, email: {}", name, email);
+  public void sendConfirmationEmail(String username, String email) {
     try {
       SimpleMailMessage message = new SimpleMailMessage();
       //noinspection ConstantConditions
       message.setFrom(((JavaMailSenderImpl) emailSender).getUsername());
       message.setTo(email);
       message.setSubject("Emporium email confirmation.");
-      message.setText(String.format(MSG_TEMPLATE, name, confirmationUrl, id));
+      message.setText(String.format(MSG_TEMPLATE, username, confirmationUrl, username));
       emailSender.send(message);
     } catch (MailException e) {
       log.error("Failed to send a confirmation email to: " + email + "\n" + e.getMessage(), e);

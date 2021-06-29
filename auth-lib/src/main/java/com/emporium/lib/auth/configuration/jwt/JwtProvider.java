@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-  public static final String TOKEN_PARSING_ERROR_MSG = "An error occurred while parsing the token";
+  public static final String REQUEST_AUTH_ERROR_MSG = "Unable to authorize request";
+  //  todo: move to variables
   private static final String JWT_SECRET = "jwtSecret";
 
   private final TokenRepository repository;
@@ -32,14 +33,26 @@ public class JwtProvider {
   }
 
   public String getUsernameFromToken(String token) {
+    final Token savedToken =
+        repository
+            .findByValue(token)
+            .orElseThrow(() -> new IllegalArgumentException(REQUEST_AUTH_ERROR_MSG));
     try {
-      return Jwts.parser().setSigningKey(JWT_SECRET).parseClaimsJws(token).getBody().getSubject();
+      return Jwts.parser()
+          .setSigningKey(JWT_SECRET)
+          .parseClaimsJws(savedToken.getValue())
+          .getBody()
+          .getSubject();
     } catch (Exception e) {
-      throw new IllegalArgumentException(TOKEN_PARSING_ERROR_MSG);
+      throw new IllegalArgumentException(REQUEST_AUTH_ERROR_MSG);
     }
   }
 
   public void invalidateToken(HttpServletRequest request) {
-    repository.delete(repository.findByValue(JwtUtil.getTokenFromRequest(request)));
+    final Token token =
+        repository
+            .findByValue(JwtUtil.getTokenFromRequest(request))
+            .orElseThrow(() -> new IllegalArgumentException(REQUEST_AUTH_ERROR_MSG));
+    repository.delete(token);
   }
 }

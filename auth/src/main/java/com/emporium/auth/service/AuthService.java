@@ -11,7 +11,7 @@ public interface AuthService {
 
   LoginResponseDTO login(UserDTO dto);
 
-  void enable(long id);
+  void confirmEmail(String username);
 
   void logout(HttpServletRequest request);
 }

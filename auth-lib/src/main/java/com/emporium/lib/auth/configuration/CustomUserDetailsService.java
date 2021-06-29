@@ -19,7 +19,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepository
             .findByUsername(username)
             .orElseThrow(
-                () -> new UsernameNotFoundException("No user found with username: " + username));
+                () ->
+                    new UsernameNotFoundException(
+                        "Unable to find user with username: " + username));
     return CustomUserDetails.fromUserEntityToCustomUserDetails(user);
   }
 }

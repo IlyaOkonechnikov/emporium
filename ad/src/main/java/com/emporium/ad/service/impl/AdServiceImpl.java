@@ -28,16 +28,13 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public List<AdDTO> findAll() {
-    //    todo убери все бессмысленные дебаг логи в проекте пж, в том числе, в моих сервисах
     List<Ad> ads = adRepository.findAll();
-    log.debug("All ads were found. Size: {}", ads.size());
     return ads.stream().map(mapper::toDTO).collect(Collectors.toList());
   }
 
   @Override
   public AdDTO findById(long id) {
     Ad ad = getById(id);
-    log.debug("Ad was found {}", ad);
     return mapper.toDTO(ad);
   }
 
